@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @project.name %>
+</p>
+
+<p>
+  <strong>Startdate:</strong>
+  <%= @project.startDate %>
+</p>
+
+<p>
+  <strong>Enddate:</strong>
+  <%= @project.endDate %>
+</p>
+
+<p>
+  <strong>Group:</strong>
+  <%= Group.find(@project.group_id).name %>
+</p>
+
+<%= link_to 'Edit', edit_project_path(@project) %> |
+<%= link_to 'Back', projects_path %>

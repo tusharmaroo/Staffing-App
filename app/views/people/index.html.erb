@@ -1,0 +1,43 @@
+<div class="container">
+<table class="data">
+        <thead>
+            <th>Name</th>
+            <th>Skills</th>
+            <th>Totalexp</th>
+            <th>Tcsexp</th>
+            <th>Releventexp</th>
+            <th>Allocation</th>
+            <th>Interestareas</th>
+            <th>Active</th>
+            <th>Location</th>
+            <th>Group</th>
+            <th>Show</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </thead>
+       
+        <% @people.each do |person| %>
+          <% if person.active? %>
+            <tr>
+              <td><%= person.name %></td>
+              <td><%= person.skills %></td>
+              <td><%= person.totalExp %></td>
+              <td><%= person.tcsExp %></td>
+              <td><%= person.relExp %></td>
+              <td><%= person.allocation %></td>
+              <td><%= person.interestAreas %></td>
+              <td><%= person.active %></td>
+              <td><%= person.location %></td>
+              <td><%= Group.find(person.group_id).name %></td>
+              <td><%= link_to 'Show', person %></td>
+              <td><%= link_to 'Edit', edit_person_path(person) %></td>
+              <td><%= link_to 'Destroy', person, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            </tr>
+          <% end %>    
+          <% end %> 
+        </table>
+        </div>
+
+<script type="text/javascript">
+$('.data').dataTable();
+</script>

@@ -1,0 +1,78 @@
+<%= form_for(@person) do |f| %>
+  <% if @person.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@person.errors.count, "error") %> prohibited this person from being saved:</h2>
+
+      <ul>
+      <% @person.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :skills %><br>
+    <%= f.text_area :skills %>
+  </div>
+  <div class="field">
+    <%= f.label :Location %><br>
+    <select id="person_location" name="person[location]">
+      <option value="Mumbai" <%= "selected" if @person.location == "Mumbai" %> >Mumbai</option>
+      <option value="Banglore" <%= "selected" if @person.location == "Banglore" %> >Banglore</option>
+      <option value="Gurgaon" <%= "selected" if @person.location == "Gurgaon" %> >Gurgaon</option>
+      <option value="Kolkata" <%= "selected" if @person.location == "Kolkata" %> >Kolkata</option>
+      <option value="NYC" <%= "selected" if @person.location == "NYC" %> >NYC</option>
+    </select>
+  </div>
+  <div class="field">
+    <%= f.label :totalExp %><br>
+    <%= f.text_field :totalExp %>
+  </div>
+  <div class="field">
+    <%= f.label :tcsExp %><br>
+    <%= f.text_field :tcsExp %>
+  </div>
+  <div class="field">
+    <%= f.label :releventExp %><br>
+    <%= f.text_field :relExp %>
+  </div>
+  <div class="field">
+    <%= f.label :allocation %><br>
+    <%= f.number_field :allocation %>
+  </div>
+  <div class="field">
+    <%= f.label :mobilenumber %><br>
+    <%= f.number_field :mobilenumber %>
+  </div>
+  <div class="field">
+    <%= f.label :emailid %><br>
+    <%= f.text_field :emailid %>
+  </div>
+  <div class="field">
+    <%= f.label :interestAreas %><br>
+    <%= f.text_area :interestAreas %>
+  </div>
+  <div class="field">
+    <%= f.label :active %><br>
+    <%= f.check_box :active %>
+  </div>
+  <div class="field">
+    <%= f.label :group_id %><br>
+    <%#= f.text_field :group_id %>
+    <select id="person_group_id" name="person[group_id]">
+      <% @groups.each do |group| %>
+        <option value="<%= group.id %>" <%= "selected" if @person.group_id == group.id %>>
+          <%= group.name %>
+        </option>
+      <% end %>
+    </select>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

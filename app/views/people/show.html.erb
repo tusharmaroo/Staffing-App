@@ -1,0 +1,64 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @person.name %>
+</p>
+
+<p>
+  <strong>Skills:</strong>
+  <%= @person.skills %>
+</p>
+
+<p>
+  <strong>Totalexp:</strong>
+  <%= @person.totalExp %>
+</p>
+
+<p>
+  <strong>Tcsexp:</strong>
+  <%= @person.tcsExp %>
+</p>
+
+<p>
+  <strong>Releventexp:</strong>
+  <%= @person.relExp %>
+</p>
+
+<p>
+  <strong>Allocation:</strong>
+  <%= @person.allocation %>
+</p>
+
+<p>
+  <strong>Location:</strong>
+  <%= @person.location %>
+</p>
+<p>
+  <strong>Mobile Number :</strong>
+  <%= @person.mobilenumber %>
+</p>
+<p>
+  <strong>Email ID:</strong>
+  <%= @person.emailid %>
+</p>
+
+<p>
+  <strong>Interestareas:</strong>
+  <%= @person.interestAreas %>
+</p>
+
+<p>
+  <strong>Active:</strong>
+  <%= @person.active %>
+</p>
+
+<p>
+  <strong>Group:</strong>
+  <%= Group.find(@person.group_id).name %>
+</p>
+<hr>
+
+
+<%= link_to 'Edit', edit_person_path(@person) %> |
+<%= link_to 'Back', people_path %>

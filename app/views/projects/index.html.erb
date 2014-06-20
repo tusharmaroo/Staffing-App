@@ -1,0 +1,39 @@
+<h1>Listing projects</h1>
+
+<table class="data">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Startdate</th>
+      <th>Enddate</th>
+      <th>Group</th>
+      <th>Active</th>
+      <th>Show</th>
+      <th>Edit</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @projects.each do |project| %>
+      <tr>
+        <td><%= project.name %></td>
+        <td><%= project.startDate %></td>
+        <td><%= project.endDate %></td>
+        <td><%= Group.find(project.group_id).name %></td>
+        <td><%= project.active %></td>
+        <td><%= link_to 'Show', project %></td>
+        <td><%= link_to 'Edit', edit_project_path(project) %></td>
+        <td><%= link_to 'Destroy', project, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Project', new_project_path %>   |
+<script type="text/javascript">
+$('.data').dataTable();
+</script>
+

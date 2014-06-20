@@ -1,0 +1,58 @@
+<%= form_for(@person) do |f| %>
+
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :skills %><br>
+    <%= f.text_area :skills %>
+  </div>
+  <div class="field">
+    <%= f.label :location %><br> 
+    <select id="person_location" name="person[location]">
+      <option value="Mumbai">Mumbai</option>
+      <option value="Banglore">Banglore</option>
+      <option value="Gurgaon">Gurgaon</option>
+      <option value="Kolkata">Kolkata</option>
+      <option value="NYC">NYC</option>
+    </select>
+  </div>
+  <div class="field">
+    <%= f.label :totalExp %><br>
+    <%= f.text_field :totalExp %>
+  </div>
+  <div class="field">
+    <%= f.label :tcsExp %><br>
+    <%= f.text_field :tcsExp %>
+  </div>
+  <div class="field">
+    <%= f.label :relExp %><br>
+    <%= f.text_field :relExp %>
+  </div>
+  <div class="field">
+    <%= f.label :allocation %><br>
+    <%= f.number_field :allocation %>
+  </div>
+  <div class="field">
+    <%= f.label :mobilenumber %><br>
+    <%= f.number_field :mobilenumber %>
+  </div>
+  <div class="field">
+    <%= f.label :emailid %><br>
+    <%= f.text_field :emailid %>
+  </div>
+  <div class="field">
+    <%= f.label :interestAreas %><br>
+    <%= f.text_area :interestAreas %>
+  </div>
+  <div class="field">
+    <%= f.label :active %><br>
+    <%= f.check_box :active %>
+  </div>
+  <input type="hidden" name="person[group_id]" value="<%= @group.id %>">
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,10 @@
+<div class="col-sm-3 col-md-2 sidebar">
+	<ul class="nav nav-sidebar">
+	  <li class="<% "active" if current_page?("#") %>"><a href="#">Overview</a></li>
+	  <li><a href="#">Add New Project</a></li>
+	  <li><a href="#">Add New Person</a></li>
+	  <li><a href="#">View All Persons</a></li>
+	  <li><a href="#">View All Projects</a></li>
+	  <li class="<% "active" if current_page?edit_group_path(@group) %>"><a href="<%= edit_group_path(@group) %>">Settings</a></li>
+	</ul>
+</div>
