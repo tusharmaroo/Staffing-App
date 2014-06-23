@@ -11,7 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140620091601) do
+ActiveRecord::Schema.define(version: 20140623123339) do
+
+  create_table "assignments", force: true do |t|
+    t.boolean  "billable"
+    t.integer  "group_id"
+    t.integer  "project_id"
+    t.integer  "person_id"
+    t.integer  "allocation"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.datetime "startdate"
+    t.datetime "enddate"
+  end
+
+  add_index "assignments", ["group_id"], name: "index_assignments_on_group_id"
+  add_index "assignments", ["person_id"], name: "index_assignments_on_person_id"
+  add_index "assignments", ["project_id"], name: "index_assignments_on_project_id"
 
   create_table "groups", force: true do |t|
     t.string   "name"

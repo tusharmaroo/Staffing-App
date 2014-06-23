@@ -1,7 +1,12 @@
 class GroupsController < ApplicationController
+	before_action :authenticate_user!
 	before_action :set_group, only: [:show, :edit, :update, :destroy]
 	def index
 		@groups = Group.all 
+	end
+
+	def new_project
+
 	end
 
 	def create
@@ -19,6 +24,8 @@ class GroupsController < ApplicationController
 
 	def show
 		@people = Person.where(:group_id => @group.id)
+		@assignments = Assignment.all 
+
 	end
 
 	def edit
@@ -45,6 +52,9 @@ class GroupsController < ApplicationController
 	private
 		def set_group
       		@group = Group.find(params[:id])
+      		@person = Person.new
+      		@groups = Group.all
+      		@project = Project.new 
     	end
 
 		def group_params

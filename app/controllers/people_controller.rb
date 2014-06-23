@@ -1,4 +1,5 @@
 class PeopleController < ApplicationController
+	before_action :authenticate_user!
 	before_action :set_person, only: [:show, :edit, :update, :destroy]
 	def index
 		@people = Person.all
@@ -10,9 +11,11 @@ class PeopleController < ApplicationController
 	end
 
 	def create
+		@group = Group.find(params[:person][:group_id])
 		@person = Person.new(person_params)
 		if @person.save
-			redirect_to people_path
+			#redirect_to people_path
+			redirect_to group_path(@group)
 		else
 			redirect_to people_new_path
 		end
@@ -31,6 +34,9 @@ class PeopleController < ApplicationController
 	end
 
 	def show
+		@assignment = Assignment.new
+		@people = Person.all
+		@projects = Project.all 
 	end
 
 	def destroy

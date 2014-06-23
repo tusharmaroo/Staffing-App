@@ -48,7 +48,7 @@
         <% @people.each do |person| %>
           <% if person.active? %>
             <tr>
-              <td><%= person.name %></td>
+              <td><a href="<%= person_path(person) %>"><%= person.name %></a></td>
               <td><%= person.skills %></td>
               <td><%= person.totalExp %></td>
               <td><%= person.tcsExp %></td>

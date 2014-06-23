@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  billable: false
+  group_id: 
+  project_id: 
+  person_id: 
+  allocation: 1
+
+two:
+  billable: false
+  group_id: 
+  project_id: 
+  person_id: 
+  allocation: 1

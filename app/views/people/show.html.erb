@@ -59,6 +59,83 @@
 </p>
 <hr>
 
-
+<a href="#" class="btn btn-lg btn-success" data-toggle="modal" data-target="#newAssignmentModal">Add Assign a Project</a> | 
 <%= link_to 'Edit', edit_person_path(@person) %> |
 <%= link_to 'Back', people_path %>
+
+
+<div class="modal fade" id="newAssignmentModal" tabindex="-1" role="dialog" aria-labelledby="newAssignmentModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+            <h4 class="modal-title" id="myModalLabel">New Assignment</h4>
+            </div>
+            <div class="modal-body">
+              <%= form_for(@assignment) do |f| %>
+                <% if @assignment.errors.any? %>
+                  <div id="error_explanation">
+                    <h2><%= pluralize(@assignment.errors.count, "error") %> prohibited this assignment from being saved:</h2>
+
+                    <ul>
+                    <% @assignment.errors.full_messages.each do |message| %>
+                      <li><%= message %></li>
+                    <% end %>
+                    </ul>
+                  </div>
+                <% end %>
+
+                <div class="field">
+                  <%= f.label :person_id %><br>
+                  <%#= f.text_field :group_id %>
+                  <select id="assignment_person_id" name="assignment[person_id]">
+                    <% @people.each do |person| %>
+                      <option value="<%= person.id %>">
+                        <%= person.name %>
+                      </option>
+                    <% end %>
+                  </select>
+                </div>
+                <div class="field">
+                  <%= f.label :project_id %><br>
+                  <%#= f.text_field :group_id %>
+                  <select id="assignment_project_id" name="assignment[project_id]">
+                    <% @projects.each do |project| %>
+                      <option value="<%= project.id %>">
+                        <%= project.name %>
+                      </option>
+                    <% end %>
+                  </select>
+                </div>
+                <div class="field">
+                  <%= f.label :billable %><br>
+                  <%= f.check_box :billable %>
+                </div>
+                
+              <div class="field">
+                  <%= f.label :startdate %><br>
+                  <%= f.text_field :startdate, :class => 'datepicker' %>
+              </div>
+              <div class="field">
+                  <%= f.label :enddate %><br>
+                  <%= f.text_field :enddate, :class => 'datepicker' %>
+              </div>
+              <div class="field">
+                  <%= f.label :allocation %><br>
+                  <%= f.text_field :allocation %>
+              </div>
+              <div class="actions">
+                  <%= f.submit %>
+                </div>
+              <% end %>
+              </div>
+
+            <div class="modal-footer"></div>
+    </div>
+  </div>
+
+<script>
+  $(function() {
+    $( ".datepicker" ).datepicker();
+  });
+</script>
