@@ -9,6 +9,10 @@ class GroupsController < ApplicationController
 
 	end
 
+	def projects
+		
+	end
+
 	def create
 		@group = Group.new(group_params)
 		if @group.save

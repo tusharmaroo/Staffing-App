@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get 'welcome/index'
   resources :groups do
     get 'new_project'
+    get 'projects'
   end
   resources :projects
   resources :assignments

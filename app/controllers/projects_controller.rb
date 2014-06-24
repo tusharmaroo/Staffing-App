@@ -3,7 +3,7 @@ class ProjectsController < ApplicationController
 	before_action :set_project, only: [:show, :edit, :update, :destroy]
 
 	def index
-		@projects = Project.all 
+		@projects = Project.all		
 	end
 
 	def edit
@@ -12,6 +12,11 @@ class ProjectsController < ApplicationController
 
 	def show
 
+	end
+
+	def new
+		@project = Project.new
+		@groups = Group.all
 	end
 
 	def create
@@ -23,10 +28,7 @@ class ProjectsController < ApplicationController
 		end
 	end
 
-	def new
-		@project = Project.new
-		@groups = Group.all
-	end
+	
 
 	def update
 		if @project.update(project_params)

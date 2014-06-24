@@ -46,7 +46,7 @@ ActiveRecord::Schema.define(version: 20140623123339) do
     t.string   "emailid"
     t.integer  "allocation"
     t.text     "interestAreas"
-    t.boolean  "active"
+    t.boolean  "active", default: true
     t.integer  "group_id"
     t.datetime "created_at"
     t.datetime "updated_at"

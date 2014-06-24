@@ -31,10 +31,7 @@
     <%= f.label :relExp %><br>
     <%= f.text_field :relExp %>
   </div>
-  <div class="field">
-    <%= f.label :allocation %><br>
-    <%= f.number_field :allocation %>
-  </div>
+  <input type="hidden" name="person[allocation]" value="<%= 0 %>">
   <div class="field">
     <%= f.label :mobilenumber %><br>
     <%= f.number_field :mobilenumber %>

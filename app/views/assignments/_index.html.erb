@@ -1,27 +1,91 @@
 <div class="container mainContent">
-<table class="data">
-  <thead>
-      <th>ID</th>
-      <th>Name</th>
-      <th>Project</th>
-      <th>Billable</th>
-      <th>Allocation</th>
-  </thead>
- 
-  <% @assignments.each do |assignment| %>
-      <% if Person.find(assignment.person_id).group_id == @group.id %>
-      <tr>
-        <td><%= assignment.id %></td>
-        <td><a href="<%= people_path(Person.find(assignment.person_id)) %>"><%= Person.find(assignment.person_id).name %></a></td>
-        <td><a href="<%= projects_path(Project.find(assignment.project_id)) %>"><%= Project.find(assignment.project_id).name %></a></td>
-        <td><%= assignment.billable %></td>
-        <td><%= assignment.allocation %></td>
-      </tr>   
-      <% end %>
-    <% end %>
-  </table>
+<ul class="nav nav-tabs" id="peopleTab">
+  <li class="active"><a href="#unallocatedPersons">Unallocated Persons</a></li>
+  <li><a href="#allocatedPersons">Allocated Persons</a></li>
+</ul>
+
+<div id='content' class="tab-content">
+      <div class="tab-pane active" id="unallocatedPersons">
+        <table class="data table table-striped">
+          <thead>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Project</th>
+              <th>Billable</th>
+              <th>Allocation</th>
+          </thead>
+         
+          <% @people.each do |person| %>
+              <% if (person.group_id == @group.id) && (person.allocation != 100) %>
+                <% @assignments = Assignment.where(person_id: person.id) %>
+                <% @assignments.each do |assignment| %>
+                <tr>
+                  <td><%= assignment.id %></td>
+                  <td><a href="<%= person_path(person) %>"><%= person.name %></a></td>
+                  <td>
+                  <a href="<%= project_path(Project.find(assignment.project_id)) %>"><%= Project.find(assignment.project_id).name %></a>
+                  
+                  </td>
+                  <td><%= assignment.billable %></td>
+                  <td><%= assignment.allocation %></td>
+                </tr> 
+                <% end %>  
+              <% end %>
+            <% end %>
+            <% @people.each do |person| %>
+              <% if (person.group_id == @group.id) && (person.allocation == 0) %>
+                <tr>
+                  <td><%= "NA" %></td>
+                  <td><a href="<%= person_path(person) %>"><%= person.name %></a></td>
+                  <td>
+                  <%= "Not Assigned" %>                 
+                  </td>
+                  <td><%= "NA" %></td>
+                  <td><%= "NA" %></td>
+                </tr> 
+              <% end %>
+            <% end %>
+          </table>
+      </div>
+      <div class="tab-pane" id="allocatedPersons">
+        <table class="data table table-striped">
+          <thead>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Project</th>
+              <th>Billable</th>
+              <th>Allocation</th>
+          </thead>
+         
+          <% @people.each do |person| %>
+              <% if (person.group_id == @group.id) && (person.allocation == 100) %>
+                <% @assignments = Assignment.where(person_id: person.id) %>
+                <% @assignments.each do |assignment| %>
+                <tr>
+                  <td><%= assignment.id %></td>
+                  <td><a href="<%= person_path(person) %>"><%= person.name %></a></td>
+                  <td>
+                  <a href="<%= project_path(Project.find(assignment.project_id)) %>"><%= Project.find(assignment.project_id).name %></a>
+                  
+                  </td>
+                  <td><%= assignment.billable %></td>
+                  <td><%= assignment.allocation %></td>
+                </tr> 
+                <% end %>  
+              <% end %>
+            <% end %>
+          </table>
+        
+      </div>
 </div>
+
+
+
 
 <script type="text/javascript">
 $('.data').dataTable();
+$('#peopleTab a').click(function (e) {
+  e.preventDefault()
+  $(this).tab('show')
+})
 </script>

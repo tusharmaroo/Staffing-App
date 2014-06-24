@@ -1,5 +1,5 @@
 <p id="notice"><%= notice %></p>
-
+<%#= render 'groups/sidebar' %>
 <p>
   <strong>Name:</strong>
   <%= @person.name %>
@@ -59,7 +59,7 @@
 </p>
 <hr>
 
-<a href="#" class="btn btn-lg btn-success" data-toggle="modal" data-target="#newAssignmentModal">Add Assign a Project</a> | 
+<a href="#" class="btn btn-lg btn-success" data-toggle="modal" data-target="#newAssignmentModal">Assign a Project</a> | 
 <%= link_to 'Edit', edit_person_path(@person) %> |
 <%= link_to 'Back', people_path %>
 
@@ -89,11 +89,11 @@
                   <%= f.label :person_id %><br>
                   <%#= f.text_field :group_id %>
                   <select id="assignment_person_id" name="assignment[person_id]">
-                    <% @people.each do |person| %>
-                      <option value="<%= person.id %>">
-                        <%= person.name %>
+                    <%# @people.each do |person| %>
+                      <option value="<%= @person.id %>">
+                        <%= @person.name %>
                       </option>
-                    <% end %>
+                    <%# end %>
                   </select>
                 </div>
                 <div class="field">
@@ -101,9 +101,11 @@
                   <%#= f.text_field :group_id %>
                   <select id="assignment_project_id" name="assignment[project_id]">
                     <% @projects.each do |project| %>
+                    <% if project.group_id == @person.group_id %>
                       <option value="<%= project.id %>">
                         <%= project.name %>
                       </option>
+                      <% end %>
                     <% end %>
                   </select>
                 </div>

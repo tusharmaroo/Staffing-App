@@ -26,8 +26,9 @@ class PeopleController < ApplicationController
 	end
 
 	def update
+		@group = Group.find(params[:person][:group_id])
 		if @person.update(person_params)
-			redirect_to people_path(@person)
+			redirect_to group_path(@group)
 		else
 			redirect_to edit_people_path(@person)
 		end

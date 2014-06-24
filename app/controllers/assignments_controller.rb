@@ -6,6 +6,7 @@ class AssignmentsController < ApplicationController
   # GET /assignments.json
   def index
     @assignments = Assignment.all
+    @people = Person.all 
   end
 
   # GET /assignments/1
@@ -30,14 +31,13 @@ class AssignmentsController < ApplicationController
   # POST /assignments.json
   def create
     @assignment = Assignment.new(assignment_params)
-
-    respond_to do |format|
+    @person = Person.find(params[:assignment][:person_id])
+    @person.allocation = @person.allocation + @assignment.allocation
+    if @person.save
       if @assignment.save
-        format.html { redirect_to @assignment, notice: 'Assignment was successfully created.' }
-        format.json { render :show, status: :created, location: @assignment }
+        redirect_to groups_path
       else
-        format.html { render :new }
-        format.json { render json: @assignment.errors, status: :unprocessable_entity }
+        redirect_to groups_path
       end
     end
   end
@@ -47,11 +47,9 @@ class AssignmentsController < ApplicationController
   def update
     respond_to do |format|
       if @assignment.update(assignment_params)
-        format.html { redirect_to @assignment, notice: 'Assignment was successfully updated.' }
-        format.json { render :show, status: :ok, location: @assignment }
+        format.html { redirect_to group_path(@group), notice: 'Assignment was successfully updated.' }
       else
-        format.html { render :edit }
-        format.json { render json: @assignment.errors, status: :unprocessable_entity }
+        format.html { redirect_to group_path(@group), notice: 'Assignment updation was not successful.' }
       end
     end
   end
@@ -74,6 +72,6 @@ class AssignmentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def assignment_params
-      params.require(:assignment).permit(:person_id, :project_id, :billable, :group_id)
+      params.require(:assignment).permit(:person_id, :project_id, :billable, :group_id,:allocation)
     end
 end

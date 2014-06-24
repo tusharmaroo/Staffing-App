@@ -6,7 +6,6 @@
       <th>Name</th>
       <th>Startdate</th>
       <th>Enddate</th>
-      <th>Group</th>
       <th>Active</th>
       <th>Show</th>
       <th>Edit</th>
@@ -16,16 +15,17 @@
 
   <tbody>
     <% @projects.each do |project| %>
+    <% if @group.id == project.group_id %>
       <tr>
         <td><%= project.name %></td>
         <td><%= project.startDate %></td>
         <td><%= project.endDate %></td>
-        <td><%= Group.find(project.group_id).name %></td>
         <td><%= project.active %></td>
         <td><%= link_to 'Show', project %></td>
         <td><%= link_to 'Edit', edit_project_path(project) %></td>
         <td><%= link_to 'Destroy', project, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
+      <% end %>
     <% end %>
   </tbody>
 </table>

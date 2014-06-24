@@ -1,11 +1,11 @@
 <div class="col-sm-3 col-md-2 sidebar">
 	<ul class="nav nav-sidebar">
 	  <li class="<% "active" if current_page?("#") %>"><a href="#">Overview</a></li>
-	  <li><a href="#" class="btn btn-lg btn-success" data-toggle="modal" data-target="#newPersonModal">Add New Person</a></li>
-	  <li><a href="#" class="btn btn-lg btn-success" data-toggle="modal" data-target="#newProjectModal">Add New Project</a></li>
-	  <li><a href="<%= people_path %>">View All Persons</a></li>
-	  <li><a href="<%= projects_path %>">View All Projects</a></li>
-	  <li class="<% "active" if current_page?edit_group_path(@group) %>"><a href="<%= edit_group_path(@group) %>">Settings</a></li>
+	  <li><a href="#" class="btn" data-toggle="modal" data-target="#newPersonModal">Add New Person</a></li>
+	  <li><a href="#" class="btn" data-toggle="modal" data-target="#newProjectModal">Add New Project</a></li>
+	  <li><a href="<%#= people_path %>">View All Persons</a></li>
+	  <li><a href="<%#= group_projects_path(@group.id) %>">View All Projects</a></li>
+	  <li class="<%# "active" if current_page?edit_group_path(@group) %>"><a href="<%#= edit_group_path(@group) %>">Settings</a></li>
 	</ul>
 </div>
 
@@ -57,10 +57,7 @@
 				    <%= f.label :relExp %><br>
 				    <%= f.text_field :relExp %>
 				  </div>
-				  <div class="field">
-				    <%= f.label :allocation %><br>
-				    <%= f.number_field :allocation %>
-				  </div>
+				  <input type="hidden" name="person[allocation]" value="<%= 0 %>">
 				  <div class="field">
 				    <%= f.label :mobilenumber %><br>
 				    <%= f.number_field :mobilenumber %>
@@ -81,11 +78,11 @@
 				    <%= f.label :group_id %><br>
 				    <%#= f.text_field :group_id %>
 				    <select id="person_group_id" name="person[group_id]">
-				      <% @groups.each do |group| %>
-				        <option value="<%= group.id %>">
-				          <%= group.name %>
+				      <%# @groups.each do |group| %>
+				        <option value="<%= @group.id %>">
+				          <%= @group.name %>
 				        </option>
-				      <% end %>
+				      <%# end %>
 				    </select>
 				  </div>
 				  <div class="actions">
@@ -134,16 +131,21 @@
 				    <%= f.text_field :endDate ,:class => 'datepicker' %>
 				  </div>
 				  <div class="field">
+				    <%= f.label :allocation %><br>
+				    <%= f.text_field :allocation %>
+				  </div>
+				  <div class="field">
 				    <%= f.label :group_id %><br>
 				    <%#= f.text_field :group_id %>
 				    <select id="project_group_id" name="project[group_id]">
-				      <% @groups.each do |group| %>
-				        <option value="<%= group.id %>">
-				          <%= group.name %>
+				      <%# @groups.each do |group| %>
+				        <option value="<%= @group.id %>">
+				          <%= @group.name %>
 				        </option>
-				      <% end %>
+				      <%# end %>
 				    </select>
 				  </div>
+				  <input type="hidden" name="project[active]" value="true">
 				  <div class="actions">
 				    <%= f.submit %>
 				  </div>
