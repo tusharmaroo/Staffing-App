@@ -5,16 +5,12 @@
 	  <li><a href="#" class="btn" data-toggle="modal" data-target="#newProjectModal">Add New Project</a></li>
 	  <li><a href="<%#= people_path %>">View All Persons</a></li>
 	  <li><a href="<%#= group_projects_path(@group.id) %>">View All Projects</a></li>
-	  <li class="<%# "active" if current_page?edit_group_path(@group) %>"><a href="<%#= edit_group_path(@group) %>">Settings</a></li>
+	  <%# if current_page?group_path(@group) %>
+	  <li><a href="<%#= edit_group_path(@group) %>">Settings</a></li>
+	  <%# end %>
 	</ul>
 </div>
 
-
-<script>
-  $(function() {
-    $( ".datepicker" ).datepicker();
-  });
-</script>
 
 
 <div class="modal fade" id="newPersonModal" tabindex="-1" role="dialog" aria-labelledby="newPersonModal" aria-hidden="true">
@@ -70,20 +66,11 @@
 				    <%= f.label :interestAreas %><br>
 				    <%= f.text_area :interestAreas %>
 				  </div>
+				  <input type="hidden" name="person[active]" value="<%= "true" %>">
 				  <div class="field">
-				    <%= f.label :active %><br>
-				    <%= f.check_box :active %>
-				  </div>
-				  <div class="field">
-				    <%= f.label :group_id %><br>
-				    <%#= f.text_field :group_id %>
-				    <select id="person_group_id" name="person[group_id]">
-				      <%# @groups.each do |group| %>
-				        <option value="<%= @group.id %>">
-				          <%= @group.name %>
-				        </option>
-				      <%# end %>
-				    </select>
+				    <%= f.label :group_id %> : 
+				    <input type="hidden" name="person[group_id]" value="<%= @group.id %>">
+				    <%= f.label @group.name %><br>
 				  </div>
 				  <div class="actions">
 				    <%= f.submit %>
@@ -130,22 +117,12 @@
 				    <%= f.label :endDate %><br>
 				    <%= f.text_field :endDate ,:class => 'datepicker' %>
 				  </div>
-				  <div class="field">
-				    <%= f.label :allocation %><br>
-				    <%= f.text_field :allocation %>
-				  </div>
-				  <div class="field">
-				    <%= f.label :group_id %><br>
-				    <%#= f.text_field :group_id %>
-				    <select id="project_group_id" name="project[group_id]">
-				      <%# @groups.each do |group| %>
-				        <option value="<%= @group.id %>">
-				          <%= @group.name %>
-				        </option>
-				      <%# end %>
-				    </select>
-				  </div>
 				  <input type="hidden" name="project[active]" value="true">
+				  <div class="field">
+				    <%= f.label :group_id %> : 
+				    <input type="hidden" name="project[group_id]" value="<%= @group.id %>">
+				    <%= f.label @group.name %><br>
+				  </div>
 				  <div class="actions">
 				    <%= f.submit %>
 				  </div>
@@ -156,3 +133,9 @@
     </div>
   </div>
 </div>
+
+<script>
+  $(function() {
+    $( ".datepicker" ).datepicker();
+  });
+</script>

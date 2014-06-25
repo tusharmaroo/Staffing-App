@@ -20,11 +20,12 @@ class ProjectsController < ApplicationController
 	end
 
 	def create
+		@group = Group.find(params[:project][:group_id])
 		@project = Project.new(project_params)
 		if @project.save
-			redirect_to projects_path
+			redirect_to group_path(@group)
 		else
-			redirect_to new_project_path
+			redirect_to group_path(@group)
 		end
 	end
 

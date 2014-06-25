@@ -1,0 +1,59 @@
+<%= form_for(@assignment) do |f| %>
+  <% if @assignment.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@assignment.errors.count, "error") %> prohibited this assignment from being saved:</h2>
+
+      <ul>
+      <% @assignment.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <p>
+  <strong>ID:</strong>
+  <%= @assignment.id %>
+  </p>
+  <div class="field">
+    <%= f.label :billable %><br>
+    <%= f.check_box :billable %>
+  </div>
+  <p>
+  <strong>Group ID:</strong>
+  <%= @assignment.group_id %>
+</p>
+
+<p>
+  <strong>Project ID:</strong>
+  <%= @assignment.project_id %>
+</p>
+
+<p>
+  <strong>Person ID:</strong>
+  <%= @assignment.person_id %>
+</p>
+  <div class="field">
+    <%= f.label :allocation %><br>
+    <%= f.text_field :allocation %>
+  </div>
+  <div class="field">
+    <%= f.label :startdate %><br>
+    <%= f.text_field :startdate  , :class => 'datepicker' %>
+  </div>
+  <div class="field">
+    <%= f.label :enddate %><br>
+    <%= f.text_field :enddate  , :class => 'datepicker' %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+<script>
+  $(function() {
+    
+    $( ".datepicker" ).datepicker({ dateFormat: "yy-mm-dd" });
+    
+  });
+</script>

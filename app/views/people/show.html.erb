@@ -1,140 +1,171 @@
-<p id="notice"><%= notice %></p>
-<%#= render 'groups/sidebar' %>
-<p>
-  <strong>Name:</strong>
-  <%= @person.name %>
-</p>
+<div class="row">
+        <div class="col-md-6">
+          <p id="notice"><%= notice %></p>
+          <%#= render 'groups/sidebar' %>
+          <p>
+            <strong>Name:</strong>
+            <%= @person.name %>
+          </p>
 
-<p>
-  <strong>Skills:</strong>
-  <%= @person.skills %>
-</p>
+          <p>
+            <strong>Skills:</strong>
+            <%= @person.skills %>
+          </p>
 
-<p>
-  <strong>Totalexp:</strong>
-  <%= @person.totalExp %>
-</p>
+          <p>
+            <strong>Totalexp:</strong>
+            <%= @person.totalExp %>
+          </p>
 
-<p>
-  <strong>Tcsexp:</strong>
-  <%= @person.tcsExp %>
-</p>
+          <p>
+            <strong>Tcsexp:</strong>
+            <%= @person.tcsExp %>
+          </p>
 
-<p>
-  <strong>Releventexp:</strong>
-  <%= @person.relExp %>
-</p>
+          <p>
+            <strong>Releventexp:</strong>
+            <%= @person.relExp %>
+          </p>
 
-<p>
-  <strong>Allocation:</strong>
-  <%= @person.allocation %>
-</p>
+          <p>
+            <strong>Allocation:</strong>
+            <%= @person.allocation %>
+          </p>
 
-<p>
-  <strong>Location:</strong>
-  <%= @person.location %>
-</p>
-<p>
-  <strong>Mobile Number :</strong>
-  <%= @person.mobilenumber %>
-</p>
-<p>
-  <strong>Email ID:</strong>
-  <%= @person.emailid %>
-</p>
+          <p>
+            <strong>Location:</strong>
+            <%= @person.location %>
+          </p>
+          <p>
+            <strong>Mobile Number :</strong>
+            <%= @person.mobilenumber %>
+          </p>
+          <p>
+            <strong>Email ID:</strong>
+            <%= @person.emailid %>
+          </p>
 
-<p>
-  <strong>Interestareas:</strong>
-  <%= @person.interestAreas %>
-</p>
+          <p>
+            <strong>Interestareas:</strong>
+            <%= @person.interestAreas %>
+          </p>
 
-<p>
-  <strong>Active:</strong>
-  <%= @person.active %>
-</p>
+          <p>
+            <strong>Active:</strong>
+            <%= @person.active %>
+          </p>
 
-<p>
-  <strong>Group:</strong>
-  <%= Group.find(@person.group_id).name %>
-</p>
-<hr>
+          <p>
+            <strong>Group:</strong>
+            <%= Group.find(@person.group_id).name %>
+          </p>
+          <hr>
+          
+          <% if current_user.Admin && @person.allocation < 100 %> 
+          <a href="#" class="btn btn-lg btn-success" data-toggle="modal" data-target="#newAssignmentModal">Assign a Project</a> | <% end %>
 
-<a href="#" class="btn btn-lg btn-success" data-toggle="modal" data-target="#newAssignmentModal">Assign a Project</a> | 
-<%= link_to 'Edit', edit_person_path(@person) %> |
-<%= link_to 'Back', people_path %>
+          <%= link_to 'Edit', edit_person_path(@person) %> |
+          <%= link_to 'Back', people_path %>
 
 
-<div class="modal fade" id="newAssignmentModal" tabindex="-1" role="dialog" aria-labelledby="newAssignmentModal" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-            <h4 class="modal-title" id="myModalLabel">New Assignment</h4>
-            </div>
-            <div class="modal-body">
-              <%= form_for(@assignment) do |f| %>
-                <% if @assignment.errors.any? %>
-                  <div id="error_explanation">
-                    <h2><%= pluralize(@assignment.errors.count, "error") %> prohibited this assignment from being saved:</h2>
+          <div class="modal fade" id="newAssignmentModal" tabindex="-1" role="dialog" aria-labelledby="newAssignmentModal" aria-hidden="true">
+              <div class="modal-dialog">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                      <h4 class="modal-title" id="myModalLabel">New Assignment</h4>
+                      </div>
+                      <div class="modal-body">
+                        <%= form_for(@assignment) do |f| %>
+                          <% if @assignment.errors.any? %>
+                            <div id="error_explanation">
+                              <h2><%= pluralize(@assignment.errors.count, "error") %> prohibited this assignment from being saved:</h2>
 
-                    <ul>
-                    <% @assignment.errors.full_messages.each do |message| %>
-                      <li><%= message %></li>
-                    <% end %>
-                    </ul>
-                  </div>
-                <% end %>
+                              <ul>
+                              <% @assignment.errors.full_messages.each do |message| %>
+                                <li><%= message %></li>
+                              <% end %>
+                              </ul>
+                            </div>
+                          <% end %>
 
-                <div class="field">
-                  <%= f.label :person_id %><br>
-                  <%#= f.text_field :group_id %>
-                  <select id="assignment_person_id" name="assignment[person_id]">
-                    <%# @people.each do |person| %>
-                      <option value="<%= @person.id %>">
-                        <%= @person.name %>
-                      </option>
-                    <%# end %>
-                  </select>
+                          <div class="field">
+                            <%= f.label :person_id %><br>
+                            <%#= f.text_field :group_id %>
+                            <select id="assignment_person_id" name="assignment[person_id]">
+                              <%# @people.each do |person| %>
+                                <option value="<%= @person.id %>">
+                                  <%= @person.name %>
+                                </option>
+                              <%# end %>
+                            </select>
+                          </div>
+                          <div class="field">
+                            <%= f.label :project_id %><br>
+                            <%#= f.text_field :group_id %>
+                            <select id="assignment_project_id" name="assignment[project_id]">
+                              <% @projects.each do |project| %>
+                              <% if project.group_id == @person.group_id %>
+                                <option value="<%= project.id %>">
+                                  <%= project.name %>
+                                </option>
+                                <% end %>
+                              <% end %>
+                            </select>
+                          </div>
+                          <div class="field">
+                            <%= f.label :billable %><br>
+                            <%= f.check_box :billable %>
+                          </div>
+                          
+                        <div class="field">
+                            <%= f.label :startdate %><br>
+                            <%= f.text_field :startdate, :class => 'datepicker' %>
+                        </div>
+                        <div class="field">
+                            <%= f.label :enddate %><br>
+                            <%= f.text_field :enddate, :class => 'datepicker' %>
+                        </div>
+                        <div class="field">
+                            <%= f.label :allocation %><br>
+                            <%= f.text_field :allocation %>
+                        </div>
+                        <div class="actions">
+                            <%= f.submit %>
+                        </div>
+                        <% end %>
+                        </div>
+
+                      <div class="modal-footer"></div>
+                    </div>
+                  </div>          
                 </div>
-                <div class="field">
-                  <%= f.label :project_id %><br>
-                  <%#= f.text_field :group_id %>
-                  <select id="assignment_project_id" name="assignment[project_id]">
-                    <% @projects.each do |project| %>
-                    <% if project.group_id == @person.group_id %>
-                      <option value="<%= project.id %>">
-                        <%= project.name %>
-                      </option>
-                      <% end %>
-                    <% end %>
-                  </select>
-                </div>
-                <div class="field">
-                  <%= f.label :billable %><br>
-                  <%= f.check_box :billable %>
-                </div>
-                
-              <div class="field">
-                  <%= f.label :startdate %><br>
-                  <%= f.text_field :startdate, :class => 'datepicker' %>
               </div>
-              <div class="field">
-                  <%= f.label :enddate %><br>
-                  <%= f.text_field :enddate, :class => 'datepicker' %>
-              </div>
-              <div class="field">
-                  <%= f.label :allocation %><br>
-                  <%= f.text_field :allocation %>
-              </div>
-              <div class="actions">
-                  <%= f.submit %>
-                </div>
-              <% end %>
-              </div>
+        <div class="col-md-6">
+          <h4>Active Tasks:</h4>
+          <% @assignments.each do |temp| %>
+          <% if (temp.enddate - Time.now) > 0 %>
+          ID : <%= temp.id %><br>
+          Billable: <%= temp.billable %><br>
+          Allcoation: <%= temp.allocation %>%<br>
+          Brief of Work: Lorem Ipsum Lorem Ipsum Lorem Ipsum <br>
+          Assignment Duration: <%= distance_of_time_in_words(temp.enddate,temp.startdate).capitalize %><br><hr>
+          <% end %>
+          <% end %>
 
-            <div class="modal-footer"></div>
-    </div>
-  </div>
+          <h4>History:</h4>
+          <% @assignments.each do |temp| %>
+          <% if (temp.enddate - Time.now) < 0 %>
+          ID : <%= temp.id %><br>
+          Billable: <%= temp.billable %><br>
+          Allcoation: <%= temp.allocation %>%<br>
+          Brief of Work: Lorem Ipsum Lorem Ipsum Lorem Ipsum <br>
+          Assignment Duration: <%= distance_of_time_in_words(temp.enddate,temp.startdate).capitalize %><br><hr>
+          <% end %>
+          <% end %>
+        </div>
+</div>
+
 
 <script>
   $(function() {

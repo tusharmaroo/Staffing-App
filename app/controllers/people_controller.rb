@@ -17,7 +17,7 @@ class PeopleController < ApplicationController
 			#redirect_to people_path
 			redirect_to group_path(@group)
 		else
-			redirect_to people_new_path
+			redirect_to group_path(@group)
 		end
 	end
 
@@ -38,6 +38,7 @@ class PeopleController < ApplicationController
 		@assignment = Assignment.new
 		@people = Person.all
 		@projects = Project.all 
+		@assignments = Assignment.where(:person_id => @person.id)
 	end
 
 	def destroy

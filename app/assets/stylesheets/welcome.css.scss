@@ -5,27 +5,7 @@
  * Globals
  */
 
-.mainContent {
-  margin-left: 150px;
-}
 
-
-/* Links */
-a,
-a:focus,
-a:hover {
-  color: #333;
-}
-
-/* Custom default button */
-.btn-default,
-.btn-default:hover,
-.btn-default:focus {
-  color: #333;
-  text-shadow: none; /* Prevent inheritence from `body` */
-  background-color: #fff;
-  border: 1px solid #fff;
-}
 
 
 /*
@@ -65,7 +45,27 @@ body {
   padding: 30px;
 }
 
+.mainContent {
+  margin-left: 150px;
+}
 
+
+/* Links */
+a,
+a:focus,
+a:hover {
+  color: #333;
+}
+
+/* Custom default button */
+.btn-default,
+.btn-default:hover,
+.btn-default:focus {
+  color: #333;
+  text-shadow: none; /* Prevent inheritence from `body` */
+  background-color: #fff;
+  border: 1px solid #fff;
+}
 /*
  * Header
  */
@@ -170,7 +170,9 @@ body {
 
 
 td, th {
-padding: 0;
-width: 150px;
 text-align: left;
+}
+
+.table {
+width: 90%;
 }

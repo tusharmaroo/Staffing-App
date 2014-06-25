@@ -8,7 +8,7 @@
       <div class="tab-pane active" id="unallocatedPersons">
         <table class="data table table-striped">
           <thead>
-              <th>ID</th>
+              <th>Assignment ID/s</th>
               <th>Name</th>
               <th>Project</th>
               <th>Billable</th>
@@ -16,20 +16,31 @@
           </thead>
          
           <% @people.each do |person| %>
-              <% if (person.group_id == @group.id) && (person.allocation != 100) %>
+              <% if (person.group_id == @group.id) && (person.allocation != 100) && (person.allocation != 0) %>
                 <% @assignments = Assignment.where(person_id: person.id) %>
-                <% @assignments.each do |assignment| %>
-                <tr>
-                  <td><%= assignment.id %></td>
-                  <td><a href="<%= person_path(person) %>"><%= person.name %></a></td>
-                  <td>
-                  <a href="<%= project_path(Project.find(assignment.project_id)) %>"><%= Project.find(assignment.project_id).name %></a>
-                  
-                  </td>
-                  <td><%= assignment.billable %></td>
-                  <td><%= assignment.allocation %></td>
-                </tr> 
-                <% end %>  
+
+                
+                  <tr><td>
+                  <% @assignments.each do |assignment| %>
+                    <%= assignment.id %><br>
+                  <% end %></td>
+                    <td><a href="<%= person_path(person) %>"><%= person.name %></a></td>
+                  <td><% @assignments.each do |assignment| %>  
+                    
+                    <a href="<%= project_path(Project.find(assignment.project_id)) %>"><%= Project.find(assignment.project_id).name %></a><br>
+                    
+                    
+                  <% end %></td><td>
+                  <% @assignments.each do |assignment| %>
+                    <%= assignment.billable %><br>
+                  <% end %></td>
+                  <td><% @assignments.each do |assignment| %>
+                    <%= assignment.allocation %><br>
+                  <% end %></td>
+                  </tr> 
+                 
+
+
               <% end %>
             <% end %>
             <% @people.each do |person| %>
@@ -41,7 +52,7 @@
                   <%= "Not Assigned" %>                 
                   </td>
                   <td><%= "NA" %></td>
-                  <td><%= "NA" %></td>
+                  <td><%= 0 %></td>
                 </tr> 
               <% end %>
             <% end %>
@@ -50,7 +61,7 @@
       <div class="tab-pane" id="allocatedPersons">
         <table class="data table table-striped">
           <thead>
-              <th>ID</th>
+              <th>Assignment ID/s</th>
               <th>Name</th>
               <th>Project</th>
               <th>Billable</th>
@@ -60,18 +71,29 @@
           <% @people.each do |person| %>
               <% if (person.group_id == @group.id) && (person.allocation == 100) %>
                 <% @assignments = Assignment.where(person_id: person.id) %>
-                <% @assignments.each do |assignment| %>
-                <tr>
-                  <td><%= assignment.id %></td>
-                  <td><a href="<%= person_path(person) %>"><%= person.name %></a></td>
-                  <td>
-                  <a href="<%= project_path(Project.find(assignment.project_id)) %>"><%= Project.find(assignment.project_id).name %></a>
-                  
-                  </td>
-                  <td><%= assignment.billable %></td>
-                  <td><%= assignment.allocation %></td>
-                </tr> 
-                <% end %>  
+
+                
+                  <tr><td>
+                  <% @assignments.each do |assignment| %>
+                    <%= assignment.id %><br>
+                  <% end %></td>
+                    <td><a href="<%= person_path(person) %>"><%= person.name %></a></td>
+                  <td><% @assignments.each do |assignment| %>  
+                    
+                    <a href="<%= project_path(Project.find(assignment.project_id)) %>"><%= Project.find(assignment.project_id).name %></a><br>
+                    
+                    
+                  <% end %></td><td>
+                  <% @assignments.each do |assignment| %>
+                    <%= assignment.billable %><br>
+                  <% end %></td>
+                  <td><% @assignments.each do |assignment| %>
+                    <%= assignment.allocation %><br>
+                  <% end %></td>
+                  </tr> 
+                 
+
+
               <% end %>
             <% end %>
           </table>

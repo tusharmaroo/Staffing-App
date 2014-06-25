@@ -45,22 +45,23 @@ class AssignmentsController < ApplicationController
   # PATCH/PUT /assignments/1
   # PATCH/PUT /assignments/1.json
   def update
-    respond_to do |format|
+    
       if @assignment.update(assignment_params)
-        format.html { redirect_to group_path(@group), notice: 'Assignment was successfully updated.' }
+        redirect_to groups_path
       else
-        format.html { redirect_to group_path(@group), notice: 'Assignment updation was not successful.' }
+        redirect_to groups_path
       end
-    end
+   
   end
 
   # DELETE /assignments/1
   # DELETE /assignments/1.json
   def destroy
-    @assignment.destroy
-    respond_to do |format|
-      format.html { redirect_to assignments_url, notice: 'Assignment was successfully destroyed.' }
-      format.json { head :no_content }
+    @assignment.active = false
+    if @assignment.save 
+      redirect_to assignments_path
+    else
+      redirect_to edit_assignments_path
     end
   end
 
@@ -72,6 +73,6 @@ class AssignmentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def assignment_params
-      params.require(:assignment).permit(:person_id, :project_id, :billable, :group_id,:allocation)
+      params.require(:assignment).permit(:person_id, :project_id, :billable, :group_id,:allocation,:startdate, :enddate)
     end
 end
