@@ -43,6 +43,25 @@ class PeopleController < ApplicationController
 
 	def destroy
 		@person.active = false
+		@person.allocation = 0
+		@openAssignments = Assignment.where(:person_id => @person.id)
+   		if (!@openAssignments.empty?)
+   			@openAssignments.each do |openAssignment|
+   				openAssignment.active = false
+   				openAssignment.save
+   			end
+   		end
+
+		if @person.save 
+			redirect_to people_path
+		else
+			redirect_to edit_people_path
+		end
+	end
+
+	def enable
+		@person = Person.find(params[:person_id])
+		@person.active = true
 		if @person.save 
 			redirect_to people_path
 		else

@@ -5,8 +5,18 @@
  * Globals
  */
 
+.dataTables_filter{
+  float: right;
+  margin-right: 100px;
+}
 
+.dataTables_length{
+  float: left;
+}
 
+.dataTables_wrapper{
+  padding: 15px;
+}
 
 /*
  * Base structure

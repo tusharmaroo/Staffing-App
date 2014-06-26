@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140623123339) do
+ActiveRecord::Schema.define(version: 20140626105435) do
 
   create_table "assignments", force: true do |t|
     t.boolean  "billable"
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20140623123339) do
     t.datetime "updated_at"
     t.datetime "startdate"
     t.datetime "enddate"
+    t.boolean  "active",     default: true
   end
 
   add_index "assignments", ["group_id"], name: "index_assignments_on_group_id"
@@ -46,7 +47,7 @@ ActiveRecord::Schema.define(version: 20140623123339) do
     t.string   "emailid"
     t.integer  "allocation"
     t.text     "interestAreas"
-    t.boolean  "active", default: true
+    t.boolean  "active"
     t.integer  "group_id"
     t.datetime "created_at"
     t.datetime "updated_at"

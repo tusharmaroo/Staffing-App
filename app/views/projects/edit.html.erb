@@ -17,22 +17,17 @@
   </div>
   <div class="field">
     <%= f.label :startDate %><br>
-    <%= f.text_field :startDate ,:class => 'datepicker' %>
+    <%= f.text_field :startDate ,:class => 'datepicker', :value => nice_date_form(@project.startDate) %>
   </div>
   <div class="field">
     <%= f.label :endDate %><br>
-    <%= f.text_field :endDate ,:class => 'datepicker' %>
+    <%= f.text_field :endDate ,:class => 'datepicker', :value => nice_date_form(@project.endDate) %>
   </div>
+  <input type="hidden" name="project[group_id]" value="<%= @project.group_id %>">
   <div class="field">
     <%= f.label :group_id %><br>
     <%#= f.text_field :group_id %>
-    <select id="project_group_id" name="project[group_id]">
-      <% @groups.each do |group| %>
-        <option value="<%= group.id %>" <%= "selected" if @project.group_id == group.id %> >
-          <%= group.name %>
-        </option>
-      <% end %>
-    </select>
+    <%= f.label Group.find(@project.group_id).name %>
   </div>
   <div class="actions">
     <%= f.submit %>
@@ -40,6 +35,6 @@
 <% end %>
 <script>
   $(function() {
-    $( ".datepicker" ).datepicker();
+    $( ".datepicker" ).datepicker({ dateFormat: "yy-mm-dd" });
   });
 </script>

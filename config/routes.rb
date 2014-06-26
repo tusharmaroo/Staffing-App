@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 
-  resources :people 
+  resources :people do
+    get 'enable'
+  end
 
   devise_for :users
   get 'welcome/index'
@@ -8,7 +10,9 @@ Rails.application.routes.draw do
     get 'new_project'
     get 'projects'
   end
-  resources :projects
+  resources :projects do
+    get 'enable'
+  end
   resources :assignments
 
   # The priority is based upon order of creation: first created -> highest priority.

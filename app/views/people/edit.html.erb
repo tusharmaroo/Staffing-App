@@ -58,19 +58,9 @@
     <%= f.text_area :interestAreas %>
   </div>
   <div class="field">
-    <%= f.label :active %><br>
-    <%= f.check_box :active %>
-  </div>
-  <div class="field">
     <%= f.label :group_id %><br>
-    <%#= f.text_field :group_id %>
-    <select id="person_group_id" name="person[group_id]">
-      <% @groups.each do |group| %>
-        <option value="<%= group.id %>" <%= "selected" if @person.group_id == group.id %>>
-          <%= group.name %>
-        </option>
-      <% end %>
-    </select>
+    <%= f.label Group.find(@person.group_id).name %>
+    <input type="hidden" name="person[group_id]" value="<%= @person.group_id %>">
   </div>
   <div class="actions">
     <%= f.submit %>

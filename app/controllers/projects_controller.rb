@@ -41,10 +41,34 @@ class ProjectsController < ApplicationController
 
 	def destroy
 		@project.active = false
+		@project.endDate = Time.now
+		@openAssignments = Assignment.where(:project_id => @project.id)
+   		if (!@openAssignments.empty?)
+   			@openAssignments.each do |openAssignment|
+   				openAssignment.active = false
+   				openAssignment.enddate = Time.now
+   				@assignedPersons = Person.where(:id => openAssignment.person_id)
+   				@assignedPersons.each do |assignedPerson|
+   					assignedPerson.allocation = assignedPerson.allocation - openAssignment.allocation
+   					assignedPerson.save
+   				end
+   				openAssignment.save
+   			end
+   		end
 		if @project.save 
 			redirect_to projects_path
 		else
 			redirect_to edit_project_path
+		end
+	end
+
+	def enable
+		@project = Project.find(params[:project_id])
+		@project.active = true
+		if @project.save 
+			redirect_to projects_path
+		else
+			redirect_to edit_projects_path
 		end
 	end
 

@@ -1,33 +1,5 @@
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-  <h1 class="page-header"><%= @group.name %></h1>
   <div class="table-responsive">
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>####</th>
-          <th>Name</th>
-          <th>Project</th>
-          <th>Billable</th>
-          <th>Allocation</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>1001</td>
-          <td><a href="#">Tushar Maroo</a></td>
-          <td><a href="#">Firm DIY Survey</a></td>
-          <td>YES</td>
-          <td>50%</td>
-        </tr>
-        <tr>
-          <td>1,002</td>
-          <td><a href="#">Ekta Verma</a></td>
-          <td><a href="#">Firm DIY Survey</a></td>
-          <td>YES</td>
-          <td>80%</td>
-        </tr>
-      </tbody>
-    </table>
     <table class="data table table-striped">
         <thead>
             <th>Name</th>
@@ -46,7 +18,7 @@
         </thead>
        
         <% @people.each do |person| %>
-          <% if person.active? %>
+          <%# if person.active? %>
             <tr>
               <td><a href="<%= person_path(person) %>"><%= person.name %></a></td>
               <td><%= person.skills %></td>
@@ -60,9 +32,13 @@
               <td><%= Group.find(person.group_id).name %></td>
               <td><%= link_to 'Show', person %></td>
               <td><%= link_to 'Edit', edit_person_path(person) %></td>
-              <td><%= link_to 'Destroy', person, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+              <% if person.active? %>
+              <td><%= link_to 'Disable', person, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+              <% else %>
+              <td><%= link_to 'Enable', person_enable_path(person), data: { confirm: 'Are you sure?' } %></td>
+              <% end %>
             </tr>
-          <% end %>    
+          <%# end %>    
           <% end %> 
         </table>
         </div>

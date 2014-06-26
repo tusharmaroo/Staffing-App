@@ -31,9 +31,12 @@
                     
                     
                   <% end %></td><td>
+                  <% @finalBillable = false %>
                   <% @assignments.each do |assignment| %>
-                    <%= assignment.billable %><br>
-                  <% end %></td>
+                    <% @finalBillable = @finalBillable || assignment.billable %>
+                  <% end %>
+                  <%= @finalBillable %><br>
+                  </td>
                   <td><% @assignments.each do |assignment| %>
                     <%= assignment.allocation %><br>
                   <% end %></td>
@@ -84,9 +87,12 @@
                     
                     
                   <% end %></td><td>
-                  <% @assignments.each do |assignment| %>
-                    <%= assignment.billable %><br>
-                  <% end %></td>
+                    <% @finalBillable = false %>
+                    <% @assignments.each do |assignment| %>
+                      <% @finalBillable = @finalBillable || assignment.billable %>
+                    <% end %>
+                    <%= @finalBillable %><br>
+                  </td>
                   <td><% @assignments.each do |assignment| %>
                     <%= assignment.allocation %><br>
                   <% end %></td>

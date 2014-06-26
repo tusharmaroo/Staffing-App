@@ -18,12 +18,16 @@
     <% if @group.id == project.group_id %>
       <tr>
         <td><%= project.name %></td>
-        <td><%= project.startDate %></td>
-        <td><%= project.endDate %></td>
+        <td><%= nice_date_form(project.startDate) %></td>
+        <td><%= nice_date_form(project.endDate) %></td>
         <td><%= project.active %></td>
         <td><%= link_to 'Show', project %></td>
         <td><%= link_to 'Edit', edit_project_path(project) %></td>
-        <td><%= link_to 'Destroy', project, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% if project.active? %>
+        <td><%= link_to 'Disable', project, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% else %>
+        <td><%= link_to 'Enable', project_enable_path(project), data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
       </tr>
       <% end %>
     <% end %>
