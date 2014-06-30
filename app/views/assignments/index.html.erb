@@ -1,0 +1,19 @@
+<table class="data table table-striped">
+          <thead>
+              <th>Assignment ID/s</th>
+              <th>Show</th>
+              <th>Edit</th>
+              <th>Delete</th>
+          </thead>
+<% @assignments.each do |assignment| %>
+<tr>
+<td><%= assignment.id %></td>
+<td><%= link_to 'show',assignment_path(assignment) %></td>>
+<td><%= link_to 'edit',edit_assignment_path(assignment) %></td>
+<td><%= link_to 'delete',assignment_path(assignment),method: :delete ,data: { confirm: 'Are you sure?' } %></td>
+</tr>
+<% end %>
+
+<script type="text/javascript">
+$('.data').dataTable();
+</script>

@@ -10,15 +10,27 @@ class GroupsController < ApplicationController
 	end
 
 	def projects
-		
+		@people = Person.all
+		@group = Group.find(params[:group_id])
+		@person = Person.new
+		@project = Project.new
+		@projects = Project.all
+	end
+
+	def people
+		@people = Person.all
+		@group = Group.find(params[:group_id])
+		@person = Person.new
+		@project = Project.new
+		@projects = Project.all
 	end
 
 	def create
 		@group = Group.new(group_params)
 		if @group.save
-			redirect_to groups_path
+			render groups_path
 		else
-			redirect_to groups_new_path
+			render new_group_path
 		end
 	end
 

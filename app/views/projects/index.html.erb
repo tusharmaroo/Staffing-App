@@ -8,23 +8,19 @@
       <th>Startdate</th>
       <th>Enddate</th>
       <th>Active</th>
-      <% if current_user.Admin %>
       <th>Show</th>
       <th>Edit</th>
       <th>Delete</th>
-      <% end %>
     </tr>
   </thead>
 
   <tbody>
     <% @projects.each do |project| %>
-    <% if @group.id == project.group_id %>
       <tr>
-        <td><%= link_to project.name, project %></td>
+        <td><a href="<%= project_path(project) %>"><%= project.name %></a></td>
         <td><%= nice_date_form(project.startDate) %></td>
         <td><%= nice_date_form(project.endDate) %></td>
         <td><%= project.active %></td>
-        <% if current_user.Admin %>
         <td><%= link_to 'Show', project %></td>
         <td><%= link_to 'Edit', edit_project_path(project) %></td>
         <% if project.active? %>
@@ -32,16 +28,13 @@
         <% else %>
         <td><%= link_to 'Enable', project_enable_path(project), data: { confirm: 'Are you sure?' } %></td>
         <% end %>
-        <% end %>
       </tr>
-      <% end %>
     <% end %>
   </tbody>
 </table>
 </div>
 </div>
 
-<br>
 
 <script type="text/javascript">
 $('.data').dataTable();

@@ -17,3 +17,4 @@
 //= require datatable
 //= require turbolinks
 //= require_tree .
+

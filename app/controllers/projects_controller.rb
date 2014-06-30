@@ -11,6 +11,10 @@ class ProjectsController < ApplicationController
 	end
 
 	def show
+		@project1 = Project.find(params[:id])
+		@group = Group.find(@project1.group_id)
+		@person = Person.new
+		@project = Project.new
 
 	end
 

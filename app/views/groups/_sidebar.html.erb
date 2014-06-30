@@ -1,13 +1,11 @@
 <div class="col-sm-3 col-md-2 sidebar">
+	<h3>Dashboard</h3>
+	<hr>
 	<ul class="nav nav-sidebar">
-	  <li class="<% "active" if current_page?("#") %>"><a href="#">Overview</a></li>
-	  <li><a href="#" class="btn" data-toggle="modal" data-target="#newPersonModal">Add New Person</a></li>
-	  <li><a href="#" class="btn" data-toggle="modal" data-target="#newProjectModal">Add New Project</a></li>
-	  <li><a href="<%#= people_path %>">View All Persons</a></li>
-	  <li><a href="<%#= group_projects_path(@group.id) %>">View All Projects</a></li>
-	  <%# if current_page?group_path(@group) %>
-	  <li><a href="<%#= edit_group_path(@group) %>">Settings</a></li>
-	  <%# end %>
+	  <li><a href="#" class="btn <%= "disabled" if !current_user.Admin %>" data-toggle="modal" data-target="#newPersonModal">Add New Person</a></li>
+	  <li><a href="#" class="btn <%= "disabled" if !current_user.Admin %>" data-toggle="modal" data-target="#newProjectModal">Add New Project</a></li>
+	  <li><a href="<%= group_people_path(@group.id) %>">View All Persons</a></li>
+	  <li><a href="<%= group_projects_path(@group.id) %>">View All Projects</a></li>
 	</ul>
 </div>
 
@@ -23,17 +21,17 @@
             <div class="modal-body">
                 <%= form_for(@person) do |f| %>
 				  <div class="field">
-				    <%= f.label :name %><br>
-				    <%= f.text_field :name %>
+				    <%= f.label :name ,"Name :" %><br>
+				    <%= f.text_field :name,:class => 'input-xlarge',:placeholder => "Person Name: eg. Andrew" %>
 				  </div>
 				  <div class="field">
-				    <%= f.label :skills %><br>
-				    <%= f.text_area :skills %>
+				    <%= f.label :skills ,"Skills :" %><br>
+				    <%= f.text_area :skills,:class => 'input-xlarge',:placeholder => "Enter the skills: eg. Angular.js, Rails etc" %>
 				  </div>
 				  <div class="field">
-				    <%= f.label :location %><br>
+				    <%= f.label :location, "Location" %><br>
 
-				    <select id="person_location" name="person[location]">
+				    <select id="person_location" name="person[location]" class='input-xlarge'>
 				      <option value="Mumbai">Mumbai</option>
 				      <option value="Banglore">Banglore</option>
 				      <option value="Gurgaon">Gurgaon</option>
@@ -42,29 +40,29 @@
 				    </select>
 				  </div>
 				  <div class="field">
-				    <%= f.label :totalExp %><br>
-				    <%= f.text_field :totalExp %>
+				    <%= f.label :totalExp, "Total Experience :" %><br>
+				    <%= f.number_field :totalExp, :class => 'input-xlarge numeric',:placeholder => "Total Experience in years: eg. 2.5",:step => "0.5",:min => "0" %>
 				  </div>
 				  <div class="field">
-				    <%= f.label :tcsExp %><br>
-				    <%= f.text_field :tcsExp %>
+				    <%= f.label :tcsExp, "TCS Experience :" %><br>
+				    <%= f.number_field :tcsExp, :class => 'input-xlarge numeric',:placeholder => "TCS Experience in years",:step => "0.5",:min => "0" %>
 				  </div>
 				  <div class="field">
-				    <%= f.label :relExp %><br>
-				    <%= f.text_field :relExp %>
+				    <%= f.label :relExp, "Relevent Experience :" %><br>
+				    <%= f.number_field :relExp, :class => 'input-xlarge numeric',:placeholder => "Relevent Technology Experience in years",:step => "0.5",:min => "0" %>
 				  </div>
 				  <input type="hidden" name="person[allocation]" value="<%= 0 %>">
 				  <div class="field">
-				    <%= f.label :mobilenumber %><br>
-				    <%= f.number_field :mobilenumber %>
+				    <%= f.label :mobilenumber, "Mobile Number :" %><br>
+				    <%= f.number_field :mobilenumber, :class => 'input-xlarge phonenumber',:placeholder => "Enter Mobile Number: eg. 9571640968" %>
 				  </div>
 				  <div class="field">
-				    <%= f.label :emailid %><br>
-				    <%= f.text_field :emailid %>
+				    <%= f.label :emailid, "Email Address :" %><br>
+				    <%= f.text_field :emailid,:class => 'input-xlarge',:placeholder => "Email Address: eg. abc@xyz.com" %>
 				  </div>
 				  <div class="field">
-				    <%= f.label :interestAreas %><br>
-				    <%= f.text_area :interestAreas %>
+				    <%= f.label :interestAreas, "Interest Areas :" %><br>
+				    <%= f.text_area :interestAreas,:class => 'input-xlarge',:placeholder => "Interested Areas: eg. Node.js" %>
 				  </div>
 				  <input type="hidden" name="person[active]" value="<%= "true" %>">
 				  <div class="field">
@@ -138,4 +136,45 @@
   $(function() {
     $( ".datepicker" ).datepicker({ dateFormat: "yy-mm-dd" });
   });
+
+$(document).ready(function () {
+	
+	$(".numeric").blur(function(){
+		if ($(this).val() == ''){
+			$(this).addClass("required");
+			$(this).attr('placeholder', 'Please enter a Number.');
+		}else if($.isNumeric($(this).val())){
+			$(this).removeClass("required");
+
+		}
+		if(!$.isNumeric($(this).val())){
+			$(this).removeClass("required").addClass("required");
+			$(this).val('');
+			$(this).attr('placeholder', 'Please enter a Number.');
+		}
+	});
+
+	$(".phonenumber").blur(function(){
+		var phoneno = /^\d{10}$/;  
+		  if($(this).val().match(phoneno))  
+		  {  
+		  	$(this).removeClass("required");
+		      return true;
+		  }  
+		  else  
+		  {  
+		    $(this).removeClass("required").addClass("required");
+			$(this).val('');
+			$(this).attr('placeholder', 'Please enter a valid Mobile Number.');  
+		    return false;  
+		  }
+	});
+	$('.modal-body').validate({
+		debug: true,
+		rules: {
+		"person[email]": {required: true, email: true},
+		}
+	});
+});
+
 </script>

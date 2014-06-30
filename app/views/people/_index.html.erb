@@ -1,0 +1,60 @@
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+  <div class="table-responsive">
+    <table class="data table table-striped">
+        <thead>
+            <th>Name</th>
+            <th>Skills</th>
+            <th>Totalexp</th>
+            <th>Tcsexp</th>
+            <th>Releventexp</th>
+            <th>Allocation</th>
+            <th>Interestareas</th>
+            <th>Active</th>
+            <th>Location</th>
+            <th>Group</th>
+            <% if current_user.Admin %>
+            <th>Show</th>
+            <th>Edit</th>
+            <th>Delete</th>
+            <% end %>
+        </thead>
+        <% @people = Person.all %>
+        <% @people.each do |person| %>
+          <%# if person.active? %>
+          <% if @group.id == person.group_id %>
+            <tr>
+              <td><a href="<%= person_path(person) %>"><%= person.name %></a></td>
+              <td><%= person.skills %></td>
+              <td><%= person.totalExp %></td>
+              <td><%= person.tcsExp %></td>
+              <td><%= person.relExp %></td>
+              <td><%= person.allocation %></td>
+              <td><%= person.interestAreas %></td>
+              <td><%= person.active %></td>
+              <td><%= person.location %></td>
+              <td><%= Group.find(person.group_id).name %></td>
+              <% if current_user.Admin %>
+              <td><%= link_to 'Show', person %></td>
+              <td><%= link_to 'Edit', edit_person_path(person) %></td>
+              <% if person.active? %>
+              <td><%= link_to 'Disable', person, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+              <% else %>
+              <td><%= link_to 'Enable', person_enable_path(person), data: { confirm: 'Are you sure?' } %></td>
+              <% end %>
+              <% end %>
+            </tr>
+          <% end %>    
+          <% end %> 
+        </table>
+        </div>
+
+<script type="text/javascript">
+$('.data').dataTable();
+$('#myTab a').click(function (e) {
+  e.preventDefault()
+  $(this).tab('show')
+})
+</script>
+
+  </div>
+</div>

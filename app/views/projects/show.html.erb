@@ -1,24 +1,29 @@
 <p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Name:</strong>
-  <%= @project.name %>
-</p>
-
-<p>
-  <strong>Startdate:</strong>
-  <%= nice_date_form(@project.startDate) %>
-</p>
-
-<p>
-  <strong>Enddate:</strong>
-  <%= nice_date_form(@project.endDate) %>
-</p>
-
-<p>
-  <strong>Group:</strong>
-  <%= Group.find(@project.group_id).name %>
-</p>
-
-<%= link_to 'Edit', edit_project_path(@project) %> |
+<%= render 'groups/sidebar' %>
+<table class="data table table-striped">
+<tr>
+	<td>Name:</td>
+	<td><%= @project1.name %></td>
+</tr>
+<tr>
+	<td>Startdate:</td>
+	<td><%= nice_date_form(@project1.startDate) %></td>
+</tr>
+<tr>
+	<td>Enddate:</td>
+	<td><%= nice_date_form(@project1.endDate) %></td>
+</tr>
+<tr>
+	<td>Group:</td>
+	<td><%= Group.find(@project1.group_id).name %></td>
+</tr>
+</table>
+currently assigned team members!!
+<% currentlyAssignedTeamMembers(@project1) %>
+<% @teamMembers.each do |teamMember| %>
+<%= link_to teamMember.name, person_path(teamMember) %>
+<% end %>
+<% if current_user.Admin %>
+<%= link_to 'Edit', edit_project_path(@project1) %> |
 <%= link_to 'Back', projects_path %>
+<% end %>

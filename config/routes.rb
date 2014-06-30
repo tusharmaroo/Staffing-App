@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resources :groups do
     get 'new_project'
     get 'projects'
+    get 'people'
   end
   resources :projects do
     get 'enable'

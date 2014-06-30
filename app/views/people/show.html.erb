@@ -63,7 +63,7 @@
           
           <% if current_user.Admin && @person.allocation < 100 %> 
           <a href="#" class="btn btn-lg btn-success" data-toggle="modal" data-target="#newAssignmentModal">Assign a Project</a> | <% end %>
-
+          <% if current_user.Admin %>
           <%= link_to 'Edit', edit_person_path(@person) %> |
           <% if @person.active? %>
           <%= link_to 'Disable', @person, method: :delete, data: { confirm: 'Are you sure?' } %> | 
@@ -71,6 +71,7 @@
           <%= link_to 'Enable', person_enable_path(@person), data: { confirm: 'Are you sure?' } %> |
           <% end %>
           <%= link_to 'Back', people_path %>
+          <% end %>
 
 
           <div class="modal fade" id="newAssignmentModal" tabindex="-1" role="dialog" aria-labelledby="newAssignmentModal" aria-hidden="true">

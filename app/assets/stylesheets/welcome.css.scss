@@ -5,6 +5,18 @@
  * Globals
  */
 
+button a {
+  color: white;
+}
+
+.required{
+  border-color: red;
+}
+
+.input-xlarge{
+  width: 60%;
+}
+
 .dataTables_filter{
   float: right;
   margin-right: 100px;
