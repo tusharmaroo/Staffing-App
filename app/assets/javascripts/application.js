@@ -15,6 +15,7 @@
 //= require jquery-ui
 //= require bootstrap.min
 //= require datatable
+//= require validation
 //= require turbolinks
 //= require_tree .
 

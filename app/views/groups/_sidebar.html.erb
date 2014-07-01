@@ -22,11 +22,11 @@
                 <%= form_for(@person) do |f| %>
 				  <div class="field">
 				    <%= f.label :name ,"Name :" %><br>
-				    <%= f.text_field :name,:class => 'input-xlarge',:placeholder => "Person Name: eg. Andrew" %>
+				    <%= f.text_field :name,:class => 'input-xlarge name',:placeholder => "Person Name: eg. Andrew" %>
 				  </div>
 				  <div class="field">
 				    <%= f.label :skills ,"Skills :" %><br>
-				    <%= f.text_area :skills,:class => 'input-xlarge',:placeholder => "Enter the skills: eg. Angular.js, Rails etc" %>
+				    <%= f.text_area :skills,:class => 'input-xlarge textArea',:placeholder => "Enter the skills: eg. Angular.js, Rails etc" %>
 				  </div>
 				  <div class="field">
 				    <%= f.label :location, "Location" %><br>
@@ -58,11 +58,11 @@
 				  </div>
 				  <div class="field">
 				    <%= f.label :emailid, "Email Address :" %><br>
-				    <%= f.text_field :emailid,:class => 'input-xlarge',:placeholder => "Email Address: eg. abc@xyz.com" %>
+				    <%= f.text_field :emailid,:class => 'input-xlarge email',:placeholder => "Email Address: eg. abc@xyz.com" %>
 				  </div>
 				  <div class="field">
 				    <%= f.label :interestAreas, "Interest Areas :" %><br>
-				    <%= f.text_area :interestAreas,:class => 'input-xlarge',:placeholder => "Interested Areas: eg. Node.js" %>
+				    <%= f.text_area :interestAreas,:class => 'input-xlarge textArea',:placeholder => "Interested Areas: eg. Node.js" %>
 				  </div>
 				  <input type="hidden" name="person[active]" value="<%= "true" %>">
 				  <div class="field">
@@ -105,15 +105,15 @@
 
 				  <div class="field">
 				    <%= f.label :name %><br>
-				    <%= f.text_field :name %>
+				    <%= f.text_field :name,:class => 'input-xlarge name',:placeholder => "Project Name: eg. Profiles" %>
 				  </div>
 				  <div class="field">
 				    <%= f.label :startDate %><br>
-				    <%= f.text_field :startDate ,:class => 'datepicker' %>
+				    <%= f.text_field :startDate ,:class => 'input-xlarge datepicker',:readonly => 'true' %>
 				  </div>
 				  <div class="field">
 				    <%= f.label :endDate %><br>
-				    <%= f.text_field :endDate ,:class => 'datepicker' %>
+				    <%= f.text_field :endDate ,:class => 'input-xlarge datepicker',:readonly => 'true' %>
 				  </div>
 				  <input type="hidden" name="project[active]" value="true">
 				  <div class="field">
@@ -136,45 +136,5 @@
   $(function() {
     $( ".datepicker" ).datepicker({ dateFormat: "yy-mm-dd" });
   });
-
-$(document).ready(function () {
-	
-	$(".numeric").blur(function(){
-		if ($(this).val() == ''){
-			$(this).addClass("required");
-			$(this).attr('placeholder', 'Please enter a Number.');
-		}else if($.isNumeric($(this).val())){
-			$(this).removeClass("required");
-
-		}
-		if(!$.isNumeric($(this).val())){
-			$(this).removeClass("required").addClass("required");
-			$(this).val('');
-			$(this).attr('placeholder', 'Please enter a Number.');
-		}
-	});
-
-	$(".phonenumber").blur(function(){
-		var phoneno = /^\d{10}$/;  
-		  if($(this).val().match(phoneno))  
-		  {  
-		  	$(this).removeClass("required");
-		      return true;
-		  }  
-		  else  
-		  {  
-		    $(this).removeClass("required").addClass("required");
-			$(this).val('');
-			$(this).attr('placeholder', 'Please enter a valid Mobile Number.');  
-		    return false;  
-		  }
-	});
-	$('.modal-body').validate({
-		debug: true,
-		rules: {
-		"person[email]": {required: true, email: true},
-		}
-	});
-});
 
 </script>

@@ -39,6 +39,8 @@ class PeopleController < ApplicationController
 		@people = Person.all
 		@projects = Project.all 
 		@assignments = Assignment.where(:person_id => @person.id)
+		@group = Group.find(@person.group_id)
+		@project = Project.new
 	end
 
 	def destroy

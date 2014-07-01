@@ -1,5 +1,8 @@
 <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-2">
+        <%= render 'groups/sidebar' %>
+        </div>
+        <div class="col-md-5">
           <p id="notice"><%= notice %></p>
           <%#= render 'groups/sidebar' %>
           <p>
@@ -66,9 +69,9 @@
           <% if current_user.Admin %>
           <%= link_to 'Edit', edit_person_path(@person) %> |
           <% if @person.active? %>
-          <%= link_to 'Disable', @person, method: :delete, data: { confirm: 'Are you sure?' } %> | 
+          <%= link_to 'Deactivate', @person, method: :delete, data: { confirm: 'Are you sure?' } %> | 
           <% else %>
-          <%= link_to 'Enable', person_enable_path(@person), data: { confirm: 'Are you sure?' } %> |
+          <%= link_to 'Activate', person_enable_path(@person), data: { confirm: 'Are you sure?' } %> |
           <% end %>
           <%= link_to 'Back', people_path %>
           <% end %>
@@ -94,17 +97,10 @@
                               </ul>
                             </div>
                           <% end %>
-
                           <div class="field">
-                            <%= f.label :person_id %><br>
-                            <%#= f.text_field :group_id %>
-                            <select id="assignment_person_id" name="assignment[person_id]">
-                              <%# @people.each do |person| %>
-                                <option value="<%= @person.id %>">
-                                  <%= @person.name %>
-                                </option>
-                              <%# end %>
-                            </select>
+                            <%= f.label :person_id %> : 
+                            <input type="hidden" name="assignment[person_id]" value="<%= @person.id %>">
+                            <%= f.label @person.name %><br>
                           </div>
                           <input type="hidden" name="assignment[group_id]" value="<%= @person.group_id %>">
                           <div class="field">
@@ -121,21 +117,29 @@
                             </select>
                           </div>
                           <div class="field">
+                            <div class="ui-widget">
+                              <label for="tags">Project: </label>
+                              <input id="tags" name="tushar">
+                              <div id="container_tags">
+                              </div>
+                            </div>
+                          </div>
+                          <div class="field">
                             <%= f.label :billable %><br>
                             <%= f.check_box :billable %>
                           </div>
                           
                         <div class="field">
                             <%= f.label :startdate %><br>
-                            <%= f.text_field :startdate, :class => 'datepicker' %>
+                            <%= f.text_field :startdate, :class => 'input-xlarge datepicker',:readonly => 'true' %>
                         </div>
                         <div class="field">
                             <%= f.label :enddate %><br>
-                            <%= f.text_field :enddate, :class => 'datepicker' %>
+                            <%= f.text_field :enddate, :class => 'input-xlarge datepicker',:readonly => 'true' %>
                         </div>
                         <div class="field">
                             <%= f.label :allocation %><br>
-                            <%= f.text_field :allocation %>
+                            <%= f.number_field :allocation, :class => 'input-xlarge',:min => '0',:max => '100' %>
                         </div>
                         <div class="actions">
                             <%= f.submit %>
@@ -148,7 +152,7 @@
                   </div>          
                 </div>
               </div>
-        <div class="col-md-6">
+        <div class="col-md-5">
           <h4>Active Tasks:</h4>
           <% @assignments.each do |temp| %>
           <% if (temp.active) && (temp.enddate - Time.now) > 0 %>
@@ -179,3 +183,23 @@
     $( ".datepicker" ).datepicker({ dateFormat: "yy-mm-dd" });
   });
 </script>
+
+<script>
+  $(function() {
+    <% hashProject = "[" %>
+    <% @projects.each do |project| %>
+    <% if project.group_id == @person.group_id %>
+    <% hashProject << "{ label: '" + project.name + "', value: '" + project.id.to_s + "' }," %>
+    <% end %>
+    <% end %>
+    <% hashProject.slice!(-1) %>
+    <% hashProject << "]" %>
+    $( "#tags" ).autocomplete({ source: <%= raw hashProject %>,
+      messages: {
+        noResults: '',
+        results: function() {}
+      }
+
+     });
+  });
+  </script>

@@ -5,6 +5,35 @@
  * Globals
  */
 
+ #container_tags {
+    display: block; 
+    position:relative
+} 
+
+.ui-autocomplete ul li {
+  list-style: none;
+}
+
+ .ui-autocomplete {
+    max-height: 100px;
+    overflow-y: auto;
+    /* prevent horizontal scrollbar */
+    overflow-x: hidden;
+    position: absolute;
+    background-color: lightgrey;
+  }
+  /* IE 6 doesn't support max-height
+   * we use height instead, but this forces the menu to always be this tall
+   */
+  * 
+  html .ui-autocomplete {
+    height: 100px;
+  }
+
+  ul.ui-autocomplete.ui-menu {
+  z-index: 9000;
+}
+
 button a {
   color: white;
 }
