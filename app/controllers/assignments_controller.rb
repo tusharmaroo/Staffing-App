@@ -14,6 +14,24 @@ class AssignmentsController < ApplicationController
   def show
   end
 
+  def create
+    @assignment = Assignment.new(assignment_params)
+    @person = Person.find(params[:assignment][:person_id])
+    Rails.logger.info "---------------------------------#{@person.allocation}"
+    Rails.logger.info "---------------------------------#{params[:assignment][:allocation]}"
+    @temp = @person.allocation + params[:assignment][:allocation].to_i
+    @person.allocation += params[:assignment][:allocation].to_i
+    if @assignment.save
+      Rails.logger.info "========================#{@temp}"
+      @person.update_attributes(:allocation => @temp)
+      Rails.logger.info "---------------------------------#{@person.allocation}"
+      @person.save
+      redirect_to assignments_path, :notice => "created"
+    else
+      redirect_to assignments_path, :notice => 'Not created'
+    end
+  end
+
   # GET /assignments/new
   def new
     @assignment = Assignment.new
@@ -29,18 +47,7 @@ class AssignmentsController < ApplicationController
 
   # POST /assignments
   # POST /assignments.json
-  def create
-    @assignment = Assignment.new(assignment_params)
-    @person = Person.find(params[:assignment][:person_id])
-    @person.allocation = @person.allocation + @assignment.allocation
-    if @person.save
-      if @assignment.save
-        redirect_to groups_path
-      else
-        redirect_to groups_path
-      end
-    end
-  end
+  
 
   # PATCH/PUT /assignments/1
   # PATCH/PUT /assignments/1.json

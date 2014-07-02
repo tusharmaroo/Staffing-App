@@ -1,11 +1,12 @@
 <div class="col-sm-3 col-md-2 sidebar">
-	<h3>Dashboard</h3>
+	<a href="<%= group_path(@group) %>"><h3>Group Dashboard</h3></a>
 	<hr>
 	<ul class="nav nav-sidebar">
 	  <li><a href="#" class="btn <%= "disabled" if !current_user.Admin %>" data-toggle="modal" data-target="#newPersonModal">Add New Person</a></li>
 	  <li><a href="#" class="btn <%= "disabled" if !current_user.Admin %>" data-toggle="modal" data-target="#newProjectModal">Add New Project</a></li>
-	  <li><a href="<%= group_people_path(@group.id) %>">View All Persons</a></li>
-	  <li><a href="<%= group_projects_path(@group.id) %>">View All Projects</a></li>
+	  <li><a href="<%= group_people_path(@group.id) %>" class="btn">View People</a></li>
+	  <li><a href="<%= group_projects_path(@group.id) %>" class="btn">View Projects</a></li>
+	  <li><a href="<%= edit_group_path(@group.id) %>" class="btn <%= "disabled" if !current_user.Admin %>">Settings</a></li>
 	</ul>
 </div>
 
@@ -131,10 +132,3 @@
     </div>
   </div>
 </div>
-
-<script>
-  $(function() {
-    $( ".datepicker" ).datepicker({ dateFormat: "yy-mm-dd" });
-  });
-
-</script>

@@ -18,4 +18,13 @@
 //= require validation
 //= require turbolinks
 //= require_tree .
+$(function() {
+    $( ".datepicker" ).datepicker({ dateFormat: "yy-mm-dd" });
+  });
 
+$('.data').dataTable();
+$('#peopleTab a').click(function (e) {
+  e.preventDefault()
+  $(this).tab('show')
+});
+$(".scroll-area").scrollspy({target: "#ttt"});

@@ -116,14 +116,14 @@
                               <% end %>
                             </select>
                           </div>
-                          <div class="field">
+                          <%#= "<div class="field">
                             <div class="ui-widget">
                               <label for="tags">Project: </label>
-                              <input id="tags" name="tushar">
+                              <input id="tags" name="assignment[project_id]">
                               <div id="container_tags">
                               </div>
                             </div>
-                          </div>
+                          </div>" %>
                           <div class="field">
                             <%= f.label :billable %><br>
                             <%= f.check_box :billable %>
@@ -152,7 +152,8 @@
                   </div>          
                 </div>
               </div>
-        <div class="col-md-5">
+        <div class="col-md-5 scrollable" id="ttt">
+        
           <h4>Active Tasks:</h4>
           <% @assignments.each do |temp| %>
           <% if (temp.active) && (temp.enddate - Time.now) > 0 %>
@@ -177,19 +178,12 @@
         </div>
 </div>
 
-
-<script>
-  $(function() {
-    $( ".datepicker" ).datepicker({ dateFormat: "yy-mm-dd" });
-  });
-</script>
-
 <script>
   $(function() {
     <% hashProject = "[" %>
     <% @projects.each do |project| %>
     <% if project.group_id == @person.group_id %>
-    <% hashProject << "{ label: '" + project.name + "', value: '" + project.id.to_s + "' }," %>
+    <% hashProject << "{ label: '" + project.name + "', value: '" + project.name.to_s + "' }," %>
     <% end %>
     <% end %>
     <% hashProject.slice!(-1) %>

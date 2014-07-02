@@ -5,6 +5,11 @@
  * Globals
  */
 
+ .scrollable {
+    height: 450px;
+    overflow: auto;
+}
+
  #container_tags {
     display: block; 
     position:relative

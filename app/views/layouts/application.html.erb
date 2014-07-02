@@ -3,17 +3,19 @@
 <head>
   <title>StaffingAppNew</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  
   <meta name="viewport" content="width=device-width, user-scalable=no">
   <%= csrf_meta_tags %>
 </head>
 <body>
+<div class="">
 <% if !current_page?(root_path) %>
 <%= render 'layouts/nav' %>
 <% end %>
 <p class="notice"><%= notice %></p>
 <p class="alert"><%= alert %></p>
 <%= yield %>
-
+<%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+</div>
 </body>
 </html>

@@ -11,9 +11,10 @@
     </div>
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="<%= groups_path %>">Groups</a></li>
-        <li><a href="<%= projects_path %>">Projects</a></li>
-        <li><a href="<%= people_path %>">People</a></li>
+        <li><a href="<%= groups_path %>">All Groups</a></li>
+        <li><a href="<%= projects_path %>">All Projects</a></li>
+        <li><a href="<%= people_path %>">All People</a></li>
+        
         <li><a href="#">Help</a></li>
         <% if user_signed_in? %>
         <li><%= link_to "Sign Out", destroy_user_session_path ,:method => :delete %></li>
