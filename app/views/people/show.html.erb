@@ -1,157 +1,247 @@
 <div class="row">
-        <div class="col-md-2">
-        <%= render 'groups/sidebar' %>
-        </div>
-        <div class="col-md-5">
-          <p id="notice"><%= notice %></p>
-          <%#= render 'groups/sidebar' %>
-          <p>
-            <strong>Name:</strong>
-            <%= @person.name %>
-          </p>
+  <div class="col-md-2">
+  <%= render 'groups/sidebar' %>
+  </div>
+  <div class="col-md-5">
+    <p id="notice"><%= notice %></p>
+    <%#= render 'groups/sidebar' %>
+    <table class="table table-striped">
+      <tr>
+        <td><strong>Name:</strong></td>
+        <td><%= @person.name %></td>
+      </tr>
 
-          <p>
-            <strong>Skills:</strong>
-            <%= @person.skills %>
-          </p>
+      <tr>
+        <td><strong>Skills:</strong></td>
+        <td><%= @person.skills %></td>
+      </tr>
 
-          <p>
-            <strong>Totalexp:</strong>
-            <%= @person.totalExp %>
-          </p>
+      <tr>
+        <td><strong>Totalexp:</strong></td>
+        <td><%= @person.totalExp %></td>
+      </tr>
 
-          <p>
-            <strong>Tcsexp:</strong>
-            <%= @person.tcsExp %>
-          </p>
+      <tr>
+        <td><strong>Tcsexp:</strong></td>
+        <td><%= @person.tcsExp %></td>
+      </tr>
 
-          <p>
-            <strong>Releventexp:</strong>
-            <%= @person.relExp %>
-          </p>
+      <tr>
+        <td><strong>Releventexp:</strong></td>
+        <td><%= @person.relExp %></td>
+      </tr>
 
-          <p>
-            <strong>Allocation:</strong>
-            <%= @person.allocation %>
-          </p>
+      <tr>
+        <td><strong>Allocation:</strong></td>
+        <td><%= @person.allocation %></td>
+      </tr>
 
-          <p>
-            <strong>Location:</strong>
-            <%= @person.location %>
-          </p>
-          <p>
-            <strong>Mobile Number :</strong>
-            <%= @person.mobilenumber %>
-          </p>
-          <p>
-            <strong>Email ID:</strong>
-            <%= @person.emailid %>
-          </p>
+      <tr>
+        <td><strong>Location:</strong></td>
+        <td><%= @person.location %></td>
+      </tr>
 
-          <p>
-            <strong>Interestareas:</strong>
-            <%= @person.interestAreas %>
-          </p>
+      <tr>
+        <td><strong>Mobile Number :</strong></td>
+        <td><%= @person.mobilenumber %></td>
+      </tr>
 
-          <p>
-            <strong>Active:</strong>
-            <%= @person.active %>
-          </p>
+      <tr>
+        <td><strong>Email ID:</strong></td>
+        <td><%= @person.emailid %></td>
+      </tr>
 
-          <p>
-            <strong>Group:</strong>
-            <%= Group.find(@person.group_id).name %>
-          </p>
-          <hr>
+      <tr>
+        <td><strong>Interestareas:</strong></td>
+        <td><%= @person.interestAreas %></td>
+      </tr>
+
+      <tr>
+        <td><strong>Active:</strong></td>
+        <td><%= @person.active == true ? "Yes" : "No" %></td>
+      </tr>
+
+      <tr>
+        <td><strong>Group:</strong></td>
+        <td><%= Group.find(@person.group_id).name %></td>
+      </tr>
+    </table>
+    <hr>
           
-          <% if current_user.Admin && @person.allocation < 100 %> 
-          <a href="#" class="btn btn-lg btn-success" data-toggle="modal" data-target="#newAssignmentModal">Assign a Project</a> | <% end %>
-          <% if current_user.Admin %>
-          <%= link_to 'Edit', edit_person_path(@person) %> |
-          <% if @person.active? %>
-          <%= link_to 'Deactivate', @person, method: :delete, data: { confirm: 'Are you sure?' } %> | 
-          <% else %>
-          <%= link_to 'Activate', person_enable_path(@person), data: { confirm: 'Are you sure?' } %> |
-          <% end %>
-          <%= link_to 'Back', people_path %>
-          <% end %>
+    <% if current_user.Admin && @person.allocation < 100 %> 
+    <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#newAssignmentModal">Assign a Project</a> | <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#editPersonModal">Edit Details</a> |<% end %>
+    <% if current_user.Admin %>
+    <%= link_to 'Edit', edit_person_path(@person), :class=> "btn btn-sm btn-primary" %> |
+    <% if @person.active? %>
+    <%= link_to 'Deactivate', @person, :class=> "btn btn-sm btn-primary", method: :delete, data: { confirm: 'Are you sure?' } %>
+    <% else %>
+    <%= link_to 'Activate', person_enable_path(@person), :class=> "btn btn-sm btn-primary", data: { confirm: 'Are you sure?' } %>
+    <% end %>
+    <% end %>
 
 
-          <div class="modal fade" id="newAssignmentModal" tabindex="-1" role="dialog" aria-labelledby="newAssignmentModal" aria-hidden="true">
-              <div class="modal-dialog">
-                  <div class="modal-content">
-                      <div class="modal-header">
-                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-                      <h4 class="modal-title" id="myModalLabel">New Assignment</h4>
-                      </div>
-                      <div class="modal-body">
-                        <%= form_for(@assignment) do |f| %>
-                          <% if @assignment.errors.any? %>
-                            <div id="error_explanation">
-                              <h2><%= pluralize(@assignment.errors.count, "error") %> prohibited this assignment from being saved:</h2>
+    <div class="modal fade" id="newAssignmentModal" tabindex="-1" role="dialog" aria-labelledby="newAssignmentModal" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+            <h4 class="modal-title" id="myModalLabel">New Assignment</h4>
+          </div>
+          <div class="modal-body">
+            <%= form_for(@assignment) do |f| %>
+              <% if @assignment.errors.any? %>
+                <div id="error_explanation">
+                  <h2><%= pluralize(@assignment.errors.count, "error") %> prohibited this assignment from being saved:</h2>
 
-                              <ul>
-                              <% @assignment.errors.full_messages.each do |message| %>
-                                <li><%= message %></li>
-                              <% end %>
-                              </ul>
-                            </div>
-                          <% end %>
-                          <div class="field">
-                            <%= f.label :person_id %> : 
-                            <input type="hidden" name="assignment[person_id]" value="<%= @person.id %>">
-                            <%= f.label @person.name %><br>
-                          </div>
-                          <input type="hidden" name="assignment[group_id]" value="<%= @person.group_id %>">
-                          <div class="field">
-                            <%= f.label :project_id %><br>
-                            <%#= f.text_field :group_id %>
-                            <select id="assignment_project_id" name="assignment[project_id]">
-                              <% @projects.each do |project| %>
-                              <% if project.group_id == @person.group_id %>
-                                <option value="<%= project.id %>">
-                                  <%= project.name %>
-                                </option>
-                                <% end %>
-                              <% end %>
-                            </select>
-                          </div>
-                          <%#= "<div class="field">
-                            <div class="ui-widget">
-                              <label for="tags">Project: </label>
-                              <input id="tags" name="assignment[project_id]">
-                              <div id="container_tags">
-                              </div>
-                            </div>
-                          </div>" %>
-                          <div class="field">
-                            <%= f.label :billable %><br>
-                            <%= f.check_box :billable %>
-                          </div>
-                          
-                        <div class="field">
-                            <%= f.label :startdate %><br>
-                            <%= f.text_field :startdate, :class => 'input-xlarge datepicker',:readonly => 'true' %>
-                        </div>
-                        <div class="field">
-                            <%= f.label :enddate %><br>
-                            <%= f.text_field :enddate, :class => 'input-xlarge datepicker',:readonly => 'true' %>
-                        </div>
-                        <div class="field">
-                            <%= f.label :allocation %><br>
-                            <%= f.number_field :allocation, :class => 'input-xlarge',:min => '0',:max => '100' %>
-                        </div>
-                        <div class="actions">
-                            <%= f.submit %>
-                        </div>
-                        <% end %>
-                        </div>
-
-                      <div class="modal-footer"></div>
-                    </div>
-                  </div>          
+                  <ul>
+                  <% @assignment.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                  <% end %>
+                  </ul>
                 </div>
+              <% end %>
+              <div class="field">
+                <%= f.label :person_id %> : 
+                <input type="hidden" name="assignment[person_id]" value="<%= @person.id %>">
+                <%= f.label @person.name %><br>
               </div>
+              <input type="hidden" name="assignment[group_id]" value="<%= @person.group_id %>">
+              <div class="field">
+                <%= f.label :project_id %><br>
+                <%#= f.text_field :group_id %>
+                <select id="assignment_project_id" name="assignment[project_id]">
+                  <% @projects.each do |project| %>
+                  <% if project.group_id == @person.group_id %>
+                    <option value="<%= project.id %>">
+                      <%= project.name %>
+                    </option>
+                    <% end %>
+                  <% end %>
+                </select>
+              </div>
+              <%#= "<div class="field">
+                <div class="ui-widget">
+                  <label for="tags">Project: </label>
+                  <input id="tags" name="assignment[project_id]">
+                  <div id="container_tags">
+                  </div>
+                </div>
+              </div>" %>
+              <div class="field">
+                <%= f.label :billable %><br>
+                <%= f.check_box :billable %>
+              </div>
+              
+            <div class="field">
+                <%= f.label :startdate %><br>
+                <%= f.text_field :startdate, :class => 'input-xlarge datepicker',:readonly => 'true' %>
+            </div>
+            <div class="field">
+                <%= f.label :enddate %><br>
+                <%= f.text_field :enddate, :class => 'input-xlarge datepicker',:readonly => 'true' %>
+            </div>
+            <div class="field">
+                <%= f.label :allocation %><br>
+                <%= f.number_field :allocation, :class => 'input-xlarge',:min => '0',:max => '100' %>
+            </div>
+            <div class="actions">
+                <%= f.submit %>
+            </div>
+            <% end %>
+          </div>
+
+          <div class="modal-footer"></div>
+          </div>
+        </div>          
+      </div>
+    </div>
+
+    <div class="modal fade" id="editPersonModal" tabindex="-1" role="dialog" aria-labelledby="newAssignmentModal" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+            <h4 class="modal-title" id="myModalLabel">Edit Details</h4>
+          </div>
+          <div class="modal-body">
+            <%= form_for(@person) do |f| %>
+            <% if @person.errors.any? %>
+              <div id="error_explanation">
+                <h2><%= pluralize(@person.errors.count, "error") %> prohibited this person from being saved:</h2>
+
+                <ul>
+                <% @person.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+                </ul>
+              </div>
+            <% end %>
+
+            <div class="field">
+              <%= f.label :name %><br>
+              <%= f.text_field :name %>
+            </div>
+            <div class="field">
+              <%= f.label :skills %><br>
+              <%= f.text_area :skills %>
+            </div>
+            <div class="field">
+              <%= f.label :Location %><br>
+              <select id="person_location" name="person[location]">
+                <option value="Mumbai" <%= "selected" if @person.location == "Mumbai" %> >Mumbai</option>
+                <option value="Banglore" <%= "selected" if @person.location == "Banglore" %> >Banglore</option>
+                <option value="Gurgaon" <%= "selected" if @person.location == "Gurgaon" %> >Gurgaon</option>
+                <option value="Kolkata" <%= "selected" if @person.location == "Kolkata" %> >Kolkata</option>
+                <option value="NYC" <%= "selected" if @person.location == "NYC" %> >NYC</option>
+              </select>
+            </div>
+            <div class="field">
+              <%= f.label :totalExp %><br>
+              <%= f.text_field :totalExp %>
+            </div>
+            <div class="field">
+              <%= f.label :tcsExp %><br>
+              <%= f.text_field :tcsExp %>
+            </div>
+            <div class="field">
+              <%= f.label :releventExp %><br>
+              <%= f.text_field :relExp %>
+            </div>
+            <div class="field">
+              <%= f.label :allocation %><br>
+              <%= f.number_field :allocation ,:disabled=>true %>
+            </div>
+            <div class="field">
+              <%= f.label :mobilenumber %><br>
+              <%= f.number_field :mobilenumber %>
+            </div>
+            <div class="field">
+              <%= f.label :emailid %><br>
+              <%= f.text_field :emailid %>
+            </div>
+            <div class="field">
+              <%= f.label :interestAreas %><br>
+              <%= f.text_area :interestAreas %>
+            </div>
+            <div class="field">
+              <%= f.label :group_id %><br>
+              <%= f.label Group.find(@person.group_id).name %>
+              <input type="hidden" name="person[group_id]" value="<%= @person.group_id %>">
+            </div>
+            <div class="actions">
+              <%= f.submit %>
+            </div>
+          <% end %>
+
+
+
+        </div>
+
+        <div class="modal-footer"></div>
+        </div>
+      </div>          
+    </div>
+         <div class="row">     
         <div class="col-md-5 scrollable" id="ttt">
         
           <h4>Active Tasks:</h4>
@@ -164,7 +254,8 @@
           Assignment Duration: <%= distance_of_time_in_words(temp.enddate,temp.startdate).capitalize %><br><hr>
           <% end %>
           <% end %>
-
+        </div>
+        <div class="col-md-5 scrollable" id="ttt">
           <h4>History:</h4>
           <% @assignments.each do |temp| %>
           <% if (!temp.active) || (temp.enddate - Time.now) < 0 %>
@@ -176,8 +267,8 @@
           <% end %>
           <% end %>
         </div>
-</div>
-
+  </div>
+  </div>
 <script>
   $(function() {
     <% hashProject = "[" %>

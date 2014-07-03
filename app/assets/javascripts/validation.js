@@ -1,4 +1,5 @@
 $(document).ready(function () {
+	
 	$("input").focus(function(){
 		$(this).removeClass("required");
 	});
@@ -61,16 +62,15 @@ $(document).ready(function () {
 		  else  
 		  {    
 
-		    if($(this).val().length() >= 8)  
-			  {  
+		    if($(this).val().length >= 8){
 			  	$(this).removeClass("required");
 			      return true;
-			  }else{
+			}else{
 			  	$(this).removeClass("required").addClass("required");
 				$(this).val('');
 				$(this).attr('placeholder', 'Minimum length: 8 chars.');
 				return false;
-			  }
+			}
 		  }
 	});
 
@@ -85,7 +85,7 @@ $(document).ready(function () {
 		  }
 		  if($(this).val().match(name))  
 		  {  
-		  	if($(this).val().length() >= 2)  
+		  	if($(this).val().length >= 2)  
 			  {  
 			  	$(this).removeClass("required");
 			      return true;
@@ -104,4 +104,12 @@ $(document).ready(function () {
 		    return false;  
 		  }
 	});
+
+	$(".modal-body > form").submit(function(){
+		  
+		  return true;
+	});
+
+
 });
+
