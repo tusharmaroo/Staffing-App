@@ -68,10 +68,10 @@
     </table>
     <hr>
           
-    <% if current_user.Admin && @person.allocation < 100 %> 
+    <% if current_user.Admin && @person.allocation < 100 && @person.active %> 
     <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#newAssignmentModal">Assign a Project</a> | <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#editPersonModal">Edit Details</a> |<% end %>
     <% if current_user.Admin %>
-    <%= link_to 'Edit', edit_person_path(@person), :class=> "btn btn-sm btn-primary" %> |
+    <%#= link_to 'Edit', edit_person_path(@person), :class=> "btn btn-sm btn-primary" %>
     <% if @person.active? %>
     <%= link_to 'Deactivate', @person, :class=> "btn btn-sm btn-primary", method: :delete, data: { confirm: 'Are you sure?' } %>
     <% else %>
@@ -251,7 +251,9 @@
           Billable: <%= temp.billable %><br>
           Allcoation: <%= temp.allocation %>%<br>
           Brief of Work: Lorem Ipsum Lorem Ipsum Lorem Ipsum <br>
-          Assignment Duration: <%= distance_of_time_in_words(temp.enddate,temp.startdate).capitalize %><br><hr>
+          Assignment Duration: <%= distance_of_time_in_words(temp.enddate,temp.startdate).capitalize %><br>
+          <%= link_to "edit" , edit_assignment_path(temp) %><br>
+          <hr>
           <% end %>
           <% end %>
         </div>

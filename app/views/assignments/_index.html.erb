@@ -6,7 +6,7 @@
 
 <div id='content' class="tab-content">
       <div class="tab-pane active" id="unallocatedPersons">
-        <table class="data table table-striped">
+        <table class="data table table-striped table-hover">
           <thead>
               <th>Assignment ID/s</th>
               <th>Name</th>
@@ -16,11 +16,11 @@
           </thead>
          
           <% @people.each do |person| %>
-              <% if (person.group_id == @group.id) && (person.allocation != 100) && (person.allocation != 0) %>
+              <% if (person.group_id == @group.id) && (person.allocation != 100) && (person.allocation != 0) && (person.active?) %>
                 <% @assignments = Assignment.where(person_id: person.id) %>
 
                 
-                  <tr><td>
+                  <tr class="<%= getProjectStatus(person.id) %>"><td>
                   <% @assignments.each do |assignment| %>
                     <%= assignment.id %><br>
                   <% end %></td>

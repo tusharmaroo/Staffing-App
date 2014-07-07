@@ -1,6 +1,7 @@
 class PeopleController < ApplicationController
 	before_action :authenticate_user!
 	before_action :set_person, only: [:show, :edit, :update, :destroy]
+
 	def index
 		@people = Person.all
 	end
@@ -12,12 +13,11 @@ class PeopleController < ApplicationController
 
 	def create
 		@group = Group.find(params[:person][:group_id])
-		@person = Person.new(person_params)
-		if @person.save
-			#redirect_to people_path
-			redirect_to group_path(@group)
+		@personnew = Person.new(person_params)
+		if @personnew.save
+			redirect_to group_people_path(@group)
 		else
-			redirect_to group_path(@group)
+			redirect_to groups_path
 		end
 	end
 
@@ -28,9 +28,9 @@ class PeopleController < ApplicationController
 	def update
 		@group = Group.find(params[:person][:group_id])
 		if @person.update(person_params)
-			redirect_to group_path(@group)
+			redirect_to person_path(@person)
 		else
-			redirect_to edit_people_path(@person)
+			redirect_to person_path(@person)
 		end
 	end
 
@@ -45,19 +45,22 @@ class PeopleController < ApplicationController
 
 	def destroy
 		@person.active = false
-		@person.allocation = 0
-		@openAssignments = Assignment.where(:person_id => @person.id)
+		@openAssignments = Assignment.where(:person_id => @person.id, :active => true)
    		if (!@openAssignments.empty?)
    			@openAssignments.each do |openAssignment|
    				openAssignment.active = false
-   				openAssignment.save
+			    openAssignment.enddate = Time.now
+			    openAssignment.save
+			    #openAssignment.destroy
+			    @person.allocation -= openAssignment.allocation
+			    @person.save
    			end
    		end
 
 		if @person.save 
-			redirect_to people_path
+			redirect_to person_path(@person)
 		else
-			redirect_to edit_people_path
+			redirect_to person_path(@person)
 		end
 	end
 
@@ -65,9 +68,9 @@ class PeopleController < ApplicationController
 		@person = Person.find(params[:person_id])
 		@person.active = true
 		if @person.save 
-			redirect_to people_path
+			redirect_to person_path(@person)
 		else
-			redirect_to edit_people_path
+			redirect_to person_path(@person)
 		end
 	end
 

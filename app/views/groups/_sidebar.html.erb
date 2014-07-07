@@ -20,7 +20,7 @@
             <h4 class="modal-title" id="myModalLabel">New Person</h4>
             </div>
             <div class="modal-body">
-                <%= form_for new_person_path(@personnew) do |f| %>
+                <%= form_for(@personnew) do |f| %>
 				  <div class="field">
 				    <%= f.label :name ,"Name :" %><br>
 				    <%= f.text_field :name,:class => 'input-xlarge name',:placeholder => "Person Name: eg. Andrew" %>

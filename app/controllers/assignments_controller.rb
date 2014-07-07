@@ -6,7 +6,7 @@ class AssignmentsController < ApplicationController
   # GET /assignments.json
   def index
     @assignments = Assignment.all
-    @people = Person.all 
+    @people = Person.where(:active => true)
   end
 
   # GET /assignments/1
@@ -17,18 +17,12 @@ class AssignmentsController < ApplicationController
   def create
     @assignment = Assignment.new(assignment_params)
     @person = Person.find(params[:assignment][:person_id])
-    Rails.logger.info "---------------------------------#{@person.allocation}"
-    Rails.logger.info "---------------------------------#{params[:assignment][:allocation]}"
-    @temp = @person.allocation + params[:assignment][:allocation].to_i
     @person.allocation += params[:assignment][:allocation].to_i
     if @assignment.save
-      Rails.logger.info "========================#{@temp}"
-      @person.update_attributes(:allocation => @temp)
-      Rails.logger.info "---------------------------------#{@person.allocation}"
       @person.save
-      redirect_to assignments_path, :notice => "created"
+      redirect_to person_path(@person), :notice => "created"
     else
-      redirect_to assignments_path, :notice => 'Not created'
+      redirect_to person_path(@person), :notice => 'Not created'
     end
   end
 
@@ -52,11 +46,15 @@ class AssignmentsController < ApplicationController
   # PATCH/PUT /assignments/1
   # PATCH/PUT /assignments/1.json
   def update
-    
+      @previousAllocation = @assignment.allocation
       if @assignment.update(assignment_params)
-        redirect_to groups_path
+        @person = Person.find(@assignment.person_id)
+        @person.allocation -= @previousAllocation
+        @person.allocation += @assignment.allocation
+        @person.save
+        redirect_to person_path(@person)
       else
-        redirect_to groups_path
+        redirect_to person_path(@person)
       end
    
   end
@@ -64,11 +62,18 @@ class AssignmentsController < ApplicationController
   # DELETE /assignments/1
   # DELETE /assignments/1.json
   def destroy
+    Rails.logger.info "---------------------------------"
     @assignment.active = false
-    if @assignment.save 
-      redirect_to assignments_path
+    @person = Person.find(@assignment.person_id)
+    @person.allocation -= @assignment.allocation
+    if @person.save
+      if @assignment.save 
+        redirect_to person_path(@person)
+      else
+        redirect_to person_path(@person)
+      end
     else
-      redirect_to edit_assignments_path
+      redirect_to person_path(@person)
     end
   end
 

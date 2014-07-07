@@ -12,7 +12,7 @@ class GroupsController < ApplicationController
 	def projects
 		@people = Person.all
 		@group = Group.find(params[:group_id])
-		@person = Person.new
+		@personnew = Person.new
 		@project = Project.new
 		@projects = Project.all
 	end
@@ -20,7 +20,7 @@ class GroupsController < ApplicationController
 	def people
 		@people = Person.all
 		@group = Group.find(params[:group_id])
-		@person = Person.new
+		@personnew = Person.new
 		@project = Project.new
 		@projects = Project.all
 	end
@@ -28,7 +28,7 @@ class GroupsController < ApplicationController
 	def create
 		@group = Group.new(group_params)
 		if @group.save
-			render groups_path
+			redirect_to groups_path
 		else
 			render new_group_path
 		end
@@ -41,6 +41,10 @@ class GroupsController < ApplicationController
 	def show
 		@people = Person.where(:group_id => @group.id)
 		@assignments = Assignment.all 
+
+		if !@group.active?
+			redirect_to edit_group_path(@group), :notice => "You need to enable the group first!"
+		end
 
 	end
 
@@ -56,8 +60,44 @@ class GroupsController < ApplicationController
 		end
 	end
 
+	def enable
+		@group.active = true
+		if @group.save
+			redirect_to groups_path
+		else
+			redirect_to groups_path
+		end
+	end
+
 	def destroy
 		@group.active = false
+		@groupPeople = Person.where(:group_id => @group.id, :active => true)
+
+		@groupProjects = Project.where(:group_id => @group.id, :active => true)
+		if (!@groupProjects.empty?)
+   			@groupProjects.each do |groupProject|
+   				groupProject.active = false
+   				groupProject.save
+   			end
+   		end
+
+		if (!@groupPeople.empty?)
+   			@groupPeople.each do |groupPerson|
+   				groupPerson.active = false
+			    @openAssignments = Assignment.where(:person_id => groupPerson.id, :active => true)
+   				if (!@openAssignments.empty?)
+   				@openAssignments.each do |openAssignment|
+	   				openAssignment.active = false
+				    openAssignment.enddate = Time.now
+				    openAssignment.save
+				    #openAssignment.destroy
+				    groupPerson.allocation -= openAssignment.allocation
+				    groupPerson.save
+	   			end
+   				end
+   			end
+   		end
+
 		if @group.save 
 			redirect_to groups_path
 		else
@@ -68,7 +108,7 @@ class GroupsController < ApplicationController
 	private
 		def set_group
       		@group = Group.find(params[:id])
-      		@person = Person.new
+      		@personnew = Person.new
       		@groups = Group.all
       		@project = Project.new 
     	end
@@ -76,5 +116,4 @@ class GroupsController < ApplicationController
 		def group_params
       		params.require(:group).permit(:name, :active)
     	end
-
 end

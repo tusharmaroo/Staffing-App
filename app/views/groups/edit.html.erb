@@ -10,8 +10,14 @@
       </ul>
     </div>
   <% end %>
+
 <div class="container">
   <%= render 'groups/sidebar' %>
+  <% if @group.active? %>
+    <%= link_to 'Deactivate', @group, :class=> "btn btn-sm btn-primary", method: :delete, data: { confirm: 'Are you sure?' } %>
+    <% else %>
+    <%= link_to 'Activate', group_enable_path(@group), :class=> "btn btn-sm btn-primary", data: { confirm: 'Are you sure?' } %>
+    <% end %>
   <div class="field">
     <%= f.label :name %><br>
     <%= f.text_field :name %>

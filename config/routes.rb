@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     get 'new_project'
     get 'projects'
     get 'people'
+    get 'enable'
   end
   resources :projects do
     get 'enable'
