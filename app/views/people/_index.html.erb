@@ -13,8 +13,6 @@
             <th>Location</th>
             <th>Group</th>
             <% if current_user.Admin %>
-            <th>Show</th>
-            <th>Edit</th>
             <th>Delete</th>
             <% end %>
         </thead>
@@ -30,12 +28,10 @@
               <td><%= person.relExp %></td>
               <td><%= person.allocation %></td>
               <td><%= person.interestAreas %></td>
-              <td><%= person.active %></td>
+              <td><%= person.active ? "Yes" : "No" %></td>
               <td><%= person.location %></td>
               <td><%= Group.find(person.group_id).name %></td>
               <% if current_user.Admin %>
-              <td><%= link_to 'Show', person %></td>
-              <td><%= link_to 'Edit', edit_person_path(person) %></td>
               <% if person.active? %>
               <td><%= link_to 'Disable', person, method: :delete, data: { confirm: 'Are you sure?' } %></td>
               <% else %>
