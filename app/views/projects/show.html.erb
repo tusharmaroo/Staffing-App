@@ -1,5 +1,9 @@
 <p id="notice"><%= notice %></p>
+<div class="row">
+  <div class="col-md-2">
 <%= render 'groups/sidebar' %>
+</div>
+<div class="col-md-10">
 <table class="data table table-striped">
 <tr>
 	<td>Name:</td>
@@ -18,12 +22,57 @@
 	<td><%= Group.find(@project1.group_id).name %></td>
 </tr>
 </table>
+</div>
 currently assigned team members!!
 <% currentlyAssignedTeamMembers(@project1) %>
 <% @teamMembers.each do |teamMember| %>
 <%= link_to teamMember.name, person_path(teamMember) %>
 <% end %>
 <% if current_user.Admin %>
+<a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#editProjectModal">Edit</a>
 <%= link_to 'Edit', edit_project_path(@project1) %> |
 <%= link_to 'Back', projects_path %>
 <% end %>
+
+
+<div class="modal fade" id="editProjectModal" tabindex="-1" role="dialog" aria-labelledby="editProjectModal" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+            <h4 class="modal-title" id="myModalLabel">Edit Project</h4>
+          </div>
+          <div class="modal-body">
+          	<%= form_for(@project1) do |f| %>
+			  <div class="field">
+			    <%= f.label :name %><br>
+			    <%= f.text_field :name %>
+			  </div>
+			  <div class="field">
+			    <%= f.label :startDate %><br>
+			    <%= f.text_field :startDate ,:class => 'datepicker', :value => nice_date_form(@project1.startDate) %>
+			  </div>
+			  <div class="field">
+			    <%= f.label :endDate %><br>
+			    <%= f.text_field :endDate ,:class => 'datepicker', :value => nice_date_form(@project1.endDate) %>
+			  </div>
+			  <input type="hidden" name="project[group_id]" value="<%= @project.group_id %>">
+			  <div class="field">
+			    <%= f.label :group_id %><br>
+			    <%#= f.text_field :group_id %>
+			    <%= f.label Group.find(@project1.group_id).name %>
+			  </div>
+			  <div class="actions">
+			    <%= f.submit %>
+			  </div>
+			<% end %>
+
+
+
+      	</div>
+
+      <div class="modal-footer"></div>
+      </div>
+    </div>          
+  </div>
+</div>
