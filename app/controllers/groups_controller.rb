@@ -40,6 +40,7 @@ class GroupsController < ApplicationController
 
 	def show
 		@people = Person.where(:group_id => @group.id)
+		@personnew =Person.new
 		@assignments = Assignment.all 
 
 		if !@group.active?
