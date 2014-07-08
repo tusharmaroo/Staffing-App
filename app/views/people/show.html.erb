@@ -65,11 +65,18 @@
         <td><strong>Group:</strong></td>
         <td><%= Group.find(@person.group_id).name %></td>
       </tr>
+
+      <tr>
+        <td><strong>Personal Learnings :</strong></td>
+        <td><%= @person.PersonalLearnings %></td>
+      </tr>
     </table>
     <hr>
           
     <% if current_user.Admin && @person.allocation < 100 && @person.active %> 
     <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#newAssignmentModal">Assign a Project</a> | <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#editPersonModal">Edit Details</a> |<% end %>
+    <% if !current_user.Admin && (current_user.email == @person.emailid) %> 
+    <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#editPersonModal">Edit Details</a><% end %>
     <% if current_user.Admin %>
     <%#= link_to 'Edit', edit_person_path(@person), :class=> "btn btn-sm btn-primary" %>
     <% if @person.active? %>
@@ -222,6 +229,10 @@
             <div class="field">
               <%= f.label :interestAreas %><br>
               <%= f.text_area :interestAreas %>
+            </div>
+            <div class="field">
+              <%= f.label :PersonalLearnings, "Personal Learnings :" %><br>
+              <%= f.text_area :PersonalLearnings %>
             </div>
             <div class="field">
               <%= f.label :group_id %><br>

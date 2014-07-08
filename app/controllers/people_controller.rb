@@ -80,6 +80,6 @@ class PeopleController < ApplicationController
 		end
 
 		def person_params
-      		params.require(:person).permit(:name, :skills, :totalExp, :tcsExp, :relExp, :mobilenumber,  :emailid,  :allocation, :interestAreas, :group_id, :active,:location)
+      		params.require(:person).permit(:name, :skills, :totalExp, :tcsExp, :relExp, :mobilenumber,  :emailid,  :allocation, :interestAreas, :group_id, :active,:location,:PersonalLearnings)
     	end
 end

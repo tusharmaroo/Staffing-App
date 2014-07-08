@@ -7,30 +7,34 @@
 <table class="data table table-striped">
 <tr>
 	<td>Name:</td>
-	<td><%= @project1.name %></td>
+	<td><%= @project.name %></td>
 </tr>
 <tr>
 	<td>Startdate:</td>
-	<td><%= nice_date_form(@project1.startDate) %></td>
+	<td><%= nice_date_form(@project.startDate) %></td>
 </tr>
 <tr>
 	<td>Enddate:</td>
-	<td><%= nice_date_form(@project1.endDate) %></td>
+	<td><%= nice_date_form(@project.endDate) %></td>
+</tr>
+<tr>
+	<td>Project Details :</td>
+	<td><%= @project.ProjectDetails %></td>
 </tr>
 <tr>
 	<td>Group:</td>
-	<td><%= Group.find(@project1.group_id).name %></td>
+	<td><%= @group.name %></td>
 </tr>
 </table>
 </div>
 currently assigned team members!!
-<% currentlyAssignedTeamMembers(@project1) %>
+<% currentlyAssignedTeamMembers(@project) %>
 <% @teamMembers.each do |teamMember| %>
 <%= link_to teamMember.name, person_path(teamMember) %>
 <% end %>
 <% if current_user.Admin %>
 <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#editProjectModal">Edit</a>
-<%= link_to 'Edit', edit_project_path(@project1) %> |
+<%= link_to 'Edit', edit_project_path(@project) %> |
 <%= link_to 'Back', projects_path %>
 <% end %>
 
@@ -43,24 +47,28 @@ currently assigned team members!!
             <h4 class="modal-title" id="myModalLabel">Edit Project</h4>
           </div>
           <div class="modal-body">
-          	<%= form_for(@project1) do |f| %>
+          	<%= form_for(@project) do |f| %>
 			  <div class="field">
 			    <%= f.label :name %><br>
 			    <%= f.text_field :name %>
 			  </div>
 			  <div class="field">
+			    <%= f.label :ProjectDetails %><br>
+			    <%= f.text_area :ProjectDetails %>
+			  </div>
+			  <div class="field">
 			    <%= f.label :startDate %><br>
-			    <%= f.text_field :startDate ,:class => 'datepicker', :value => nice_date_form(@project1.startDate) %>
+			    <%= f.text_field :startDate ,:class => 'datepicker', :value => nice_date_form(@project.startDate) %>
 			  </div>
 			  <div class="field">
 			    <%= f.label :endDate %><br>
-			    <%= f.text_field :endDate ,:class => 'datepicker', :value => nice_date_form(@project1.endDate) %>
+			    <%= f.text_field :endDate ,:class => 'datepicker', :value => nice_date_form(@project.endDate) %>
 			  </div>
 			  <input type="hidden" name="project[group_id]" value="<%= @project.group_id %>">
 			  <div class="field">
 			    <%= f.label :group_id %><br>
 			    <%#= f.text_field :group_id %>
-			    <%= f.label Group.find(@project1.group_id).name %>
+			    <%= f.label Group.find(@project.group_id).name %>
 			  </div>
 			  <div class="actions">
 			    <%= f.submit %>

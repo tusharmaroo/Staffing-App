@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140626105435) do
+ActiveRecord::Schema.define(version: 20140708102332) do
 
   create_table "assignments", force: true do |t|
     t.boolean  "billable"
@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(version: 20140626105435) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "location"
+    t.text     "PersonalLearnings"
   end
 
   add_index "people", ["group_id"], name: "index_people_on_group_id"
@@ -63,7 +64,8 @@ ActiveRecord::Schema.define(version: 20140626105435) do
     t.integer  "group_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "active",     default: true
+    t.boolean  "active",         default: true
+    t.text     "ProjectDetails"
   end
 
   add_index "projects", ["group_id"], name: "index_projects_on_group_id"

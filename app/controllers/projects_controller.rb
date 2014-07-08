@@ -11,11 +11,8 @@ class ProjectsController < ApplicationController
 	end
 
 	def show
-		@project1 = Project.find(params[:id])
-		@group = Group.find(@project1.group_id)
+		@group = Group.find(@project.group_id)
 		@person = Person.new
-		@project = Project.new
-
 	end
 
 	def new
@@ -78,10 +75,10 @@ class ProjectsController < ApplicationController
 
 	private
 		def set_project
-			@project1 = Project.find(params[:id])
+			@project = Project.find(params[:id])
 		end
 
 		def project_params
-			params.require(:project).permit(:name, :startDate, :endDate, :group_id, :active)
+			params.require(:project).permit(:name, :startDate, :endDate, :group_id, :active,:ProjectDetails)
 		end
 end

@@ -65,6 +65,10 @@
 				    <%= f.label :interestAreas, "Interest Areas :" %><br>
 				    <%= f.text_area :interestAreas,:class => 'input-xlarge textArea',:placeholder => "Interested Areas: eg. Node.js" %>
 				  </div>
+				  <div class="field">
+				    <%= f.label :PersonalLearnings, "Personal Learnings :" %><br>
+				    <%= f.text_area :PersonalLearnings,:class => 'input-xlarge textArea',:placeholder => "PersonalLearnings" %>
+				  </div>
 				  <input type="hidden" name="person[active]" value="<%= "true" %>">
 				  <div class="field">
 				    <%= f.label :group_id %> : 
@@ -107,6 +111,11 @@
 				  <div class="field">
 				    <%= f.label :name %><br>
 				    <%= f.text_field :name,:class => 'input-xlarge name',:placeholder => "Project Name: eg. Profiles" %>
+				  </div>
+				  
+				  <div class="field">
+				    <%= f.label :ProjectDetails %><br>
+				    <%= f.text_area :ProjectDetails,:class => 'input-xlarge textArea',:placeholder => "ProjectDetails" %>
 				  </div>
 				  <div class="field">
 				    <%= f.label :startDate %><br>

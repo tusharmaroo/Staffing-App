@@ -5,6 +5,39 @@
  * Globals
  */
 
+ .container {
+width: 1100px;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+box-sizing: border-box;
+display: inline-block;
+min-width: 1.5em;
+padding: 0.5em 1em;
+margin-left: 2px;
+text-align: center;
+text-decoration: none !important;
+cursor: pointer;
+color: #333333 !important;
+border: 1px solid transparent;
+}
+
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+color: #333333 !important;
+border: 1px solid #cacaca;
+background-color: white;
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, white), color-stop(100%, gainsboro));
+background: -webkit-linear-gradient(top, white 0%, gainsboro 100%);
+background: -moz-linear-gradient(top, white 0%, gainsboro 100%);
+background: -ms-linear-gradient(top, white 0%, gainsboro 100%);
+background: -o-linear-gradient(top, white 0%, gainsboro 100%);
+background: linear-gradient(to bottom, white 0%, gainsboro 100%);
+}
+
+
+
+
  .scrollable {
     height: 250px;
     overflow: auto;
@@ -76,7 +109,6 @@ body {
 body {
   color: black;
   text-align: center;
-  text-shadow: 0 1px 3px rgba(0,0,0,.5);
   box-shadow: inset 0 0 100px rgba(0,0,0,.5);
 }
 
@@ -232,3 +264,80 @@ text-align: left;
 .table {
 width: 90%;
 }
+
+// Place all the styles related to the groups controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+/*
+ * Base structure
+ */
+
+
+
+/*
+ * Global add-ons
+ */
+
+.sub-header {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+
+/*
+ * Sidebar
+ */
+
+/* Hide for mobile, show later */
+.sidebar {
+  display: none;
+}
+@media (min-width: 768px) {
+  .sidebar {
+    position: fixed;
+    top: 51px;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    display: block;
+    padding: 20px;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+    background-color: #f5f5f5;
+    border-right: 1px solid #eee;
+  }
+}
+
+/* Sidebar navigation */
+.nav-sidebar {
+  margin-right: -21px; /* 20px padding + 1px border */
+  margin-bottom: 20px;
+  margin-left: -20px;
+}
+.nav-sidebar > li > a {
+  padding-right: 20px;
+  padding-left: 20px;
+}
+.nav-sidebar > .active > a {
+  color: #fff;
+  background-color: #428bca;
+}
+
+
+/*
+ * Main content
+ */
+
+.main {
+  padding: 20px;
+}
+@media (min-width: 768px) {
+  .main {
+    padding-right: 40px;
+    padding-left: 40px;
+  }
+}
+.main .page-header {
+  margin-top: 0;
+}
+

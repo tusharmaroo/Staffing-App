@@ -11,6 +11,10 @@
     </div>
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
+        <% @myProfile = Person.where(:emailid => current_user.email).first if user_signed_in? %>
+        <% if !@myProfile.nil? %>
+        <li><a href="<%= person_path(@myProfile) %>">My Profile</a></li>
+        <% end %>
         <% if user_signed_in? && current_user.Admin? %>
           <li><a href="<%= groups_path %>">All Groups</a></li>
           <li><a href="<%= projects_path %>">All Projects</a></li>
