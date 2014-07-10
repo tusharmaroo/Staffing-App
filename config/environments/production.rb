@@ -45,15 +45,17 @@ Rails.application.configure do
   # Set to :debug to see everything in the log.
   config.log_level = :info
 
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    address:              'smtp.gmail.com',
-    port:                 587,
-    domain:               'stormy-ravine-9512.herokuapp.com',
-    user_name:            'vishalattcs',
-    password:             'mypasstcs',
-    authentication:       'plain',
-    enable_starttls_auto: true  }
+  config.action_mailer.perform_deliveries = true
+config.action_mailer.raise_delivery_errors = true
+
+ActionMailer::Base.smtp_settings = {
+  :address              => "smtp.gmail.com",
+  :port                 => 587,
+  :user_name            => 'vishalattcs',
+  :password             => 'mypasstcs',
+  :authentication       => 'plain',
+  :enable_starttls_auto => true
+}
 
   # Prepend all log lines with the following tags.
   # config.log_tags = [ :subdomain, :uuid ]
