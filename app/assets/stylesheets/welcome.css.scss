@@ -5,6 +5,8 @@
  * Globals
  */
 
+
+
  .container {
 width: 1100px;
 }
@@ -331,6 +333,11 @@ width: 90%;
 .main {
   padding: 20px;
 }
+
+.masthead-nav > li > a,.masthead-nav > .active > a {
+  color: black;
+}
+
 @media (min-width: 768px) {
   .main {
     padding-right: 40px;
