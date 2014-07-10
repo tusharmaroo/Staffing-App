@@ -14,6 +14,8 @@ class PeopleController < ApplicationController
 	def create
 		@group = Group.find(params[:person][:group_id])
 		@personnew = Person.new(person_params)
+		@deviseUser = User.create_new_user(params[:person][:emailid])
+		UserMailer.welcome_email(@personnew).deliver
 		if @personnew.save
 			redirect_to group_people_path(@group)
 		else
