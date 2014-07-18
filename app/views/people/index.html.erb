@@ -8,7 +8,6 @@
             <th>Tcsexp</th>
             <th>Releventexp</th>
             <th>Allocation</th>
-            <th>Interestareas</th>
             <th>Active</th>
             <th>Location</th>
             <th>Group</th>
@@ -26,7 +25,6 @@
               <td><%= person.tcsExp %></td>
               <td><%= person.relExp %></td>
               <td><%= person.allocation %></td>
-              <td><%= person.interestAreas %></td>
               <td><%= person.active %></td>
               <td><%= person.location %></td>
               <td><%= Group.find(person.group_id).name %></td>
@@ -42,14 +40,5 @@
           <% end %> 
         </table>
         </div>
-
-<script type="text/javascript">
-$('.data').dataTable();
-$('#myTab a').click(function (e) {
-  e.preventDefault()
-  $(this).tab('show')
-})
-</script>
-
   </div>
 </div>

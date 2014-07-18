@@ -3,17 +3,13 @@
     <table class="data table table-striped">
         <thead>
             <th>Name</th>
-            <th>Skills</th>
-            <th>Totalexp</th>
-            <th>Tcsexp</th>
-            <th>Releventexp</th>
+            <th>Skill</th>
+            <th>Relevent Exp.</th>
             <th>Allocation</th>
-            <th>Interestareas</th>
             <th>Active</th>
             <th>Location</th>
-            <th>Group</th>
             <% if current_user.Admin %>
-            <th>Delete</th>
+            <th>Disable</th>
             <% end %>
         </thead>
         <% @people = Person.all %>
@@ -23,14 +19,10 @@
             <tr>
               <td><a href="<%= person_path(person) %>"><%= person.name %></a></td>
               <td><%= person.skills %></td>
-              <td><%= person.totalExp %></td>
-              <td><%= person.tcsExp %></td>
               <td><%= person.relExp %></td>
               <td><%= person.allocation %></td>
-              <td><%= person.interestAreas %></td>
               <td><%= person.active ? "Yes" : "No" %></td>
               <td><%= person.location %></td>
-              <td><%= Group.find(person.group_id).name %></td>
               <% if current_user.Admin %>
               <% if person.active? %>
               <td><%= link_to 'Disable', person, method: :delete, data: { confirm: 'Are you sure?' } %></td>

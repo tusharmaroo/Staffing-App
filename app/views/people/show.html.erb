@@ -1,4 +1,3 @@
-tushar
 <div class="row">
   <div class="col-md-2">
   <%= render 'groups/sidebar' %>
@@ -74,16 +73,18 @@ tushar
     </table>
     <hr>
           
-    <% if show_edit_button(@person)%> 
-    <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#newAssignmentModal">Assign a Project</a> | <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#editPersonModal">Edit Details</a> |<% end %>
-    <% if !current_user.Admin && (current_user.email == @person.emailid) %> 
-    <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#editPersonModal">Edit Details</a><% end %>
     <% if current_user.Admin %>
+      <% if @person.allocation < 100 %>
+      <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#newAssignmentModal">Assign a Project</a> | <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#editPersonModal">Edit Details</a> |<% end %>
+      <% if !current_user.Admin && (current_user.email == @person.emailid) %> 
+      <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#editPersonModal">Edit Details</a>
+      <% end %>
+    
     <%#= link_to 'Edit', edit_person_path(@person), :class=> "btn btn-sm btn-primary" %>
     <% if @person.active? %>
-    <%= link_to @person.active?  ? 'Deactivate' : "Activate",@person.active?  ? @person :  person_enable_path(@person) ,  :class=> "btn btn-sm btn-primary", method: :delete, data: { confirm: 'Are you sure?' } %>
+    <%= link_to "Activate", @person ,  :class=> "btn btn-sm btn-primary", method: :delete, data: { confirm: 'Are you sure?' } %>
     <% else %>
-    <%= link_to 'Activate',, :class=> "btn btn-sm btn-primary", data: { confirm: 'Are you sure?' } %>
+    <%= link_to 'Activate',person_enable_path(@person), :class=> "btn btn-sm btn-primary", data: { confirm: 'Are you sure?' } %>
     <% end %>
     <% end %>
 

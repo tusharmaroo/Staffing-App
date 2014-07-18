@@ -1,3 +1,5 @@
+<div class="container">
+<%= render 'groups/sidebar' %>
 <%= form_for(@group) do |f| %>
   <% if @group.errors.any? %>
     <div id="error_explanation">
@@ -10,32 +12,18 @@
       </ul>
     </div>
   <% end %>
-
-<div class="container">
-  <%= render 'groups/sidebar' %>
-  <% if @group.active? %>
-    <%= link_to 'Deactivate', @group, :class=> "btn btn-sm btn-primary", method: :delete, data: { confirm: 'Are you sure?' } %>
-    <% else %>
-    <%= link_to 'Activate', group_enable_path(@group), :class=> "btn btn-sm btn-primary", data: { confirm: 'Are you sure?' } %>
-    <% end %>
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :active %><br>
-    <%#= f.text_field :group_id %>
-    <select id="group_active" name="group[active]">
-        <option value="<%= true %>">
-          <%= "Active" %>
-        </option>
-        <option value="<%= false %>">
-          <%= "Inactive" %>
-        </option>
-    </select>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+<div class="field">
+<%= f.label :name %>
+<%= f.text_field :name %>
+</div>
+<div class="actions">
+<%= f.submit "Update Name" %>
+</div>
+<% end %>
+<br>
+<% if @group.active? %>
+<%= link_to 'Deactivate', @group, :class=> "btn btn-sm btn-danger", method: :delete, data: { confirm: 'Are you sure?' } %>
+<% else %>
+<%= link_to 'Activate', group_enable_path(@group), :class=> "btn btn-sm btn-primary", data: { confirm: 'Are you sure?' } %>
 <% end %>
 </div>

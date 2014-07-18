@@ -5,13 +5,13 @@
   <thead>
     <tr>
       <th>Name</th>
-      <th>Startdate</th>
-      <th>Enddate</th>
+      <th>Start Date</th>
+      <th>End Date</th>
       <th>Active</th>
       <% if current_user.Admin %>
       <th>Show</th>
       <th>Edit</th>
-      <th>Delete</th>
+      <th>Disable</th>
       <% end %>
     </tr>
   </thead>
@@ -23,7 +23,7 @@
         <td><%= link_to project.name, project %></td>
         <td><%= nice_date_form(project.startDate) %></td>
         <td><%= nice_date_form(project.endDate) %></td>
-        <td><%= project.active %></td>
+        <td><%= project.active ? 'Yes' : 'No' %></td>
         <% if current_user.Admin %>
         <td><%= link_to 'Show', project %></td>
         <td><%= link_to 'Edit', edit_project_path(project) %></td>

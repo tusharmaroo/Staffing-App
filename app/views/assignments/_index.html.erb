@@ -35,7 +35,7 @@
                   <% @assignments.each do |assignment| %>
                     <% @finalBillable = @finalBillable || assignment.billable %>
                   <% end %>
-                  <%= @finalBillable %><br>
+                  <%= @finalBillable ? 'Yes' : 'No' %><br>
                   </td>
                   <td><% @assignments.each do |assignment| %>
                     <%= assignment.allocation %><br>
@@ -91,7 +91,7 @@
                     <% @assignments.each do |assignment| %>
                       <% @finalBillable = @finalBillable || assignment.billable %>
                     <% end %>
-                    <%= @finalBillable %><br>
+                    <%= @finalBillable ? 'Yes' : 'No' %><br>
                   </td>
                   <td><% @assignments.each do |assignment| %>
                     <%= assignment.allocation %><br>
