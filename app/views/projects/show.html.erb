@@ -27,16 +27,18 @@
 </tr>
 </table>
 </div>
-currently assigned team members!!
-<% currentlyAssignedTeamMembers(@project) %>
-<% @teamMembers.each do |teamMember| %>
-<%= link_to teamMember.name, person_path(teamMember) %>
-<% end %>
 <% if current_user.Admin %>
 <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#editProjectModal">Edit</a>
 <%= link_to 'Edit', edit_project_path(@project) %> |
 <%= link_to 'Back', projects_path %>
 <% end %>
+<br>
+currently assigned team members!!<br>
+<% currentlyAssignedTeamMembers(@project) %>
+<% @teamMembers.each do |teamMember| %>
+<%= link_to teamMember.name, person_path(teamMember) %><br>
+<% end %>
+
 
 
 <div class="modal fade" id="editProjectModal" tabindex="-1" role="dialog" aria-labelledby="editProjectModal" aria-hidden="true">

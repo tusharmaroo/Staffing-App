@@ -1,10 +1,14 @@
 module ProjectsHelper
-	def currentlyAssignedTeamMembers project
-		@all = Assignment.where(:project_id => '1')
+	def currentlyAssignedTeamMembers project_id
+		@all = Assignment.where(:project_id => project_id)
 		@teamMembers = []
 		@all.each do |single|
 			@teamMembers.push(Person.find(single.person_id))
 		end
 		@teamMembers
+	end
+
+	def getProject project_id
+		Project.find(project_id)
 	end
 end

@@ -43,6 +43,7 @@ class ProjectsController < ApplicationController
 	def destroy
 		@project.active = false
 		@project.endDate = Time.now
+		@group = @project.group_id
 		@openAssignments = Assignment.where(:project_id => @project.id)
    		if (!@openAssignments.empty?)
    			@openAssignments.each do |openAssignment|
@@ -57,9 +58,9 @@ class ProjectsController < ApplicationController
    			end
    		end
 		if @project.save 
-			redirect_to projects_path
+			redirect_to group_projects_path(@group)
 		else
-			redirect_to edit_project_path
+			redirect_to group_projects_path(@group)
 		end
 	end
 

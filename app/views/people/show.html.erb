@@ -1,13 +1,11 @@
-<div class="row">
   <div class="col-md-2">
   <%= render 'groups/sidebar' %>
   </div>
-  <div class="col-md-5">
-    <p id="notice"><%= notice %></p>
+  <div class="col-md-4">
     <%#= render 'groups/sidebar' %>
     <table class="table table-striped">
       <tr>
-        <td><strong>Name:</strong></td>
+        <td>Name:</td>
         <td><%= @person.name %></td>
       </tr>
 
@@ -151,7 +149,7 @@
             </div>
             <div class="field">
                 <%= f.label :allocation %><br>
-                <%= f.number_field :allocation, :class => 'input-xlarge',:min => '0',:max => '100' %>
+                <%= f.number_field :allocation, :class => 'input-xlarge',:min => '0',:max => (100 - @person.allocation), :step => '5' %>
             </div>
             <div class="actions">
                 <%= f.submit %>
@@ -253,37 +251,36 @@
         <div class="modal-footer"></div>
         </div>
       </div>          
-    </div>
-         <div class="row">     
-        <div class="col-md-5 scrollable" id="ttt">
+    </div>    
+        <div class="col-md-6 scrollable" id="ttt">
         
           <h4>Active Tasks:</h4>
-          <% @assignments.each do |temp| %>
-          <% if (temp.active) && (temp.enddate - Time.now) > 0 %>
-          ID : <%= temp.id %><br>
-          Billable: <%= temp.billable %><br>
-          Allcoation: <%= temp.allocation %>%<br>
-          Brief of Work: Lorem Ipsum Lorem Ipsum Lorem Ipsum <br>
-          Assignment Duration: <%= distance_of_time_in_words(temp.enddate,temp.startdate).capitalize %><br>
-          <%= link_to "edit" , edit_assignment_path(temp) %><br>
+          <% @assignments.each do |assignment| %>
+          <% if (assignment.active) && (assignment.enddate - Time.now) > 0 %>
+          Project Name :<%= link_to getProject(assignment.project_id).name, project_path(getProject(assignment.project_id)) %><br>
+          Allcoation: <%= assignment.allocation %>%<br>
+          Project start: 11/12/2014 | project End : 11/12/2014<br>
+          Staffing start : 11/12/2014 | Staffing End : 11/12/2014<br>
+          <%= link_to edit_assignment_path(assignment), class: "btn btn-default" do  %>
+              <i class="glyphicon glyphicon-edit"></i>
+          <% end %>
+          <br>
           <hr>
           <% end %>
           <% end %>
         </div>
-        <div class="col-md-5 scrollable" id="ttt">
+        <div class="col-md-6 scrollable" id="ttt">
           <h4>History:</h4>
           <% @assignments.each do |temp| %>
           <% if (!temp.active) || (temp.enddate - Time.now) < 0 %>
           ID : <%= temp.id %><br>
           Billable: <%= temp.billable %><br>
           Allcoation: <%= temp.allocation %>%<br>
-          Brief of Work: Lorem Ipsum Lorem Ipsum Lorem Ipsum <br>
           Assignment Duration: <%= distance_of_time_in_words(temp.enddate,temp.startdate).capitalize %><br><hr>
           <% end %>
           <% end %>
         </div>
-  </div>
-  </div>
+
 <script>
   $(function() {
     <% hashProject = "[" %>
