@@ -5,4 +5,7 @@ module ApplicationHelper
       end
    end
 
+   def getAllLocations
+   		["Mumbai","Banglore","Gurgaon","Kolkata","NYC"]
+   end
 end

@@ -1,7 +1,7 @@
-  <div class="col-md-2">
-  <%= render 'groups/sidebar' %>
-  </div>
-  <div class="col-md-4">
+<div class="col-md-2">
+      <%= render 'groups/sidebar' %>
+</div>
+<div class="col-md-4">
     <%#= render 'groups/sidebar' %>
     <table class="table table-striped">
       <tr>
@@ -80,9 +80,9 @@
     
     <%#= link_to 'Edit', edit_person_path(@person), :class=> "btn btn-sm btn-primary" %>
     <% if @person.active? %>
-    <%= link_to "Activate", @person ,  :class=> "btn btn-sm btn-primary", method: :delete, data: { confirm: 'Are you sure?' } %>
+    <%= link_to "Disable", @person ,  :class=> "btn btn-sm btn-primary", method: :delete, data: { confirm: 'Are you sure?' } %>
     <% else %>
-    <%= link_to 'Activate',person_enable_path(@person), :class=> "btn btn-sm btn-primary", data: { confirm: 'Are you sure?' } %>
+    <%= link_to 'Enable',person_enable_path(@person), :class=> "btn btn-sm btn-primary", data: { confirm: 'Are you sure?' } %>
     <% end %>
     <% end %>
 
@@ -115,25 +115,8 @@
               <input type="hidden" name="assignment[group_id]" value="<%= @person.group_id %>">
               <div class="field">
                 <%= f.label :project_id %><br>
-                <%#= f.text_field :group_id %>
-                <select_ id="assignment_project_id" name="assignment[project_id]">
-                  <% @projects.each do |project| %>
-                  <% if project.group_id == @person.group_id %>
-                    <option value="<%= project.id %>">
-                      <%= project.name %>
-                    </option>
-                    <% end %>
-                  <% end %>
-                </select>
+                <%= f.select :project_id, options_from_collection_for_select(getGroupProjects(@person.group_id), "id", "name") %>
               </div>
-              <%#= "<div class="field">
-                <div class="ui-widget">
-                  <label for="tags">Project: </label>
-                  <input id="tags" name="assignment[project_id]">
-                  <div id="container_tags">
-                  </div>
-                </div>
-              </div>" %>
               <div class="field">
                 <%= f.label :billable %><br>
                 <%= f.check_box :billable %>
@@ -192,15 +175,9 @@
               <%= f.label :skills %><br>
               <%= f.text_area :skills %>
             </div>
-            <div class="field">
-              <%= f.label :Location %><br>
-              <select id="person_location" name="person[location]">
-                <option value="Mumbai" <%= "selected" if @person.location == "Mumbai" %> >Mumbai</option>
-                <option value="Banglore" <%= "selected" if @person.location == "Banglore" %> >Banglore</option>
-                <option value="Gurgaon" <%= "selected" if @person.location == "Gurgaon" %> >Gurgaon</option>
-                <option value="Kolkata" <%= "selected" if @person.location == "Kolkata" %> >Kolkata</option>
-                <option value="NYC" <%= "selected" if @person.location == "NYC" %> >NYC</option>
-              </select>
+            <div id="field">
+              <%= f.label :location %><br>
+              <%= f.select :location, options_for_select(getAllLocations,@person.location) %>
             </div>
             <div class="field">
               <%= f.label :totalExp %><br>

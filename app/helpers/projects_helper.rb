@@ -11,4 +11,8 @@ module ProjectsHelper
 	def getProject project_id
 		Project.find(project_id)
 	end
+
+	def getGroupProjects id
+		Project.where(:group_id => id)		
+	end
 end

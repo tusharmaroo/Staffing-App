@@ -28,3 +28,5 @@ $('#peopleTab a').click(function (e) {
   $(this).tab('show')
 });
 $(".scroll-area").scrollspy({target: "#ttt"});
+
+$("i").tooltip();

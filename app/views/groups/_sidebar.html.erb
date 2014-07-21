@@ -11,134 +11,134 @@
 
 
 
-<div class="modal fade" id="newPersonModal" tabindex="-1" role="dialog" aria-labelledby="newPersonModal" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-            <h4 class="modal-title" id="myModalLabel">New Person</h4>
-            </div>
-            <div class="modal-body">
-                <%= form_for(Person.new) do |f| %>
-				  <div class="field">
-				    <%= f.label :name ,"Name :" %><br>
-				    <%= f.text_field :name,:class => 'input-xlarge name',:placeholder => "Person Name: eg. Andrew" %>
-				  </div>
-				  <div class="field">
-				    <%= f.label :skills ,"Skills :" %><br>
-				    <%= f.text_area :skills,:class => 'input-xlarge textArea',:placeholder => "Enter the skills: eg. Angular.js, Rails etc" %>
-				  </div>
-				  <div class="field">
-				    <%= f.label :location, "Location" %><br>
+	<div class="modal fade" id="newPersonModal" tabindex="-1" role="dialog" aria-labelledby="newPersonModal" aria-hidden="true">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	            <div class="modal-header">
+		            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+		            <h4 class="modal-title" id="myModalLabel">New Person</h4>
+	            </div>
+	            <div class="modal-body">
+	                <%= form_for(Person.new) do |f| %>
+					  <div class="field">
+					    <%= f.label :name ,"Name :" %><br>
+					    <%= f.text_field :name,:class => 'input-xlarge name',:placeholder => "Person Name: eg. Andrew" %>
+					  </div>
+					  <div class="field">
+					    <%= f.label :skills ,"Skills :" %><br>
+					    <%= f.text_area :skills,:class => 'input-xlarge textArea',:placeholder => "Enter the skills: eg. Angular.js, Rails etc" %>
+					  </div>
+					  <div class="field">
+					    <%= f.label :location, "Location" %><br>
 
-				    <select id="person_location" name="person[location]" class='input-xlarge'>
-				      <option value="Mumbai">Mumbai</option>
-				      <option value="Banglore">Banglore</option>
-				      <option value="Gurgaon">Gurgaon</option>
-				      <option value="Kolkata">Kolkata</option>
-				      <option value="NYC">NYC</option>
-				    </select>
-				  </div>
-				  <div class="field">
-				    <%= f.label :totalExp, "Total Experience :" %><br>
-				    <%= f.number_field :totalExp, :class => 'input-xlarge numeric',:placeholder => "Total Experience in years: eg. 2.5",:step => "0.5",:min => "0" %>
-				  </div>
-				  <div class="field">
-				    <%= f.label :tcsExp, "TCS Experience :" %><br>
-				    <%= f.number_field :tcsExp, :class => 'input-xlarge numeric',:placeholder => "TCS Experience in years",:step => "0.5",:min => "0" %>
-				  </div>
-				  <div class="field">
-				    <%= f.label :relExp, "Relevent Experience :" %><br>
-				    <%= f.number_field :relExp, :class => 'input-xlarge numeric',:placeholder => "Relevent Technology Experience in years",:step => "0.5",:min => "0" %>
-				  </div>
-				  <input type="hidden" name="person[allocation]" value="<%= 0 %>">
-				  <div class="field">
-				    <%= f.label :mobilenumber, "Mobile Number :" %><br>
-				    <%= f.number_field :mobilenumber, :class => 'input-xlarge phonenumber',:placeholder => "Enter Mobile Number: eg. 9571640968" %>
-				  </div>
-				  <div class="field">
-				    <%= f.label :emailid, "Email Address :" %><br>
-				    <%= f.text_field :emailid,:class => 'input-xlarge email',:placeholder => "Email Address: eg. abc@xyz.com" %>
-				  </div>
-				  <div class="field">
-				    <%= f.label :interestAreas, "Interest Areas :" %><br>
-				    <%= f.text_area :interestAreas,:class => 'input-xlarge textArea',:placeholder => "Interested Areas: eg. Node.js" %>
-				  </div>
-				  <div class="field">
-				    <%= f.label :PersonalLearnings, "Personal Learnings :" %><br>
-				    <%= f.text_area :PersonalLearnings,:class => 'input-xlarge textArea',:placeholder => "PersonalLearnings" %>
-				  </div>
-				  <input type="hidden" name="person[active]" value="<%= "true" %>">
-				  <div class="field">
-				    <%= f.label :group_id %> : 
-				    <input type="hidden" name="person[group_id]" value="<%= @group.id %>">
-				    <%= f.label @group.name %><br>
-				  </div>
-				  <div class="actions">
-				    <%= f.submit "Create" %>
-				  </div>
-				<% end %>
-            </div>
-            <div class="modal-footer">
-        </div>
-    </div>
-  </div>
-</div>
+					    <select id="person_location" name="person[location]" class='input-xlarge'>
+					      <option value="Mumbai">Mumbai</option>
+					      <option value="Banglore">Banglore</option>
+					      <option value="Gurgaon">Gurgaon</option>
+					      <option value="Kolkata">Kolkata</option>
+					      <option value="NYC">NYC</option>
+					    </select>
+					  </div>
+					  <div class="field">
+					    <%= f.label :totalExp, "Total Experience :" %><br>
+					    <%= f.number_field :totalExp, :class => 'input-xlarge numeric',:placeholder => "Total Experience in years: eg. 2.5",:step => "0.5",:min => "0" %>
+					  </div>
+					  <div class="field">
+					    <%= f.label :tcsExp, "TCS Experience :" %><br>
+					    <%= f.number_field :tcsExp, :class => 'input-xlarge numeric',:placeholder => "TCS Experience in years",:step => "0.5",:min => "0" %>
+					  </div>
+					  <div class="field">
+					    <%= f.label :relExp, "Relevent Experience :" %><br>
+					    <%= f.number_field :relExp, :class => 'input-xlarge numeric',:placeholder => "Relevent Technology Experience in years",:step => "0.5",:min => "0" %>
+					  </div>
+					  <input type="hidden" name="person[allocation]" value="<%= 0 %>">
+					  <div class="field">
+					    <%= f.label :mobilenumber, "Mobile Number :" %><br>
+					    <%= f.number_field :mobilenumber, :class => 'input-xlarge phonenumber',:placeholder => "Enter Mobile Number: eg. 9571640968" %>
+					  </div>
+					  <div class="field">
+					    <%= f.label :emailid, "Email Address :" %><br>
+					    <%= f.text_field :emailid,:class => 'input-xlarge email',:placeholder => "Email Address: eg. abc@xyz.com" %>
+					  </div>
+					  <div class="field">
+					    <%= f.label :interestAreas, "Interest Areas :" %><br>
+					    <%= f.text_area :interestAreas,:class => 'input-xlarge textArea',:placeholder => "Interested Areas: eg. Node.js" %>
+					  </div>
+					  <div class="field">
+					    <%= f.label :PersonalLearnings, "Personal Learnings :" %><br>
+					    <%= f.text_area :PersonalLearnings,:class => 'input-xlarge textArea',:placeholder => "PersonalLearnings" %>
+					  </div>
+					  <input type="hidden" name="person[active]" value="<%= "true" %>">
+					  <div class="field">
+					    <%= f.label :group_id %> : 
+					    <input type="hidden" name="person[group_id]" value="<%= @group.id %>">
+					    <%= f.label @group.name %><br>
+					  </div>
+					  <div class="actions">
+					    <%= f.submit "Create" %>
+					  </div>
+					<% end %>
+	            </div>
+	            <div class="modal-footer">
+	        </div>
+	    </div>
+	  </div>
+	</div>
 
 
-<div class="modal fade" id="newProjectModal" tabindex="-1" role="dialog" aria-labelledby="newProjectModal" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-            <h4 class="modal-title" id="myModalLabel">New Project</h4>
-            </div>
-            <div class="modal-body">
-              <%= form_for(Project.new) do |f| %>
-				  <% if @project.errors.any? %>
-				    <div id="error_explanation">
-				      <h2><%= pluralize(@project.errors.count, "error") %> prohibited this project from being saved:</h2>
+	<div class="modal fade" id="newProjectModal" tabindex="-1" role="dialog" aria-labelledby="newProjectModal" aria-hidden="true">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	            <div class="modal-header">
+		            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+		            <h4 class="modal-title" id="myModalLabel">New Project</h4>
+	            </div>
+	            <div class="modal-body">
+	              <%= form_for(Project.new) do |f| %>
+					  <% if @project.errors.any? %>
+					    <div id="error_explanation">
+					      <h2><%= pluralize(@project.errors.count, "error") %> prohibited this project from being saved:</h2>
 
-				      <ul>
-				      <% @project.errors.full_messages.each do |message| %>
-				        <li><%= message %></li>
-				      <% end %>
-				      </ul>
-				    </div>
-				  <% end %>
+					      <ul>
+					      <% @project.errors.full_messages.each do |message| %>
+					        <li><%= message %></li>
+					      <% end %>
+					      </ul>
+					    </div>
+					  <% end %>
 
-				  <div class="field">
-				    <%= f.label :name %><br>
-				    <%= f.text_field :name,:class => 'input-xlarge name',:placeholder => "Project Name: eg. Profiles" %>
-				  </div>
-				  
-				  <div class="field">
-				    <%= f.label :ProjectDetails %><br>
-				    <%= f.text_area :ProjectDetails,:class => 'input-xlarge textArea',:placeholder => "ProjectDetails" %>
-				  </div>
-				  <div class="field">
-				    <%= f.label :startDate %><br>
-				    <%= f.text_field :startDate ,:class => 'input-xlarge datepicker',:readonly => 'true' %>
-				  </div>
-				  <div class="field">
-				    <%= f.label :endDate %><br>
-				    <%= f.text_field :endDate ,:class => 'input-xlarge datepicker',:readonly => 'true' %>
-				  </div>
-				  <input type="hidden" name="project[active]" value="true">
-				  <div class="field">
-				    <%= f.label :group_id %> : 
-				    <input type="hidden" name="project[group_id]" value="<%= @group.id %>">
-				    <%= f.label @group.name %><br>
-				  </div>
-				  <div class="actions">
-				    <%= f.submit %>
-				  </div>
-				<% end %>  
-            </div>
-            <div class="modal-footer">
-        </div>
-    </div>
-  </div>
-</div>
+					  <div class="field">
+					    <%= f.label :name %><br>
+					    <%= f.text_field :name,:class => 'input-xlarge name',:placeholder => "Project Name: eg. Profiles" %>
+					  </div>
+					  
+					  <div class="field">
+					    <%= f.label :ProjectDetails %><br>
+					    <%= f.text_area :ProjectDetails,:class => 'input-xlarge textArea',:placeholder => "ProjectDetails" %>
+					  </div>
+					  <div class="field">
+					    <%= f.label :startDate %><br>
+					    <%= f.text_field :startDate ,:class => 'input-xlarge datepicker',:readonly => 'true' %>
+					  </div>
+					  <div class="field">
+					    <%= f.label :endDate %><br>
+					    <%= f.text_field :endDate ,:class => 'input-xlarge datepicker',:readonly => 'true' %>
+					  </div>
+					  <input type="hidden" name="project[active]" value="true">
+					  <div class="field">
+					    <%= f.label :group_id %> : 
+					    <input type="hidden" name="project[group_id]" value="<%= @group.id %>">
+					    <%= f.label @group.name %><br>
+					  </div>
+					  <div class="actions">
+					    <%= f.submit %>
+					  </div>
+				  <% end %>  
+	            </div>
+	            <div class="modal-footer">
+	        </div>
+	    </div>
+	  </div>
+	</div>
 
 </div>
