@@ -72,7 +72,7 @@
     <hr>
           
     <% if current_user.Admin %>
-      <% if @person.allocation < 100 %>
+      <% if @person.allocation < 100 && @person.active? %>
       <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#newAssignmentModal">Assign a Project</a> | <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#editPersonModal">Edit Details</a> |<% end %>
       <% if !current_user.Admin && (current_user.email == @person.emailid) %> 
       <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#editPersonModal">Edit Details</a>

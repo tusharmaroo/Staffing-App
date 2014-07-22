@@ -1,13 +1,9 @@
 <div class="row placeholders">
 <% @groups.each do |group| %>
-	<div class="col-xs-6 col-sm-3 placeholder">
+	<div class="col-xs-6 col-sm-3 col-md-3 placeholder">
 	  
 	  <h4><%= link_to group.name ,group_path(group) %></h4><br>
 	  <a href="<%= group_path(group) %>"><img src="http://placehold.it/150x150/3276B1/ffffff&text=<%= group.name %>" /></a><br><br>
-	  <% if false && current_user.Admin %> 
-	  <button type="button" class="btn btn-primary"><%= link_to 'edit' ,edit_group_path(group) %></button>
-	  <button type="button" class="btn btn-primary"><%= link_to 'delete' ,group_path(group), method: :delete ,data: { confirm: 'Are you sure?' } %></button>
-	  <% end %>
 	</div>
 <% end %>
 </div>

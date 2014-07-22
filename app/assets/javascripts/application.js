@@ -19,14 +19,13 @@
 //= require turbolinks
 //= require_tree .
 $(function() {
-    $( ".datepicker" ).datepicker({ dateFormat: "yy-mm-dd" });
-  });
+    $( ".datepicker" ).datepicker({ dateFormat: "yy-mm-dd",
+    								showButtonPanel: true,
+    								minDate: 0 });
+});
 
 $('.data').dataTable();
 $('#peopleTab a').click(function (e) {
   e.preventDefault()
   $(this).tab('show')
 });
-$(".scroll-area").scrollspy({target: "#ttt"});
-
-$("i").tooltip();
