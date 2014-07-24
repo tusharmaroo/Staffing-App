@@ -15,7 +15,7 @@ class PeopleController < ApplicationController
 		@group = Group.find(params[:person][:group_id])
 		@personnew = Person.new(person_params)
 		@deviseUser = User.create_new_user(params[:person][:emailid])
-		UserMailer.welcome_email(@personnew).deliver
+		#UserMailer.welcome_email(@personnew).deliver
 		if @personnew.save
 			redirect_to group_people_path(@group)
 		else
@@ -50,10 +50,7 @@ class PeopleController < ApplicationController
 		@openAssignments = Assignment.where(:person_id => @person.id, :active => true)
    		if (!@openAssignments.empty?)
    			@openAssignments.each do |openAssignment|
-   				openAssignment.active = false
-			    openAssignment.enddate = Time.now
-			    openAssignment.save
-			    #openAssignment.destroy
+   				openAssignment.deactive
 			    @person.allocation -= openAssignment.allocation
 			    @person.save
    			end

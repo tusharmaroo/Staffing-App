@@ -1,107 +1,108 @@
 <div class="container mainContent">
-<ul class="nav nav-tabs" id="peopleTab">
-  <li class="active"><a href="#unallocatedPersons">Unallocated Persons</a></li>
-  <li><a href="#allocatedPersons">Allocated Persons</a></li>
-</ul>
+  <ul class="nav nav-tabs" id="peopleTab">
+    <li class="active"><a href="#unallocatedPersons">Unallocated Persons</a></li>
+    <li><a href="#allocatedPersons">Allocated Persons</a></li>
+  </ul>
 
-<div id='content' class="tab-content">
-  <div class="tab-pane active" id="unallocatedPersons">
-    <table class="data table table-hover">
-      <thead>
-          <th>Assignment ID/s</th>
-          <th>Name</th>
-          <th>Project</th>
-          <th>Billable</th>
-          <th>Allocation</th>
-      </thead>
-     
-      <% @people.each do |person| %>
-          <% if (person.group_id == @group.id) && (person.allocation != 100) && (person.allocation != 0) && (person.active?) %>
-            <% @assignments = Assignment.where(person_id: person.id) %>
-
-              <tr class="<%= getProjectStatus(person.id) %>"><td>
-              <% @assignments.each do |assignment| %>
-                <%= assignment.id %><br>
-              <% end %></td>
-                <td><a href="<%= person_path(person) %>"><%= person.name %></a></td>
-              <td><% @assignments.each do |assignment| %>  
-                
-                <a href="<%= project_path(Project.find(assignment.project_id)) %>"><%= Project.find(assignment.project_id).name %></a><br>
-                
-                
-              <% end %></td><td>
-              <% @finalBillable = false %>
-              <% @assignments.each do |assignment| %>
-                <% @finalBillable = @finalBillable || assignment.billable %>
-              <% end %>
-              <%= @finalBillable ? 'Yes' : 'No' %><br>
-              </td>
-              <td><% @assignments.each do |assignment| %>
-                <%= assignment.allocation %><br>
-              <% end %></td>
-              </tr> 
-             
-
-
-          <% end %>
-        <% end %>
+  <div id='content' class="tab-content">
+    <div class="tab-pane active" id="unallocatedPersons">
+      <table class="data table table-hover">
+        <thead>
+            <th>Assignment ID/s</th>
+            <th>Name</th>
+            <th>Project</th>
+            <th>Billable</th>
+            <th>Allocation</th>
+        </thead>
+       
         <% @people.each do |person| %>
-          <% if (person.group_id == @group.id) && (person.allocation == 0) %>
-            <tr class="<%= getProjectStatus(person.id) %>">
-              <td><%= "NA" %></td>
-              <td><a href="<%= person_path(person) %>"><%= person.name %></a></td>
-              <td>
-              <%= "Not Assigned" %>                 
-              </td>
-              <td><%= "NA" %></td>
-              <td><%= 0 %></td>
-            </tr> 
-          <% end %>
-        <% end %>
-      </table>
-  </div>
-  <div class="tab-pane" id="allocatedPersons">
-    <table class="data table table-striped">
-      <thead>
-          <th>Assignment ID/s</th>
-          <th>Name</th>
-          <th>Project</th>
-          <th>Billable</th>
-          <th>Allocation</th>
-      </thead>
-     
-      <% @people.each do |person| %>
-          <% if (person.group_id == @group.id) && (person.allocation == 100) %>
-            <% @assignments = Assignment.where(person_id: person.id) %>
+            <% if (person.group_id == @group.id) && (person.allocation != 100) && (person.allocation != 0) && (person.active?) %>
+              <% @assignments = Assignment.where(person_id: person.id) %>
 
-            
-              <tr><td>
-              <% @assignments.each do |assignment| %>
-                <%= assignment.id %><br>
-              <% end %></td>
-                <td><a href="<%= person_path(person) %>"><%= person.name %></a></td>
-              <td><% @assignments.each do |assignment| %>  
-                
-                <a href="<%= project_path(Project.find(assignment.project_id)) %>"><%= Project.find(assignment.project_id).name %></a><br>
-                
-                
-              <% end %></td><td>
+                <tr class="<%= getProjectStatus(person.id) %>"><td>
+                <% @assignments.each do |assignment| %>
+                  <%= assignment.id %><br>
+                <% end %></td>
+                  <td><a href="<%= person_path(person) %>"><%= person.name %></a></td>
+                <td><% @assignments.each do |assignment| %>  
+                  
+                  <a href="<%= project_path(Project.find(assignment.project_id)) %>"><%= Project.find(assignment.project_id).name %></a><br>
+                  
+                  
+                <% end %></td><td>
                 <% @finalBillable = false %>
                 <% @assignments.each do |assignment| %>
                   <% @finalBillable = @finalBillable || assignment.billable %>
                 <% end %>
                 <%= @finalBillable ? 'Yes' : 'No' %><br>
-              </td>
-              <td><% @assignments.each do |assignment| %>
-                <%= assignment.allocation %><br>
-              <% end %></td>
-              </tr> 
-             
+                </td>
+                <td><% @assignments.each do |assignment| %>
+                  <%= assignment.allocation %><br>
+                <% end %></td>
+                </tr> 
+               
 
 
+            <% end %>
           <% end %>
-        <% end %>
-      </table> 
+          <% @people.each do |person| %>
+            <% if (person.group_id == @group.id) && (person.allocation == 0) %>
+              <tr class="<%= getProjectStatus(person.id) %>">
+                <td><%= "NA" %></td>
+                <td><a href="<%= person_path(person) %>"><%= person.name %></a></td>
+                <td>
+                <%= "Not Assigned" %>                 
+                </td>
+                <td><%= "NA" %></td>
+                <td><%= 0 %></td>
+              </tr> 
+            <% end %>
+          <% end %>
+        </table>
+    </div>
+    <div class="tab-pane" id="allocatedPersons">
+      <table class="data table table-striped">
+        <thead>
+            <th>Assignment ID/s</th>
+            <th>Name</th>
+            <th>Project</th>
+            <th>Billable</th>
+            <th>Allocation</th>
+        </thead>
+       
+        <% @people.each do |person| %>
+            <% if (person.group_id == @group.id) && (person.allocation == 100) %>
+              <% @assignments = Assignment.where(person_id: person.id) %>
+
+              
+                <tr><td>
+                <% @assignments.each do |assignment| %>
+                  <%= assignment.id %><br>
+                <% end %></td>
+                  <td><a href="<%= person_path(person) %>"><%= person.name %></a></td>
+                <td><% @assignments.each do |assignment| %>  
+                  
+                  <a href="<%= project_path(Project.find(assignment.project_id)) %>"><%= Project.find(assignment.project_id).name %></a><br>
+                  
+                  
+                <% end %></td><td>
+                  <% @finalBillable = false %>
+                  <% @assignments.each do |assignment| %>
+                    <% @finalBillable = @finalBillable || assignment.billable %>
+                  <% end %>
+                  <%= @finalBillable ? 'Yes' : 'No' %><br>
+                </td>
+                <td><% @assignments.each do |assignment| %>
+                  <%= assignment.allocation %><br>
+                <% end %></td>
+                </tr> 
+               
+
+
+            <% end %>
+          <% end %>
+        </table> 
+    </div>
   </div>
 </div>
 
@@ -109,9 +110,8 @@
 
 
 <script type="text/javascript">
-
-$('#peopleTab a').click(function (e) {
-  e.preventDefault();
-  $(this).tab('show');
-});
+  $('#peopleTab a').click(function (e) {
+    e.preventDefault();
+    $(this).tab('show');
+  });
 </script>

@@ -8,6 +8,7 @@
       <th>Start Date</th>
       <th>End Date</th>
       <th>Active</th>
+      <th>AllocatedPersons</th>
       <% if current_user.Admin %>
       <th>Show</th>
       <th>Edit</th>
@@ -15,7 +16,6 @@
       <% end %>
     </tr>
   </thead>
-
   <tbody>
     <% @projects.each do |project| %>
     <% if @group.id == project.group_id %>
@@ -24,6 +24,8 @@
         <td><%= nice_date_form(project.startDate) %></td>
         <td><%= nice_date_form(project.endDate) %></td>
         <td><%= project.active ? 'Yes' : 'No' %></td>
+        <% @allocatedpeople = project.AllocatedPeople %>
+        <td><a href="#" class="btn <%= "disabled" if @allocatedpeople.empty? %>" data-toggle="modal" data-target="#allocatedPersonModal"><%= @allocatedpeople.count %></a></td>
         <% if current_user.Admin %>
         <td>
         <%= link_to project, class: "btn btn-default" do %>
@@ -47,6 +49,30 @@
         <% end %>
         <% end %>
       </tr>
+
+      <div class="modal" id="allocatedPersonModal" tabindex="-1" role="dialog" aria-labelledby="allocatedPersonModal" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+              <h4 class="modal-title" id="myModalLabel">Allocated Persons</h4>
+            </div>
+            <div class="modal-body">
+                <% @allocatedpeople.each do |person| %>
+                  <ol>
+                    <li>
+                      <%= link_to "#{Person.find(person).name}", person_path(Person.find(person)) %>
+                    </li>
+                  </ol>
+                <% end %>
+            </div>
+            <div class="modal-footer">
+            </div>
+          </div>
+        </div>
+      </div>
+
+
       <% end %>
     <% end %>
   </tbody>
@@ -55,5 +81,7 @@
 </div>
 
 <br>
+
+
 
 

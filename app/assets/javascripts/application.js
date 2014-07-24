@@ -20,7 +20,6 @@
 //= require_tree .
 $(function() {
     $( ".datepicker" ).datepicker({ dateFormat: "yy-mm-dd",
-    								showButtonPanel: true,
     								minDate: 0 });
 });
 

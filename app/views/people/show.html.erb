@@ -73,11 +73,7 @@
           
     <% if current_user.Admin %>
       <% if @person.allocation < 100 && @person.active? %>
-      <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#newAssignmentModal">Assign a Project</a> | <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#editPersonModal">Edit Details</a> |<% end %>
-      <% if !current_user.Admin && (current_user.email == @person.emailid) %> 
-      <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#editPersonModal">Edit Details</a>
-      <% end %>
-    
+      <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#newAssignmentModal">Assign a Project</a><% end %>    
     <%#= link_to 'Edit', edit_person_path(@person), :class=> "btn btn-sm btn-primary" %>
     <% if @person.active? %>
     <%= link_to "Disable", @person ,  :class=> "btn btn-sm btn-primary", method: :delete, data: { confirm: 'Are you sure?' } %>
@@ -85,9 +81,12 @@
     <%= link_to 'Enable',person_enable_path(@person), :class=> "btn btn-sm btn-primary", data: { confirm: 'Are you sure?' } %>
     <% end %>
     <% end %>
+    <% if (current_user.email == @person.emailid) %> 
+      <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#editPersonModal">Edit Details</a>
+    <% end %>
 
 
-    <div class="modal fade" id="newAssignmentModal" tabindex="-1" role="dialog" aria-labelledby="newAssignmentModal" aria-hidden="true">
+    <div class="modal" id="newAssignmentModal" tabindex="-1" role="dialog" aria-labelledby="newAssignmentModal" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -146,7 +145,7 @@
       </div>
     </div>
 
-    <div class="modal fade" id="editPersonModal" tabindex="-1" role="dialog" aria-labelledby="newAssignmentModal" aria-hidden="true">
+    <div class="modal" id="editPersonModal" tabindex="-1" role="dialog" aria-labelledby="newAssignmentModal" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -217,7 +216,7 @@
               <input type="hidden" name="person[group_id]" value="<%= @person.group_id %>">
             </div>
             <div class="actions">
-              <%= f.submit %>
+              <%= f.submit "Update" %>
             </div>
           <% end %>
 
@@ -232,30 +231,72 @@
         <div class="col-md-6 scrollable" id="ttt">
         
           <h4>Active Tasks:</h4>
+          <table class="table table-striped">
           <% @assignments.each do |assignment| %>
           <% if (assignment.active) && (assignment.enddate - Time.now) > 0 %>
-          Project Name :<%= link_to getProject(assignment.project_id).name, project_path(getProject(assignment.project_id)) %><br>
-          Allcoation: <%= assignment.allocation %>%<br>
-          Project start: 11/12/2014 | project End : 11/12/2014<br>
-          Staffing start : 11/12/2014 | Staffing End : 11/12/2014<br>
-          <%= link_to edit_assignment_path(assignment), class: "btn btn-default" do  %>
-              <i class="glyphicon glyphicon-edit"></i>
+          <tr>
+            <td>
+          Project Name :
+            </td>
+            <td>
+              <%= link_to getProject(assignment.project_id).name, project_path(getProject(assignment.project_id)) %>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Allcoation:
+            </td>
+            <td>
+             <%= assignment.allocation %>
+            </td>
+            <tr>
+              <td></td>
+              <td>
+              <% if current_user.Admin %>
+                <%= link_to edit_assignment_path(assignment), class: "btn btn-sm" do  %>
+                  <i class="glyphicon glyphicon-edit"></i>
+                <% end %>
+              <% end %>
+              </td>
+            </tr>
+            <br>
           <% end %>
-          <br>
-          <hr>
           <% end %>
-          <% end %>
+          </table>
         </div>
         <div class="col-md-6 scrollable" id="ttt">
           <h4>History:</h4>
-          <% @assignments.each do |temp| %>
-          <% if (!temp.active) || (temp.enddate - Time.now) < 0 %>
-          ID : <%= temp.id %><br>
-          Billable: <%= temp.billable %><br>
-          Allcoation: <%= temp.allocation %>%<br>
-          Assignment Duration: <%= distance_of_time_in_words(temp.enddate,temp.startdate).capitalize %><br><hr>
-          <% end %>
-          <% end %>
+          <table class="table table-striped">
+            <% @assignments.each do |assignment| %>
+              <% if (!assignment.active) || (assignment.enddate - Time.now) < 0 %>
+                <tr>
+                  <td>
+                    Project Name :
+                  </td>
+                  <td>
+                  <%= link_to getProject(assignment.project_id).name, project_path(getProject(assignment.project_id)) %><br>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Allcoation: 
+                  </td>
+                  <td>
+                  <%= assignment.allocation %>%<br>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Assignment Duration:
+                  </td>
+                  <td>
+                  <%= distance_of_time_in_words(assignment.enddate,assignment.startdate).capitalize %>
+                  </td>
+                </tr>
+                <br><hr>
+              <% end %>
+            <% end %>
+          </table>
         </div>
 
 <script>
