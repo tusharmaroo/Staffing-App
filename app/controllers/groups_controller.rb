@@ -88,10 +88,10 @@ class GroupsController < ApplicationController
 			    @openAssignments = Assignment.where(:person_id => groupPerson.id, :active => true)
    				if (!@openAssignments.empty?)
    				@openAssignments.each do |openAssignment|
-	   				openAssignment.active = false
-				    openAssignment.enddate = Time.now
-				    openAssignment.save
-				    #openAssignment.destroy
+	   				# openAssignment.active = false
+				    # openAssignment.enddate = Time.now
+				    # openAssignment.save
+				    openAssignment.deactive
 				    groupPerson.allocation -= openAssignment.allocation
 				    groupPerson.save
 	   			end
@@ -104,6 +104,10 @@ class GroupsController < ApplicationController
 		else
 			redirect_to edit_group_path
 		end
+	end
+
+	def disable
+		
 	end
 
 	private

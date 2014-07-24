@@ -7,7 +7,7 @@ class PeopleController < ApplicationController
 	end
 
 	def new
-		@personnew = Person.new
+		@person = Person.new
 		@groups = Group.all 
 	end
 
@@ -28,7 +28,7 @@ class PeopleController < ApplicationController
 	end
 
 	def update
-		@group = Group.find(params[:person][:group_id])
+		#@group = Group.find(params[:person][:group_id])
 		if @person.update(person_params)
 			redirect_to person_path(@person)
 		else
@@ -38,7 +38,7 @@ class PeopleController < ApplicationController
 
 	def show
 		@assignment = Assignment.new
-		@people = Person.all
+		#@people = Person.all
 		@projects = Project.all 
 		@assignments = Assignment.where(:person_id => @person.id)
 		@group = Group.find(@person.group_id)

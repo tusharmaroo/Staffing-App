@@ -1,5 +1,6 @@
 class Person < ActiveRecord::Base
   	belongs_to :group
+  	
   	validates :name, :presence => true, :length => { :minimum => 2 }
 	validates :skills, :presence => true, :length => { :minimum => 8 }
 	validates :totalExp, :presence => true, :on => :create
