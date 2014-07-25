@@ -3,16 +3,15 @@ class Person < ActiveRecord::Base
   	
   	validates :name, :presence => true, :length => { :minimum => 2 }
 	validates :skills, :presence => true, :length => { :minimum => 8 }
-	validates :totalExp, :presence => true, :on => :create
-	validates :tcsExp, :presence => true, :on => :create
-	validates :relExp, :presence => true, :on => :create
-	validates :mobilenumber, :presence => true, :on => :create
-	validates_format_of :mobilenumber, :with => /\A\d{10}\Z/, :on => :create
-	validates :emailid, :presence => true, :on => :create
-	validates_format_of :emailid, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, :on => :create
-	validates :allocation, :presence => true, :on => :save
-	validates :interestAreas, :presence => true, :length => { :minimum => 8 }, :on => :create
-	validates :active, :presence => true, :on => :create
-	validates :group_id, :presence => true, :on => :create
-	validates :location, :presence => true, :on => :create
+	validates :totalExp, :tcsExp, :relExp, :presence => true, :numericality => { :greater_than_or_equal_to => 0 }
+	validates :mobilenumber, :presence => true
+	validates_format_of :mobilenumber, :with => /\A\d{10}\Z/
+	validates :allocation, :active, :group_id, :location, :emailid, :presence => true
+	validates_format_of :emailid, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
+	validates :interestAreas, :presence => true, :length => { :minimum => 8 }
+
+	def deactive
+	  self.update_column :active, false
+	  self.save
+	end
 end

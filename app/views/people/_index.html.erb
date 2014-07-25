@@ -23,11 +23,18 @@
               <td><%= person.allocation %></td>
               <td><%= person.active ? "Yes" : "No" %></td>
               <td><%= person.location %></td>
+
               <% if current_user.Admin %>
               <% if person.active? %>
-              <td><%= link_to 'Disable', person, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+              <td><%= link_to person, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-default" do  %>
+                <i class="glyphicon glyphicon-ban-circle"></i>
+                <% end %>
+              </td>
               <% else %>
-              <td><%= link_to 'Enable', person_enable_path(person), data: { confirm: 'Are you sure?' } %></td>
+              <td><%= link_to person_enable_path(person), data: { confirm: 'Are you sure?' } , class: "btn btn-default" do  %>
+                <i class="glyphicon glyphicon-ok-circle"></i>
+                <% end %>
+              </td>
               <% end %>
               <% end %>
             </tr>

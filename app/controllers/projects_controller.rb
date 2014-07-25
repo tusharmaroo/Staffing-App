@@ -41,10 +41,10 @@ class ProjectsController < ApplicationController
 	end
 
 	def destroy
-		@project.active = false
-		@project.endDate = Time.now
+		@project.update_column :active, false
+		@project.update_column :endDate ,Time.now
 		@group = @project.group_id
-		@openAssignments = Assignment.where(:project_id => @project.id)
+		@openAssignments = Assignment.where(:project_id => @project.id,:active => true)
    		if (!@openAssignments.empty?)
    			@openAssignments.each do |openAssignment|
    				openAssignment.active = false
@@ -66,9 +66,9 @@ class ProjectsController < ApplicationController
 
 	def enable
 		@project = Project.find(params[:project_id])
-		@project.active = true
+		@project.update_column :active, true
 		if @project.save 
-			redirect_to projects_path
+			redirect_to group_projects_path(@project.group_id)
 		else
 			redirect_to edit_projects_path
 		end

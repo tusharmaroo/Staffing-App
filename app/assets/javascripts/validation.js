@@ -106,8 +106,11 @@ $(document).ready(function () {
 	});
 
 	$(".modal-body > form").submit(function(){
-		  
-		  return true;
+		  if ($( "input" ).hasClass( "required" )){
+		  	return false;
+		  }else{
+		  	return true;		  	
+		  }
 	});
 
 

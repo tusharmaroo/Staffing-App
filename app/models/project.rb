@@ -1,17 +1,20 @@
 class Project < ActiveRecord::Base
   	belongs_to :group
 
-	validates :name, :presence => true, :length => { :minimum => 2 }, :on => :create
-    validates :startDate, :presence => true, :on => :create
-    validates :endDate, :presence => true, :on => :create
-    validates :group_id, :presence => true, :on => :create
-    validates :active, :presence => true, :on => :create
+	validates :name, :presence => true, :length => { :minimum => 2 }
+    validates :startDate, :endDate, :active, :presence => true
+    validates :active, :group_id, :presence => true, :on => :create
+
+    def deactive
+      self.update_column :active, false
+      self.save
+    end
 
     def AllocatedPeople
-    	allocatedAssignmnets = Assignment.where(:project_id => self.id, :active => true)
+    	allocatedAssignments = Assignment.where(:project_id => self.id)
     	array = []
-    	allocatedAssignmnets.each do |allocatedAssignmnet|
-    		array << allocatedAssignmnet.person_id
+    	allocatedAssignments.each do |allocatedAssignment|
+    		array << allocatedAssignment.person_id
     	end
     	array.uniq
     	array

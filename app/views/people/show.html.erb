@@ -5,7 +5,7 @@
 <div class="col-md-4">
   <table class="table table-striped">
     <tr>
-      <td>Name:</td>
+      <td><strong>Name:</strong></td>
       <td><%= @person.name %></td>
     </tr>
 
@@ -82,7 +82,7 @@
     <% end %>
   <% end %>
   
-  <% if (current_user.email == @person.emailid) %> 
+  <% if (current_user.email == @person.emailid) ||  current_user.Admin %> 
       <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#editPersonModal">Edit Details</a>
   <% end %>
 
@@ -116,7 +116,6 @@
               <%= f.label :project_id %><br>
               <%= f.select :project_id, options_from_collection_for_select(getGroupProjects(@person.group_id), "id", "name") %>
             </div>
-            <%= f.autocomplete_field :project_name, autocomplete_project_name_assignments_path %><br>
             <div class="field">
               <%= f.label :billable %><br>
               <%= f.check_box :billable %>
@@ -281,7 +280,7 @@
                 <% end %>
                 <div class="field">
                   <strong>ID:</strong>
-                  <%= @assignment.id %>
+                  <%= assignment.id %>
                 </div>
                 <div class="field">
                   <%= f.label :billable %><br>
@@ -289,15 +288,15 @@
                 </div>
                 <p>
                   <strong>Group ID:</strong>
-                  <%= @assignment.group_id %>
+                  <%= assignment.group_id %>
                 </p>
                 <p>
                   <strong>Project ID:</strong>
-                  <%= @assignment.project_id %>
+                  <%= assignment.project_id %>
                 </p>
                 <p>
                   <strong>Person ID:</strong>
-                  <%= @assignment.person_id %>
+                  <%= assignment.person_id %>
                 </p>
                 <div class="field">
                   <%= f.label :allocation %><br>
@@ -305,11 +304,11 @@
                 </div>
                 <div class="field">
                   <%= f.label :startdate %><br>
-                  <%= f.text_field :startdate  , :class => 'datepicker' %>
+                  <%= f.text_field :startdate ,:class => 'datepicker', :value => nice_date_form(assignment.startdate) %>
                 </div>
                 <div class="field">
                   <%= f.label :enddate %><br>
-                  <%= f.text_field :enddate  , :class => 'datepicker' %>
+                  <%= f.text_field :enddate ,:class => 'datepicker', :value => nice_date_form(assignment.enddate) %>
                 </div>
                 <div class="actions">
                   <%= f.submit %>

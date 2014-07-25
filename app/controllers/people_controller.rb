@@ -46,14 +46,15 @@ class PeopleController < ApplicationController
 	end
 
 	def destroy
-		@person.active = false
+		@person.update_column :active, false
 		@openAssignments = Assignment.where(:person_id => @person.id, :active => true)
+		newAllocation = @person.allocation
    		if (!@openAssignments.empty?)
    			@openAssignments.each do |openAssignment|
    				openAssignment.deactive
-			    @person.allocation -= openAssignment.allocation
-			    @person.save
+			    newAllocation -= openAssignment.allocation
    			end
+   			@person.update_column :allocation, newAllocation
    		end
 
 		if @person.save 
