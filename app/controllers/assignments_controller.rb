@@ -47,8 +47,8 @@ class AssignmentsController < ApplicationController
   # PATCH/PUT /assignments/1.json
   def update
       @previousAllocation = @assignment.allocation
+      @person = Person.find(@assignment.person_id)
       if @assignment.update(assignment_params)
-        @person = Person.find(@assignment.person_id)
         @person.allocation -= @previousAllocation
         @person.allocation += @assignment.allocation
         @person.save
@@ -62,16 +62,22 @@ class AssignmentsController < ApplicationController
   # DELETE /assignments/1
   # DELETE /assignments/1.json
   def destroy
-    Rails.logger.info "---------------------------------"
-    @assignment.active = false
+    #Rails.logger.info "---------------------------------"
+    #@assignment.active = false
+    # @assignment.update_column :active, false
     @person = Person.find(@assignment.person_id)
-    @person.allocation -= @assignment.allocation
-    if @person.save
-      if @assignment.save 
-        redirect_to person_path(@person)
-      else
-        redirect_to person_path(@person)
-      end
+    # @person.allocation -= @assignment.allocation
+    # if @person.save
+    #   if @assignment.save 
+    #     redirect_to person_path(@person)
+    #   else
+    #     redirect_to person_path(@person)
+    #   end
+    # else
+    #   redirect_to person_path(@person)
+    # end
+    if @assignment.deactive
+      redirect_to person_path(@person)
     else
       redirect_to person_path(@person)
     end

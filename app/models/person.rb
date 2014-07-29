@@ -12,6 +12,5 @@ class Person < ActiveRecord::Base
 
 	def deactive
 	  self.update_column :active, false
-	  self.save
 	end
 end

@@ -71,7 +71,7 @@
   </table>
   <hr>
           
-  <% if current_user.Admin %>
+  <% if current_user.admin %>
     <% if @person.allocation < 100 && @person.active? %>
       <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#newAssignmentModal">Assign a Project</a>
     <% end %>    
@@ -82,7 +82,7 @@
     <% end %>
   <% end %>
   
-  <% if (current_user.email == @person.emailid) ||  current_user.Admin %> 
+  <% if (current_user.email == @person.emailid) ||  current_user.admin %> 
       <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#editPersonModal">Edit Details</a>
   <% end %>
 
@@ -95,17 +95,7 @@
           <h4 class="modal-title" id="myModalLabel">New Assignment</h4>
         </div>
         <div class="modal-body">
-          <%= form_for(@assignment) do |f| %>
-            <% if @assignment.errors.any? %>
-              <div id="error_explanation">
-                <h2><%= pluralize(@assignment.errors.count, "error") %> prohibited this assignment from being saved:</h2>
-                <ul>
-                <% @assignment.errors.full_messages.each do |message| %>
-                  <li><%= message %></li>
-                <% end %>
-                </ul>
-              </div>
-            <% end %>
+          <%= form_for(Assignment.new) do |f| %>
             <div class="field">
               <%= f.label :person_id %> : 
               <input type="hidden" name="assignment[person_id]" value="<%= @person.id %>">
@@ -240,7 +230,7 @@
       </tr>
         <tr>
           <td>
-            Allcoation:
+            Allocation:
           </td>
           <td>
             <%= assignment.allocation %>
@@ -249,7 +239,7 @@
           <td>
           </td>
           <td>
-          <% if current_user.Admin %>
+          <% if current_user.admin %>
             <a href="#" data-toggle="modal" data-target="#editAssignmentModal">
               <i class="glyphicon glyphicon-edit"></i>
             </a>
@@ -304,11 +294,11 @@
                 </div>
                 <div class="field">
                   <%= f.label :startdate %><br>
-                  <%= f.text_field :startdate ,:class => 'datepicker', :value => nice_date_form(assignment.startdate) %>
+                  <%= f.text_field :startdate ,:class => 'datepicker', :value => nice_date_form(assignment.startdate),:readonly => 'true' %>
                 </div>
                 <div class="field">
                   <%= f.label :enddate %><br>
-                  <%= f.text_field :enddate ,:class => 'datepicker', :value => nice_date_form(assignment.enddate) %>
+                  <%= f.text_field :enddate ,:class => 'datepicker', :value => nice_date_form(assignment.enddate),:readonly => 'true' %>
                 </div>
                 <div class="actions">
                   <%= f.submit %>
@@ -340,7 +330,7 @@
         </tr>
         <tr>
           <td>
-            Allcoation: 
+            Allocation: 
           </td>
           <td>
             <%= assignment.allocation %>%<br>
@@ -364,9 +354,7 @@
   $(function() {
     <% hashProject = "[" %>
     <% @projects.each do |project| %>
-    <% if project.group_id == @person.group_id %>
     <% hashProject << "{ label: '" + project.name + "', value: '" + project.name.to_s + "' }," %>
-    <% end %>
     <% end %>
     <% hashProject.slice!(-1) %>
     <% hashProject << "]" %>

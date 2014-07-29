@@ -6,8 +6,9 @@ namespace :update_data do
   		if(project.endDate < Time.now)
   			project.active = false
   			project.save
-  			assignments = Assignment.where(:project_id => project.id)
+  			assignments = Assignment.where(:project_id => project.id,:active => true)
   			assignments.each do |assignment|
+          ##handle for users allocation if enddate is passed but still active.
   				assignment.active = false
   				assignment.save
   			end

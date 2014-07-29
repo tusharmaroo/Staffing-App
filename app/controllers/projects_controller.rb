@@ -41,23 +41,15 @@ class ProjectsController < ApplicationController
 	end
 
 	def destroy
-		@project.update_column :active, false
-		@project.update_column :endDate ,Time.now
 		@group = @project.group_id
 		@openAssignments = Assignment.where(:project_id => @project.id,:active => true)
    		if (!@openAssignments.empty?)
    			@openAssignments.each do |openAssignment|
-   				openAssignment.active = false
-   				openAssignment.enddate = Time.now
-   				@assignedPersons = Person.where(:id => openAssignment.person_id)
-   				@assignedPersons.each do |assignedPerson|
-   					assignedPerson.allocation = assignedPerson.allocation - openAssignment.allocation
-   					assignedPerson.save
-   				end
-   				openAssignment.save
+   				openAssignment.deactive
    			end
    		end
-		if @project.save 
+
+		if @project.deactive
 			redirect_to group_projects_path(@group)
 		else
 			redirect_to group_projects_path(@group)

@@ -10,19 +10,19 @@ class GroupsController < ApplicationController
 	end
 
 	def projects
-		@people = Person.all
+		#@people = Person.all
 		@group = Group.find(params[:group_id])
-		@personnew = Person.new
-		@project = Project.new
-		@projects = Project.all
+		#@personnew = Person.new
+		#@project = Project.new
+		@projects = Project.where(:group_id => @group.id)
 	end
 
 	def people
-		@people = Person.all
 		@group = Group.find(params[:group_id])
-		@personnew = Person.new
-		@project = Project.new
-		@projects = Project.all
+		@people = Person.where(:group_id => @group.id)
+		#@personnew = Person.new
+		#@project = Project.new
+		#@projects = Project.all
 	end
 
 	def create
@@ -41,7 +41,7 @@ class GroupsController < ApplicationController
 	def show
 		@people = Person.where(:group_id => @group.id)
 		@personnew =Person.new
-		@assignments = Assignment.all 
+		@assignments = Assignment.where(:group_id => @group.id) 
 
 		if !@group.active?
 			redirect_to edit_group_path(@group), :notice => "You need to enable the group first!"
@@ -62,7 +62,8 @@ class GroupsController < ApplicationController
 	end
 
 	def enable
-		@group.active = true
+		@group = Group.find(params[:group_id])
+		@group.update_column :active, true
 		if @group.save
 			redirect_to groups_path
 		else
@@ -71,43 +72,46 @@ class GroupsController < ApplicationController
 	end
 
 	def destroy
-		@group.active = false
+		
 		@groupPeople = Person.where(:group_id => @group.id, :active => true)
 
 		@groupProjects = Project.where(:group_id => @group.id, :active => true)
+
+
+
 		if (!@groupProjects.empty?)
    			@groupProjects.each do |groupProject|
-   				groupProject.active = false
-   				groupProject.save
+   				openAssignments = Assignment.where(:project_id => groupProject.id, :active => true)
+   				openAssignments.each do |openAssignment|
+   					openAssignment.deactive
+   				end
+   				groupProject.deactive
    			end
    		end
 
 		if (!@groupPeople.empty?)
    			@groupPeople.each do |groupPerson|
-   				groupPerson.active = false
-			    @openAssignments = Assignment.where(:person_id => groupPerson.id, :active => true)
-   				if (!@openAssignments.empty?)
-   				@openAssignments.each do |openAssignment|
-	   				# openAssignment.active = false
-				    # openAssignment.enddate = Time.now
-				    # openAssignment.save
-				    openAssignment.deactive
-				    groupPerson.allocation -= openAssignment.allocation
-				    groupPerson.save
-	   			end
-   				end
+   				groupPerson.deactive
+			    # @openAssignments = Assignment.where(:person_id => groupPerson.id, :active => true)
+   				# if (!@openAssignments.empty?)
+   				# @openAssignments.each do |openAssignment|
+	   			# 	# openAssignment.active = false
+				   #  # openAssignment.enddate = Time.now
+				   #  # openAssignment.save
+				   #  openAssignment.deactive
+				   #  groupPerson.allocation -= openAssignment.allocation
+				   #  groupPerson.save
+	   			# end
+   				# end
    			end
    		end
 
-		if @group.save 
+
+		if @group.deactive
 			redirect_to groups_path
 		else
-			redirect_to edit_group_path
+			redirect_to edit_group_path(@group)
 		end
-	end
-
-	def disable
-		
 	end
 
 	private

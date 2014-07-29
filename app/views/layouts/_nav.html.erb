@@ -15,7 +15,7 @@
         <% if !@myProfile.nil? %>
         <li><a href="<%= person_path(@myProfile) %>">My Profile</a></li>
         <% end %>
-        <% if user_signed_in? && current_user.Admin? %>
+        <% if user_signed_in? && current_user.admin? %>
           <li><a href="<%= projects_path %>">Projects</a></li>
           <li><a href="<%= people_path %>">People</a></li>
         <% end %>

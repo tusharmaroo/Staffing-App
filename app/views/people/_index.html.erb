@@ -8,11 +8,10 @@
             <th>Allocation</th>
             <th>Active</th>
             <th>Location</th>
-            <% if current_user.Admin %>
+            <% if current_user.admin %>
             <th>Disable</th>
             <% end %>
         </thead>
-        <% @people = Person.all %>
         <% @people.each do |person| %>
           <%# if person.active? %>
           <% if @group.id == person.group_id %>
@@ -24,7 +23,7 @@
               <td><%= person.active ? "Yes" : "No" %></td>
               <td><%= person.location %></td>
 
-              <% if current_user.Admin %>
+              <% if current_user.admin %>
               <% if person.active? %>
               <td><%= link_to person, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-default" do  %>
                 <i class="glyphicon glyphicon-ban-circle"></i>

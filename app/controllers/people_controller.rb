@@ -7,24 +7,24 @@ class PeopleController < ApplicationController
 	end
 
 	def new
-		@person = Person.new
-		@groups = Group.all 
+		#@person = Person.new
+		#@groups = Group.all 
 	end
 
 	def create
 		@group = Group.find(params[:person][:group_id])
-		@personnew = Person.new(person_params)
+		@person = Person.new(person_params)
 		@deviseUser = User.create_new_user(params[:person][:emailid])
 		#UserMailer.welcome_email(@personnew).deliver
-		if @personnew.save
+		if @person.save
 			redirect_to group_people_path(@group)
 		else
-			redirect_to groups_path
+			redirect_to group_people_path(@group)
 		end
 	end
 
 	def edit
-		@groups = Group.all
+		#@groups = Group.all
 	end
 
 	def update
@@ -37,27 +37,24 @@ class PeopleController < ApplicationController
 	end
 
 	def show
-		@assignment = Assignment.new
+		#@assignment = Assignment.new
 		#@people = Person.all
-		@projects = Project.all 
+		@projects = Project.where(:group_id => @person.group_id) 
 		@assignments = Assignment.where(:person_id => @person.id)
 		@group = Group.find(@person.group_id)
-		@project = Project.new
+		#@project = Project.new
 	end
 
 	def destroy
-		@person.update_column :active, false
 		@openAssignments = Assignment.where(:person_id => @person.id, :active => true)
-		newAllocation = @person.allocation
+		#@openAssignments = openAssignments.where("enddate > ?", Time.now)
    		if (!@openAssignments.empty?)
    			@openAssignments.each do |openAssignment|
    				openAssignment.deactive
-			    newAllocation -= openAssignment.allocation
    			end
-   			@person.update_column :allocation, newAllocation
    		end
 
-		if @person.save 
+		if @person.deactive
 			redirect_to person_path(@person)
 		else
 			redirect_to person_path(@person)
@@ -66,7 +63,8 @@ class PeopleController < ApplicationController
 
 	def enable
 		@person = Person.find(params[:person_id])
-		@person.active = true
+		@person.update_column :active, true
+		#@person.active = true
 		if @person.save 
 			redirect_to person_path(@person)
 		else

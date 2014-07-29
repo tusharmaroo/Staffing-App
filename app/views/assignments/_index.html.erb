@@ -16,7 +16,7 @@
         </thead>
        
         <% @people.each do |person| %>
-            <% if (person.group_id == @group.id) && (person.allocation != 100) && (person.allocation != 0) && (person.active?) %>
+            <% if (person.allocation != 100) && (person.allocation != 0) && (person.active?) %>
               <% @assignments = Assignment.where(person_id: person.id) %>
 
                 <tr class="<%= getProjectStatus(person.id) %>"><td>
@@ -46,7 +46,7 @@
             <% end %>
           <% end %>
           <% @people.each do |person| %>
-            <% if (person.group_id == @group.id) && (person.allocation == 0) %>
+            <% if (person.allocation == 0) %>
               <tr class="<%= getProjectStatus(person.id) %>">
                 <td><%= "NA" %></td>
                 <td><a href="<%= person_path(person) %>"><%= person.name %></a></td>
@@ -71,7 +71,7 @@
         </thead>
        
         <% @people.each do |person| %>
-            <% if (person.group_id == @group.id) && (person.allocation == 100) %>
+            <% if (person.allocation == 100) %>
               <% @assignments = Assignment.where(person_id: person.id) %>
 
               
@@ -106,12 +106,3 @@
   </div>
 </div>
 
-
-
-
-<script type="text/javascript">
-  $('#peopleTab a').click(function (e) {
-    e.preventDefault();
-    $(this).tab('show');
-  });
-</script>

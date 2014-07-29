@@ -8,9 +8,12 @@ class Assignment < ActiveRecord::Base
   validates :allocation, :presence => true, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 100 }
 
   def deactive
-    self.update_column :active, false
+    person = Person.find(self.person_id)
+    newAllocation = person.allocation
+    newAllocation -= self.allocation
+    person.update_column :allocation, newAllocation
     self.update_column :enddate, Time.now
-    self.save
+    self.update_column :active, false
   end
   
 end

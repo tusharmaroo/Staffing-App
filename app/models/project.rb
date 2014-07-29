@@ -6,12 +6,12 @@ class Project < ActiveRecord::Base
     validates :active, :group_id, :presence => true, :on => :create
 
     def deactive
+      self.update_column :endDate ,Time.now
       self.update_column :active, false
-      self.save
     end
 
     def AllocatedPeople
-    	allocatedAssignments = Assignment.where(:project_id => self.id)
+    	allocatedAssignments = Assignment.where(:project_id => self.id, :active => true)
     	array = []
     	allocatedAssignments.each do |allocatedAssignment|
     		array << allocatedAssignment.person_id

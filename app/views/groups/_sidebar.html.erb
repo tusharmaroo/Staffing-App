@@ -2,11 +2,11 @@
 	<a href="<%= group_path(@group) %>"><h3>Group Dashboard</h3></a>
 	<hr>
 	<ul class="nav nav-sidebar">
-	  <li><a href="#" class="btn <%= "disabled" if !current_user.Admin %>" data-toggle="modal" data-target="#newPersonModal">Add New Person</a></li>
-	  <li><a href="#" class="btn <%= "disabled" if !current_user.Admin %>" data-toggle="modal" data-target="#newProjectModal">Add New Project</a></li>
+	  <li><a href="#" class="btn <%= "disabled" if !current_user.admin %>" data-toggle="modal" data-target="#newPersonModal">Add New Person</a></li>
+	  <li><a href="#" class="btn <%= "disabled" if !current_user.admin %>" data-toggle="modal" data-target="#newProjectModal">Add New Project</a></li>
 	  <li><a href="<%= group_people_path(@group.id) %>" class="btn">View People</a></li>
 	  <li><a href="<%= group_projects_path(@group.id) %>" class="btn">View Projects</a></li>
-	  <li><a href="<%= edit_group_path(@group.id) %>" class="btn <%= "disabled" if !current_user.Admin %>">Settings</a></li>
+	  <li><a href="<%= edit_group_path(@group.id) %>" class="btn <%= "disabled" if !current_user.admin %>">Settings</a></li>
 	</ul>
 </div>
 
@@ -28,17 +28,10 @@
 					    <%= f.label :skills ,"Skills :" %><br>
 					    <%= f.text_area :skills,:class => 'input-xlarge textArea',:placeholder => "Enter the skills: eg. Angular.js, Rails etc" %>
 					  </div>
-					  <div class="field">
-					    <%= f.label :location, "Location" %><br>
-
-					    <select id="person_location" name="person[location]" class='input-xlarge'>
-					      <option value="Mumbai">Mumbai</option>
-					      <option value="Banglore">Banglore</option>
-					      <option value="Gurgaon">Gurgaon</option>
-					      <option value="Kolkata">Kolkata</option>
-					      <option value="NYC">NYC</option>
-					    </select>
-					  </div>
+					  <div id="field">
+			            <%= f.label :location %><br>
+			            <%= f.select :location, options_for_select(getAllLocations) %>
+			          </div>
 					  <div class="field">
 					    <%= f.label :totalExp, "Total Experience :" %><br>
 					    <%= f.number_field :totalExp, :class => 'input-xlarge numeric',:placeholder => "Total Experience in years: eg. 2.5",:step => "0.5",:min => "0" %>
@@ -95,17 +88,6 @@
 	            </div>
 	            <div class="modal-body">
 	              <%= form_for(Project.new) do |f| %>
-					  <% if @project.errors.any? %>
-					    <div id="error_explanation">
-					      <h2><%= pluralize(@project.errors.count, "error") %> prohibited this project from being saved:</h2>
-
-					      <ul>
-					      <% @project.errors.full_messages.each do |message| %>
-					        <li><%= message %></li>
-					      <% end %>
-					      </ul>
-					    </div>
-					  <% end %>
 
 					  <div class="field">
 					    <%= f.label :name %><br>

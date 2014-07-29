@@ -9,7 +9,7 @@
       <th>End Date</th>
       <th>Active</th>
       <th>AllocatedPersons</th>
-      <% if current_user.Admin %>
+      <% if current_user.admin %>
       <th>Edit</th>
       <th>Disable</th>
       <% end %>
@@ -17,60 +17,69 @@
   </thead>
   <tbody>
     <% @projects.each do |project| %>      
-      <% if @group.id == project.group_id %>
-        <tr>
-          <td><%= link_to project.name, project %></td>
-          <td><%= nice_date_form(project.startDate) %></td>
-          <td><%= nice_date_form(project.endDate) %></td>
-          <td><%= project.active ? 'Yes' : 'No' %></td>
-          <td>
-          <% @allocatedpeople = project.AllocatedPeople %>
-          <a href="#" class="btn <%= "disabled" if @allocatedpeople.empty? %>" data-toggle="modal" data-target="#allocatedPersonModal<%= project.id %>"><%= @allocatedpeople.count %></a>
-          </td>
-          <% if current_user.Admin %>
-          <td><%= link_to edit_project_path(project), class: "btn btn-default" do  %>
-              <i class="glyphicon glyphicon-edit"></i>
-          <% end %>
-          </td>
-          <% if project.active? %>
-          <td><%= link_to project, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-default" do  %>
-            <i class="glyphicon glyphicon-ban-circle"></i>
-            <% end %>
-          </td>
-          <% else %>
-          <td><%= link_to project_enable_path(project), data: { confirm: 'Are you sure?' } , class: "btn btn-default" do  %>
-            <i class="glyphicon glyphicon-ok-circle"></i>
-            <% end %>
-          </td>
-          <% end %>
-          <% end %>
+    <tr>
+      <td>
+        <%= link_to project.name, project %>
+      </td>
+      <td>
+        <%= nice_date_form(project.startDate) %>
+      </td>
+      <td>
+        <%= nice_date_form(project.endDate) %>
+      </td>
+      <td>
+        <%= project.active ? 'Yes' : 'No' %>
+      </td>
+      <td>
+        <% @allocatedpeople = project.AllocatedPeople %>
+        <a href="#" class="btn <%= "disabled" if @allocatedpeople.empty? %>" data-toggle="modal" data-target="#allocatedPersonModal<%= project.id %>"><%= @allocatedpeople.count %></a>
+      </td>
+      <% if current_user.admin %>
+      <td>
+        <%= link_to edit_project_path(project), class: "btn btn-default" do  %>
+          <i class="glyphicon glyphicon-edit"></i>
+        <% end %>
+      </td>
+      <% if project.active? %>
+      <td>
+        <%= link_to project, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-default" do  %>
+          <i class="glyphicon glyphicon-ban-circle"></i>
+        <% end %>
+      </td>
+      <% else %>
+      <td>
+        <%= link_to project_enable_path(project), data: { confirm: 'Are you sure?' } , class: "btn btn-default" do  %>
+          <i class="glyphicon glyphicon-ok-circle"></i>
+        <% end %>
+      </td>
+      <% end %>
+      <% end %>
 
-          <div class="modal" id="allocatedPersonModal<%= project.id %>" tabindex="-1" role="dialog" aria-labelledby="allocatedPersonModal<%= project.id %>" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-                  <h4 class="modal-title" id="myModalLabel">Allocated Persons</h4>
-                </div>
-                <div class="modal-body">
-                <ol>
-                    <%#= allocatedpeople = project.AllocatedPeople %>
-                    <% @allocatedpeople.each do |person| %>                     
-                      <li>
-                        <%= link_to "#{Person.find(person).name}", person_path(Person.find(person)) %>
-                      </li>                      
-                    <% end %>
-                </ol>
-                </div>
-                <div class="modal-footer">
-                </div>
-              </div>
+      <div class="modal" id="allocatedPersonModal<%= project.id %>" tabindex="-1" role="dialog" aria-labelledby="allocatedPersonModal<%= project.id %>" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+              <h4 class="modal-title" id="myModalLabel">Allocated Persons</h4>
+            </div>
+            <div class="modal-body">
+            <ol>
+                <%#= allocatedpeople = project.AllocatedPeople %>
+                <% @allocatedpeople.each do |person| %>                     
+                  <li>
+                    <%= link_to "#{Person.find(person).name}", person_path(Person.find(person)) %>
+                  </li>                      
+                <% end %>
+            </ol>
+            </div>
+            <div class="modal-footer">
             </div>
           </div>
+        </div>
+      </div>
           
           
-        </tr>      
-      <% end %>
+    </tr>      
     <% end %>
   </tbody>
 </table>
