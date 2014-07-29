@@ -1,0 +1,120 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Unallocated">
+      <table>
+        <Row>
+          <Cell><Data ss:Type="String">Assignment ID/s</Data></Cell>
+          <Cell><Data ss:Type="String">Name</Data></Cell>
+          <Cell><Data ss:Type="String">Project</Data></Cell>
+          <Cell><Data ss:Type="String">Billable</Data></Cell>
+          <Cell><Data ss:Type="String">Allocation</Data></Cell>
+        </Row>
+       
+        <% @people.each do |person| %>
+        
+        <% if (person.allocation != 100) && (person.allocation != 0) && (person.active?) %>
+          <% @assignments = Assignment.where(person_id: person.id) %>
+        <Row>
+          <Cell><Data ss:Type="Number">
+            <% @assignments.each do |assignment| %>
+            <%= assignment.id %>,
+            <% end %>
+          </Data></Cell>
+          <Cell><Data ss:Type="String">
+              <a href="<%= person_path(person) %>"><%= person.name %></a>
+          </Data></Cell>
+          <Cell><Data ss:Type="String">
+          <% @assignments.each do |assignment| %>  
+            <a href="<%= project_path(Project.find(assignment.project_id)) %>"><%= Project.find(assignment.project_id).name %></a>              
+            <% end %>
+          </Data></Cell>
+          <Cell><Data ss:Type="String">
+            <% @finalBillable = false %>
+            <% @assignments.each do |assignment| %>
+              <% @finalBillable = @finalBillable || assignment.billable %>
+            <% end %>
+            <%= @finalBillable ? 'Yes' : 'No' %><br>
+          </Data></Cell>
+          <Cell><Data ss:Type="Number">
+          <% @assignments.each do |assignment| %>
+              <%= assignment.allocation %>,
+            <% end %>
+          </Data></Cell>
+          </Row>
+          <% end %>
+          
+      <% end %>
+       
+           
+
+
+        
+          <% @people.each do |person| %>
+            <% if (person.allocation == 0) %>
+            <Row>
+                <Cell><Data ss:Type="Number"><%= "NA" %></Data></Cell>
+                <Cell><Data ss:Type="String"><a href="<%= person_path(person) %>"><%= person.name %></a></Data></Cell>
+                <Cell><Data ss:Type="String">
+                <%= "Not Assigned" %>                 
+                </Data></Cell>
+                <Cell><Data ss:Type="String"><%= "NA" %></Data></Cell>
+                <Cell><Data ss:Type="Number"><%= 0 %></Data></Cell>
+              </Row> 
+            <% end %>
+          <% end %>
+        </Worksheet>
+
+    <Worksheet ss:Name="Allocated">
+        <Row>
+          <Cell><Data ss:Type="String">Assignment ID/s</Data></Cell>
+          <Cell><Data ss:Type="String">Name</Data></Cell>
+          <Cell><Data ss:Type="String">Project</Data></Cell>
+          <Cell><Data ss:Type="String">Billable</Data></Cell>
+          <Cell><Data ss:Type="String">Allocation</Data></Cell>
+        </Row>
+       
+        <% @people.each do |person| %>
+            <% if (person.allocation == 100) %>
+            <Row>
+              <% @assignments = Assignment.where(person_id: person.id) %>
+
+              
+                <Cell><Data ss:Type="Number">
+                <% @assignments.each do |assignment| %>
+                  <%= assignment.id %>,
+                <% end %>
+                </Data></Cell>
+                <Cell><Data ss:Type="String">
+                  <a href="<%= person_path(person) %>"><%= person.name %></a>
+                </Data></Cell>
+                <Cell><Data ss:Type="String"><% @assignments.each do |assignment| %>  
+                  
+                  <a href="<%= project_path(Project.find(assignment.project_id)) %>"><%= Project.find(assignment.project_id).name %></a> ,
+                
+                  
+                  
+                <% end %></Data></Cell>
+                <Cell><Data ss:Type="String">
+                  <% @finalBillable = false %>
+                  <% @assignments.each do |assignment| %>
+                    <% @finalBillable = @finalBillable || assignment.billable %>
+                  <% end %>
+                  <%= @finalBillable ? 'Yes' : 'No' %><br>
+                </Data></Cell>
+                <Cell><Data ss:Type="String"><% @assignments.each do |assignment| %>
+                  <%= assignment.allocation %><br>
+                <% end %>
+                </Data></Cell>
+                </Row> 
+               
+
+
+            <% end %>
+          <% end %>
+        </Worksheet> 
+</Workbook>
+
