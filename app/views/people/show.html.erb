@@ -104,7 +104,7 @@
             <input type="hidden" name="assignment[group_id]" value="<%= @person.group_id %>">
             <div class="field">
               <%= f.label :project_id %><br>
-              <%= f.select :project_id, options_from_collection_for_select(getGroupProjects(@person.group_id), "id", "name") %>
+              <%= f.select :project_id, options_from_collection_for_select(getGroupProjects(@person.group_id), "id", "name"),{},{:class => 'input-xlarge'} %>
             </div>
             <div class="field">
               <%= f.label :billable %><br>
@@ -156,47 +156,47 @@
 
           <div class="field">
             <%= f.label :name %><br>
-            <%= f.text_field :name %>
+            <%= f.text_field :name,:class => 'input-xlarge name',:placeholder => "Person Name: eg. Andrew" %>
           </div>
           <div class="field">
             <%= f.label :skills %><br>
-            <%= f.text_area :skills %>
+            <%= f.text_area :skills,:class => 'input-xlarge textArea',:placeholder => "Enter the skills: eg. Angular.js, Rails etc" %>
           </div>
           <div id="field">
             <%= f.label :location %><br>
-            <%= f.select :location, options_for_select(getAllLocations,@person.location) %>
+            <%= f.select :location, options_for_select(getAllLocations,@person.location), {},{:class => "input-xlarge"} %>
           </div>
           <div class="field">
             <%= f.label :totalExp %><br>
-            <%= f.text_field :totalExp %>
+            <%= f.text_field :totalExp, :class => 'input-xlarge numeric',:placeholder => "Total Experience in years: eg. 2.5",:step => "0.5",:min => "0"  %>
           </div>
           <div class="field">
             <%= f.label :tcsExp %><br>
-            <%= f.text_field :tcsExp %>
+            <%= f.text_field :tcsExp, :class => 'input-xlarge numeric',:placeholder => "TCS Experience in years",:step => "0.5",:min => "0" %>
           </div>
           <div class="field">
             <%= f.label :releventExp %><br>
-            <%= f.text_field :relExp %>
+            <%= f.text_field :relExp, :class => 'input-xlarge numeric',:placeholder => "Relevent Technology Experience in years",:step => "0.5",:min => "0" %>
           </div>
           <div class="field">
             <%= f.label :allocation %><br>
-            <%= f.number_field :allocation ,:disabled=>true %>
+            <%= f.number_field :allocation ,:disabled=>true,:class => 'input-xlarge numeric' %>
           </div>
           <div class="field">
             <%= f.label :mobilenumber %><br>
-            <%= f.number_field :mobilenumber %>
+            <%= f.number_field :mobilenumber, :class => 'input-xlarge phonenumber',:placeholder => "Enter Mobile Number: eg. 9571640968" %>
           </div>
           <div class="field">
             <%= f.label :emailid %><br>
-            <%= f.text_field :emailid ,:disabled=>true %>
+            <%= f.text_field :emailid ,:disabled=>true,:class => 'input-xlarge email',:placeholder => "Email Address: eg. abc@xyz.com" %>
           </div>
           <div class="field">
             <%= f.label :interestAreas %><br>
-            <%= f.text_area :interestAreas %>
+            <%= f.text_area :interestAreas,:class => 'input-xlarge textArea',:placeholder => "Interested Areas: eg. Node.js" %>
           </div>
           <div class="field">
             <%= f.label :PersonalLearnings, "Personal Learnings :" %><br>
-            <%= f.text_area :PersonalLearnings %>
+            <%= f.text_area :PersonalLearnings,:class => 'input-xlarge textArea',:placeholder => "PersonalLearnings" %>
           </div>
           <div class="field">
             <%= f.label :group_id %><br>
@@ -240,7 +240,7 @@
           </td>
           <td>
           <% if current_user.admin %>
-            <a href="#" data-toggle="modal" data-target="#editAssignmentModal">
+            <a href="#" data-toggle="modal" data-target="#editAssignmentModal<%= assignment.id %>">
               <i class="glyphicon glyphicon-edit"></i>
             </a>
           <% end %>
@@ -249,7 +249,7 @@
         <br>
         <% end %>
 
-      <div class="modal" id="editAssignmentModal" tabindex="-1" role="dialog" aria-labelledby="editAssignmentModal" aria-hidden="true">
+      <div class="modal" id="editAssignmentModal<%= assignment.id %>" tabindex="-1" role="dialog" aria-labelledby="editAssignmentModal<%= assignment.id %>" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -258,16 +258,6 @@
             </div>
             <div class="modal-body">
               <%= form_for(assignment) do |f| %>
-                <% if assignment.errors.any? %>
-                  <div id="error_explanation">
-                    <h2><%= pluralize(assignment.errors.count, "error") %> prohibited this assignment from being saved:</h2>
-                    <ul>
-                    <% assignment.errors.full_messages.each do |message| %>
-                      <li><%= message %></li>
-                    <% end %>
-                    </ul>
-                  </div>
-                <% end %>
                 <div class="field">
                   <strong>ID:</strong>
                   <%= assignment.id %>
@@ -277,16 +267,16 @@
                   <%= f.check_box :billable %>
                 </div>
                 <p>
-                  <strong>Group ID:</strong>
-                  <%= assignment.group_id %>
+                  <strong>Group Name :</strong>
+                  <%= Group.find(assignment.group_id).name %>
                 </p>
                 <p>
-                  <strong>Project ID:</strong>
-                  <%= assignment.project_id %>
+                  <strong>Project Name :</strong>
+                  <%= Project.find(assignment.project_id).name %>
                 </p>
                 <p>
-                  <strong>Person ID:</strong>
-                  <%= assignment.person_id %>
+                  <strong>Person Name :</strong>
+                  <%= Person.find(assignment.person_id).name %>
                 </p>
                 <div class="field">
                   <%= f.label :allocation %><br>
@@ -294,11 +284,11 @@
                 </div>
                 <div class="field">
                   <%= f.label :startdate %><br>
-                  <%= f.text_field :startdate ,:class => 'datepicker', :value => nice_date_form(assignment.startdate),:readonly => 'true' %>
+                  <%= f.text_field :startdate ,:class => 'input-xlarge datepicker', :value => (assignment.startdate).strftime("%Y-%m-%d") %>
                 </div>
                 <div class="field">
                   <%= f.label :enddate %><br>
-                  <%= f.text_field :enddate ,:class => 'datepicker', :value => nice_date_form(assignment.enddate),:readonly => 'true' %>
+                  <%= f.text_field :enddate ,:class => 'input-xlarge datepicker', :value => (assignment.enddate).strftime("%Y-%m-%d") %>
                 </div>
                 <div class="actions">
                   <%= f.submit %>

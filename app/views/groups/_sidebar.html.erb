@@ -30,7 +30,7 @@
 					  </div>
 					  <div id="field">
 			            <%= f.label :location %><br>
-			            <%= f.select :location, options_for_select(getAllLocations) %>
+			            <%= f.select :location, options_for_select(getAllLocations), {},{:class => "input-xlarge"} %>
 			          </div>
 					  <div class="field">
 					    <%= f.label :totalExp, "Total Experience :" %><br>
