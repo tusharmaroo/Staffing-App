@@ -1,0 +1,98 @@
+wb = xlsx_package.workbook
+wb.add_worksheet(name: "Unallocated") do |sheet|
+
+  sheet.add_row ["Assignment ID/s", "Name", "Project", "Billable","Allocation(%)"]
+  ## Header values of Excel
+ @people.each do |person|
+ 
+ @assignmentData = ''
+ @nameData = ''
+ @projectData = ''
+ @billableData = ''
+ @allocationData = 0
+
+  if (person.allocation != 100) && (person.allocation != 0) && (person.active?)
+
+      @assignments = Assignment.where(person_id: person.id)
+      @assignments.each do |assignment|
+         @assignmentData += assignment.id.to_s + " ,"
+      end
+
+      @nameData = person.name
+
+      @assignments.each do |assignment|        
+        @projectData += Project.find(assignment.project_id).name + " ,"
+      end 
+      
+      @finalBillable = false 
+      @assignments.each do |assignment| 
+        @finalBillable = @finalBillable || assignment.billable
+      end
+
+      @billableData = @finalBillable ? 'Yes' : 'No' 
+      @assignments.each do |assignment| 
+        @allocationData += assignment.allocation 
+      end
+      sheet.add_row [@assignmentData,@nameData,@projectData,@billableData,@allocationData]
+   end
+
+    
+  end
+  @people.each do |person|
+     @assignmentData = ''
+     @nameData = ''
+     @projectData = ''
+     @billableData = ''
+     @allocationData = ''
+      if (person.allocation == 0)
+
+          @assignmentData = "NA"
+          @nameData = person.name
+          @projectData = "Not Assigned"              
+          @billableData = "NA"
+          @allocationData = 0
+          sheet.add_row [@assignmentData,@nameData,@projectData,@billableData,@allocationData]
+      end
+    end
+    
+end
+
+
+
+wb.add_worksheet(name: "Allocated") do |sheet|
+  sheet.add_row ["Assignment ID/s", "Name", "Project", "Billable","Allocation(%)"]
+  ## Header values of Excel
+
+   @people.each do |person|
+      @assignmentData = ''
+      @nameData = ''
+      @projectData = ''
+      @billableData = ''
+      @allocationData = 0
+      if (person.allocation == 100)
+        @assignments = Assignment.where(person_id: person.id)
+
+        
+          @assignments.each do |assignment|
+            @assignmentData += assignment.id.to_s + " ,"
+          end
+          @nameData = person.name
+          @assignments.each do |assignment| 
+            
+          @projectData += Project.find(assignment.project_id).name + " ,"
+            
+            
+          end
+          @finalBillable = false
+          @assignments.each do |assignment|
+            @finalBillable = @finalBillable || assignment.billable
+          end
+          @billableData = @finalBillable ? 'Yes' : 'No'
+          @assignments.each do |assignment|
+            @allocationData += assignment.allocation
+          end       
+          sheet.add_row [@assignmentData,@nameData,@projectData,@billableData,@allocationData]
+      end
+    end
+    
+end

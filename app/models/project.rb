@@ -1,4 +1,5 @@
 class Project < ActiveRecord::Base
+    acts_as_xlsx
   	belongs_to :group
 
 	validates :name, :presence => true, :length => { :minimum => 2 }

@@ -11,6 +11,10 @@ class PeopleController < ApplicationController
 		#@groups = Group.all 
 	end
 
+	def checkMailID
+		emailExist = Person.find_by_email(params[:checkmail]).present?
+	end
+
 	def create
 		@group = Group.find(params[:person][:group_id])
 		@person = Person.new(person_params)

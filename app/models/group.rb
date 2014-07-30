@@ -1,4 +1,5 @@
 class Group < ActiveRecord::Base
+	acts_as_xlsx
 	has_many :people
 	has_many :projects
 	has_many :assignments

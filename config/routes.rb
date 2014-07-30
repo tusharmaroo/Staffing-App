@@ -4,6 +4,8 @@ Rails.application.routes.draw do
     get 'enable'
   end
 
+  #match '/check-user' =>"users#checkMailID"
+
   devise_for :users
   get 'welcome/index'
   resources :groups do

@@ -45,7 +45,7 @@ class GroupsController < ApplicationController
 		
 		respond_to do |format|
 		  format.html
-		  format.xls
+		  format.xlsx
 		end
 
 		if !@group.active?

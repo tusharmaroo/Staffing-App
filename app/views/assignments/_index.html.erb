@@ -1,6 +1,7 @@
 <div class="container mainContent">
   <div>
-    <%= link_to "Excel", controller: "groups", action: "show", id: @group, format: "xls" %>
+    <%#= link_to "Excel", controller: "groups", action: "show", id: @group, format: "xls" %>
+    <%= link_to "Download as Excel", controller: "groups", action: "show", id: @group, format: "xlsx" %>
   </div>
   <ul class="nav nav-tabs" id="peopleTab">
     <li class="active"><a href="#unallocatedPersons">Unallocated Persons</a></li>

@@ -1,4 +1,5 @@
 class Assignment < ActiveRecord::Base
+  acts_as_xlsx
   belongs_to :group
   belongs_to :project
   belongs_to :person
