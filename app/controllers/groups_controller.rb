@@ -43,14 +43,17 @@ class GroupsController < ApplicationController
 		@personnew =Person.new
 		@assignments = Assignment.where(:group_id => @group.id) 
 		
-		respond_to do |format|
-		  format.html
-		  format.xlsx
-		end
-
 		if !@group.active?
-			redirect_to edit_group_path(@group), :notice => "You need to enable the group first!"
+			redirect_to edit_group_path(@group)
+		else
+
+
+			respond_to do |format|
+			  format.html
+			  format.xlsx
+			end
 		end
+		
 	end
 
 	def edit

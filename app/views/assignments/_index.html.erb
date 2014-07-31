@@ -1,11 +1,15 @@
 <div class="container mainContent">
   <div>
+    <h3>Allocation Index</h3>
     <%#= link_to "Excel", controller: "groups", action: "show", id: @group, format: "xls" %>
-    <%= link_to "Download as Excel", controller: "groups", action: "show", id: @group, format: "xlsx" %>
+    <%= link_to controller: "groups", action: "show", id: @group, format: "xlsx" do  %>
+      <i class="glyphicon glyphicon-download-alt"></i>Download as Excel
+    <% end %>
+    <%#= link_to "Download as Excel", controller: "groups", action: "show", id: @group, format: "xlsx" %>
   </div>
   <ul class="nav nav-tabs" id="peopleTab">
-    <li class="active"><a href="#unallocatedPersons">Unallocated Persons</a></li>
-    <li><a href="#allocatedPersons">Allocated Persons</a></li>
+    <li class="active"><a href="#unallocatedPersons" title="Unallocated People">Unallocated People</a></li>
+    <li><a href="#allocatedPersons" title="Allocated People">Allocated People</a></li>
   </ul>
 
   <div id='content' class="tab-content">
@@ -27,7 +31,7 @@
                 <% @assignments.each do |assignment| %>
                   <%= assignment.id %><br>
                 <% end %></td>
-                  <td><a href="<%= person_path(person) %>"><%= person.name %></a></td>
+                  <td><a href="<%= person_path(person) %>" title="<%= person.name %>"><%= person.name %></a></td>
                 <td><% @assignments.each do |assignment| %>  
                   
                   <a href="<%= project_path(Project.find(assignment.project_id)) %>"><%= Project.find(assignment.project_id).name %></a><br>
@@ -53,7 +57,7 @@
             <% if (person.allocation == 0) %>
               <tr class="<%= getProjectStatus(person.id) %>">
                 <td><%= "NA" %></td>
-                <td><a href="<%= person_path(person) %>"><%= person.name %></a></td>
+                <td><a href="<%= person_path(person) %>" title="<%= person.name %>"><%= person.name %></a></td>
                 <td>
                 <%= "Not Assigned" %>                 
                 </td>
@@ -83,7 +87,7 @@
                 <% @assignments.each do |assignment| %>
                   <%= assignment.id %><br>
                 <% end %></td>
-                  <td><a href="<%= person_path(person) %>"><%= person.name %></a></td>
+                  <td><a href="<%= person_path(person) %>" title="<%= person.name %>"><%= person.name %></a></td>
                 <td><% @assignments.each do |assignment| %>  
                   
                   <a href="<%= project_path(Project.find(assignment.project_id)) %>"><%= Project.find(assignment.project_id).name %></a><br>

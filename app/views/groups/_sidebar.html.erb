@@ -1,5 +1,5 @@
 <div class="sidebar">
-	<a href="<%= group_path(@group) %>"><h3>Group Dashboard</h3></a>
+	<a href="<%= group_path(@group) %>"><h3><%= @group.name %></h3></a>
 	<hr>
 	<ul class="nav nav-sidebar">
 	  <li><a href="#" class="btn <%= "disabled" if !current_user.admin %>" data-toggle="modal" data-target="#newPersonModal">Add New Person</a></li>
@@ -28,7 +28,7 @@
 					    <%= f.label :skills ,"Skills :" %><br>
 					    <%= f.text_area :skills,:class => 'input-xlarge textArea',:placeholder => "Enter the skills: eg. Angular.js, Rails etc" %>
 					  </div>
-					  <div id="field">
+					  <div class="field">
 			            <%= f.label :location %><br>
 			            <%= f.select :location, options_for_select(getAllLocations), {},{:class => "input-xlarge"} %>
 			          </div>
@@ -41,8 +41,8 @@
 					    <%= f.number_field :tcsExp, :class => 'input-xlarge numeric',:placeholder => "TCS Experience in years",:step => "0.5",:min => "0" %>
 					  </div>
 					  <div class="field">
-					    <%= f.label :relExp, "Relevent Experience :" %><br>
-					    <%= f.number_field :relExp, :class => 'input-xlarge numeric',:placeholder => "Relevent Technology Experience in years",:step => "0.5",:min => "0" %>
+					    <%= f.label :relExp, "Relevant Experience :" %><br>
+					    <%= f.number_field :relExp, :class => 'input-xlarge numeric',:placeholder => "Relevant Technology Experience in years",:step => "0.5",:min => "0" %>
 					  </div>
 					  <input type="hidden" name="person[allocation]" value="<%= 0 %>">
 					  <div class="field">
@@ -72,8 +72,6 @@
 					  </div>
 					<% end %>
 	            </div>
-	            <div class="modal-footer">
-	        </div>
 	    </div>
 	  </div>
 	</div>
@@ -117,8 +115,6 @@
 					  </div>
 				  <% end %>  
 	            </div>
-	            <div class="modal-footer">
-	        </div>
 	    </div>
 	  </div>
 	</div>
